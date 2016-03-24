@@ -19,8 +19,4 @@ public class TaskGetBody {
     public void setContent(String content) {
         this.title = content;
     }
-
-
-
-
 }

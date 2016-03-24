@@ -51,7 +51,7 @@ public class FavoritePeopleFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_my_tasks, container, false);
 
-        recyclerView = (RecyclerView) getView().findViewById(R.id.recycle_view);
+        recyclerView = (RecyclerView) v.findViewById(R.id.recycle_view);
 
         tasksArrayList = new ArrayList<>();
 
