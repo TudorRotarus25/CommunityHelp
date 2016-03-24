@@ -19,6 +19,8 @@ import java.util.ArrayList;
 
 public class MyTasksFragment extends Fragment {
 
+    private final String TAG = "MyTasksFragment";
+
     private RecyclerView recyclerView;
     private TaskAdapter mAdapter;
     private ArrayList<TaskGetBody> tasksArrayList;
@@ -30,15 +32,9 @@ public class MyTasksFragment extends Fragment {
     }
 
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-
 
         }
 
@@ -48,7 +44,7 @@ public class MyTasksFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View v = inflater.inflate(R.layout.fragment_my_tasks, container, false);
+        View v = inflater.inflate(R.layout.layout_fragment_tasks, container, false);
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recycle_view);
 
@@ -67,7 +63,7 @@ public class MyTasksFragment extends Fragment {
 
         ////
 
-        mAdapter = new TaskAdapter(getContext(), tasksArrayList);
+        mAdapter = new TaskAdapter(getContext(), tasksArrayList, TAG);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -77,8 +73,6 @@ public class MyTasksFragment extends Fragment {
 
         return v;
     }
-
-
 
 
 }

@@ -19,24 +19,40 @@ import java.util.ArrayList;
 public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context context;
-    int viewTaskType;
+    String fragment_type;
     ArrayList<TaskGetBody> tasksArrayList;
 
-    public TaskAdapter(Context mContext, ArrayList<TaskGetBody> tasksArrayList) {
+    public TaskAdapter(Context mContext, ArrayList<TaskGetBody> tasksArrayList, String fragment_type) {
         this.context = mContext;
         this.tasksArrayList = tasksArrayList;
+        this.fragment_type = fragment_type;
+
+        //Log.d("DEBUG ", "ADAPTER CONSTRUCTOR");
+        //Log.d("DEBUG ", getItemCount()+"");
 
     }
 
 
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView;
+        View itemView = null;
 
+        //Log.d("DEBUG ", "TASK ADAPTER ITEM VIEW");
 
-        itemView = LayoutInflater.from(parent.getContext())
+        if(fragment_type.equals("MyTasksFragment")) {
+            itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.layout_my_task, parent, false);
+        }
+
+        if(fragment_type.equals("OtherTasksFragment")) {
+            itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.layout_other_tasks, parent, false);
+        }
+        else
+        {
+            itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.layout_favorite_people, parent, false);
+        }
 
 
 
@@ -46,7 +62,8 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         TaskGetBody task = tasksArrayList.get(position);
-        ((ViewHolder) holder).task_tittle.setText(task.getContent());
+        ((ViewHolder) holder).other_task_title.setText(task.getTitle());
+        //Log.d("DEBUG ", "TASK ADAPTER BIND VIEW HOLDER");
     }
 
     @Override
@@ -56,24 +73,61 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return tasksArrayList.size();
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView task_tittle, task_time, task_date_added, task_user, no_users, task_reward_info;
-        ImageView task_image_url;
+
+        //my tasks
+        TextView my_task_title, my_task_time, my_task_date_added, my_task_user,
+                my_no_users, my_task_reward_info;
+        ImageView my_task_image_url;
+
+        //other tasks
+        TextView other_task_title, other_task_time, other_task_date_added, other_task_user,
+                other_no_users, other_task_reward_info;
+        ImageView other_task_image_url;
+
+        //favorite people
+        TextView fav_first_name, fav_last_name, fav_rating, fav_rank, fav_phone_number, fav_email;
+        ImageView fav_profile_pic;
 
         public ViewHolder(View view) {
             super(view);
-            task_tittle = (TextView) itemView.findViewById(R.id.task_tittle);
-            task_time = (TextView) itemView.findViewById(R.id.task_time);
-            task_date_added = (TextView) itemView.findViewById(R.id.task_date_added);
-            task_user = (TextView) itemView.findViewById(R.id.user);
-            no_users = (TextView) itemView.findViewById(R.id.no_users);
-            task_reward_info = (TextView) itemView.findViewById(R.id.task_reward_info);
-            task_image_url = (ImageView) itemView.findViewById(R.id.task_image);
+
+            switch (view.getId()) {
+                case R.layout.layout_my_task:
+                    my_task_title = (TextView) itemView.findViewById(R.id.task_title);
+                    my_task_time = (TextView) itemView.findViewById(R.id.task_time);
+                    my_task_date_added = (TextView) itemView.findViewById(R.id.task_date_added);
+                    my_task_user = (TextView) itemView.findViewById(R.id.user);
+                    my_no_users = (TextView) itemView.findViewById(R.id.no_users);
+                    my_task_reward_info = (TextView) itemView.findViewById(R.id.task_reward_info);
+                    my_task_image_url = (ImageView) itemView.findViewById(R.id.task_image);
+                    break;
+                case R.layout.layout_other_tasks:
+                    other_task_title = (TextView) itemView.findViewById(R.id.task_title);
+                    other_task_time = (TextView) itemView.findViewById(R.id.task_time);
+                    other_task_date_added = (TextView) itemView.findViewById(R.id.task_date_added);
+                    other_task_user = (TextView) itemView.findViewById(R.id.user);
+                    other_no_users = (TextView) itemView.findViewById(R.id.no_users);
+                    other_task_reward_info = (TextView) itemView.findViewById(R.id.task_reward_info);
+                    other_task_image_url = (ImageView) itemView.findViewById(R.id.task_image);
+                    break;
+                case R.layout.layout_favorite_people:
+                    fav_first_name = (TextView) itemView.findViewById(R.id.task_title);
+                    fav_last_name = (TextView) itemView.findViewById(R.id.task_time);
+                    fav_email = (TextView) itemView.findViewById(R.id.task_date_added);
+                    fav_rating = (TextView) itemView.findViewById(R.id.user);
+                    fav_rank = (TextView) itemView.findViewById(R.id.no_users);
+                    fav_phone_number= (TextView) itemView.findViewById(R.id.task_reward_info);
+                    fav_profile_pic= (ImageView) itemView.findViewById(R.id.task_image);
+                    break;
+            }
+
 
         }
+
     }
 }

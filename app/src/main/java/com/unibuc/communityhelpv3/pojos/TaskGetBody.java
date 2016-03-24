@@ -12,11 +12,11 @@ public class TaskGetBody {
     }
 
 
-    public String getContent() {
+    public String getTitle() {
         return title;
     }
 
-    public void setContent(String content) {
+    public void setTitle(String content) {
         this.title = content;
     }
 }
