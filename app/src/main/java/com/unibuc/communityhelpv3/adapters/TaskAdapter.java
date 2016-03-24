@@ -96,35 +96,35 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public ViewHolder(View view) {
             super(view);
 
-            switch (view.getId()) {
-                case R.layout.layout_my_task:
-                    my_task_title = (TextView) itemView.findViewById(R.id.task_title);
-                    my_task_time = (TextView) itemView.findViewById(R.id.task_time);
-                    my_task_date_added = (TextView) itemView.findViewById(R.id.task_date_added);
-                    my_task_user = (TextView) itemView.findViewById(R.id.user);
-                    my_no_users = (TextView) itemView.findViewById(R.id.no_users);
-                    my_task_reward_info = (TextView) itemView.findViewById(R.id.task_reward_info);
-                    my_task_image_url = (ImageView) itemView.findViewById(R.id.task_image);
-                    break;
-                case R.layout.layout_other_tasks:
-                    other_task_title = (TextView) itemView.findViewById(R.id.task_title);
-                    other_task_time = (TextView) itemView.findViewById(R.id.task_time);
-                    other_task_date_added = (TextView) itemView.findViewById(R.id.task_date_added);
-                    other_task_user = (TextView) itemView.findViewById(R.id.user);
-                    other_no_users = (TextView) itemView.findViewById(R.id.no_users);
-                    other_task_reward_info = (TextView) itemView.findViewById(R.id.task_reward_info);
-                    other_task_image_url = (ImageView) itemView.findViewById(R.id.task_image);
-                    break;
-                case R.layout.layout_favorite_people:
-                    fav_first_name = (TextView) itemView.findViewById(R.id.task_title);
-                    fav_last_name = (TextView) itemView.findViewById(R.id.task_time);
-                    fav_email = (TextView) itemView.findViewById(R.id.task_date_added);
-                    fav_rating = (TextView) itemView.findViewById(R.id.user);
-                    fav_rank = (TextView) itemView.findViewById(R.id.no_users);
-                    fav_phone_number= (TextView) itemView.findViewById(R.id.task_reward_info);
-                    fav_profile_pic= (ImageView) itemView.findViewById(R.id.task_image);
-                    break;
-            }
+//            switch (view.getId()) {
+//                case R.layout.layout_my_task:
+//                    my_task_title = (TextView) itemView.findViewById(R.id.task_title);
+//                    my_task_time = (TextView) itemView.findViewById(R.id.task_time);
+//                    my_task_date_added = (TextView) itemView.findViewById(R.id.task_date_added);
+//                    my_task_user = (TextView) itemView.findViewById(R.id.user);
+//                    my_no_users = (TextView) itemView.findViewById(R.id.no_users);
+//                    my_task_reward_info = (TextView) itemView.findViewById(R.id.task_reward_info);
+//                    my_task_image_url = (ImageView) itemView.findViewById(R.id.task_image);
+//                    break;
+//                case R.layout.layout_other_tasks:
+//                    other_task_title = (TextView) itemView.findViewById(R.id.task_title);
+//                    other_task_time = (TextView) itemView.findViewById(R.id.task_time);
+//                    other_task_date_added = (TextView) itemView.findViewById(R.id.task_date_added);
+//                    other_task_user = (TextView) itemView.findViewById(R.id.user);
+//                    other_no_users = (TextView) itemView.findViewById(R.id.no_users);
+//                    other_task_reward_info = (TextView) itemView.findViewById(R.id.task_reward_info);
+//                    other_task_image_url = (ImageView) itemView.findViewById(R.id.task_image);
+//                    break;
+//                case R.layout.layout_favorite_people:
+//                    fav_first_name = (TextView) itemView.findViewById(R.id.task_title);
+//                    fav_last_name = (TextView) itemView.findViewById(R.id.task_time);
+//                    fav_email = (TextView) itemView.findViewById(R.id.task_date_added);
+//                    fav_rating = (TextView) itemView.findViewById(R.id.user);
+//                    fav_rank = (TextView) itemView.findViewById(R.id.no_users);
+//                    fav_phone_number= (TextView) itemView.findViewById(R.id.task_reward_info);
+//                    fav_profile_pic= (ImageView) itemView.findViewById(R.id.task_image);
+//                    break;
+//            }
 
 
         }
