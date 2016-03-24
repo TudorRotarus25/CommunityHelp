@@ -16,7 +16,7 @@ import retrofit.Retrofit;
  */
 public class RestClient {
 
-    private static final String BASE_URL = "http://biscanvas.com/";
+    private static final String BASE_URL = "http://biscanvas.com/api/v1/";
     private RestAPI apiService;
 
     public RestClient() {

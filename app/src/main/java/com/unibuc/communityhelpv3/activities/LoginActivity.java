@@ -13,12 +13,20 @@ import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.unibuc.communityhelp.MyApplication;
-import com.unibuc.communityhelp.R;
+import com.unibuc.communityhelpv3.MyApplication;
+import com.unibuc.communityhelpv3.R;
+import com.unibuc.communityhelpv3.pojos.LoginPostBody;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
 
     private final static String TAG = "LoginActivity";
+
+    MyApplication app;
 
     CallbackManager callbackManager;
     LoginButton facebookLoginButton;
@@ -42,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initLayout() {
+        app = (MyApplication) getApplication();
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         facebookLoginButton = (LoginButton) findViewById(R.id.activity_login_with_facebook_button);
@@ -49,8 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 writeTokenToSharedPreferences(loginResult);
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
+                postToBE(loginResult);
             }
 
             @Override
@@ -61,6 +70,26 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException error) {
                 Log.e(TAG, error.getMessage());
+            }
+        });
+    }
+
+    private void postToBE(LoginResult loginResult) {
+        Profile profile = Profile.getCurrentProfile();
+
+        // TODO: 24.03.2016 Configure profile pic dimensions
+        Call<LoginPostBody> loginCall = app.getRestClient().getApiService().LOGIN_POST_BODY_CALL(profile.getFirstName(), profile.getLastName(), loginResult.getAccessToken().getToken().toString(), profile.getProfilePictureUri(200, 200).toString());
+        loginCall.enqueue(new Callback<LoginPostBody>() {
+            @Override
+            public void onResponse(Response<LoginPostBody> response, Retrofit retrofit) {
+                Log.i(TAG, "Login successful");
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
             }
         });
     }

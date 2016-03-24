@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     Log.i(TAG, response.body().toString());
                 }
-
             }
 
             @Override
