@@ -13,9 +13,8 @@ import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.unibuc.communityhelpv3.MyApplication;
-import com.unibuc.communityhelpv3.R;
-import com.unibuc.communityhelpv3.pojos.LoginPostBody;
+import com.unibuc.communityhelp.MyApplication;
+import com.unibuc.communityhelp.R;
 
 import retrofit.Call;
 import retrofit.Callback;

@@ -4,4 +4,9 @@
     <string name="section_format">Hello World from section: %1$d</string>
 
     <string name="facebook_app_id">796749083802292</string>
+    <string name="profile_fragment_rank_text">Rank</string>
+    <string name="profile_fragment_rating_text">Rating</string>
+    <string name="profile_fragment_email_text">Email: </string>
+    <string name="profile_fragment_phone_text">Phone: </string>
+    <string name="profile_fragment_follow_button_text">Follow</string>
 </resources>

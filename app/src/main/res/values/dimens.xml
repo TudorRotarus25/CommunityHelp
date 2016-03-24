@@ -5,4 +5,12 @@
 
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
+
+    <dimen name="profile_image_size">150dp</dimen>
+    <dimen name="profile_rank_text_size">30dp</dimen>
+    <dimen name="profile_name_size">30dp</dimen>
+    <dimen name="profile_tag_size">20dp</dimen>
+    <dimen name="profile_info_size">17dp</dimen>
+    <dimen name="profile_follow_button_margin">10dp</dimen>
+    <dimen name="profile_follow_button_text_size">15sp</dimen>
 </resources>
