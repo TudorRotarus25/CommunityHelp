@@ -20,6 +20,9 @@ import java.util.ArrayList;
  * Created by Serban Theodor on 17-Mar-16.
  */
 public class FavoritePeopleFragment extends Fragment {
+
+    private final String TAG = "FavoritePeopleFragment";
+
     private RecyclerView recyclerView;
     private TaskAdapter mAdapter;
     private ArrayList<TaskGetBody> tasksArrayList;
@@ -31,16 +34,9 @@ public class FavoritePeopleFragment extends Fragment {
     }
 
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-
-
     }
 
 
@@ -49,7 +45,7 @@ public class FavoritePeopleFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View v = inflater.inflate(R.layout.fragment_my_tasks, container, false);
+        View v = inflater.inflate(R.layout.layout_fragment_tasks, container, false);
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recycle_view);
 
@@ -62,13 +58,13 @@ public class FavoritePeopleFragment extends Fragment {
         while(i != 100)
         {
             i++;
-            task = new TaskGetBody("Task "+i);
+            task = new TaskGetBody("Prietenii tai: "+i);
             tasksArrayList.add(task);
         }
 
         ////
 
-        mAdapter = new TaskAdapter(getContext(), tasksArrayList);
+        mAdapter = new TaskAdapter(getContext(), tasksArrayList, TAG);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
