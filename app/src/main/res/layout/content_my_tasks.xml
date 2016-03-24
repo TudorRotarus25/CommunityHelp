@@ -7,7 +7,6 @@
     tools:context=".activity.MainActivity"
     tools:showIn="@layout/layout_fragment_tasks">
 
-
     <android.support.v7.widget.RecyclerView
 
         android:id="@+id/recycle_view"

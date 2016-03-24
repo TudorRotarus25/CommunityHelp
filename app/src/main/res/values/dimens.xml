@@ -6,6 +6,14 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
 
+    <dimen name="my_task_stars_size">35sp</dimen>
+    <dimen name="my_task_title_text_size">25sp</dimen>
+    <dimen name="layout_my_task_button_horizontal_margin">15dp</dimen>
+    <dimen name="layout_my_task_horizontal_padding">10dp</dimen>
+    <dimen name="layout_my_task_vertical_padding">15dp</dimen>
+    <dimen name="layout_my_task_vertical_between_margin">9dp</dimen>
+    <dimen name="layout_my_task_description_text_size">16sp</dimen>
+
     <dimen name="profile_image_size">150dp</dimen>
     <dimen name="profile_rank_text_size">30dp</dimen>
     <dimen name="profile_name_size">30dp</dimen>
