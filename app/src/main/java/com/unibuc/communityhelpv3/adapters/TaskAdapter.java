@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unibuc.communityhelpv3.R;
@@ -60,11 +61,19 @@ public class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView task_tittle;
+        TextView task_tittle, task_time, task_date_added, task_user, no_users, task_reward_info;
+        ImageView task_image_url;
 
         public ViewHolder(View view) {
             super(view);
             task_tittle = (TextView) itemView.findViewById(R.id.task_tittle);
+            task_time = (TextView) itemView.findViewById(R.id.task_time);
+            task_date_added = (TextView) itemView.findViewById(R.id.task_date_added);
+            task_user = (TextView) itemView.findViewById(R.id.user);
+            no_users = (TextView) itemView.findViewById(R.id.no_users);
+            task_reward_info = (TextView) itemView.findViewById(R.id.task_reward_info);
+            task_image_url = (ImageView) itemView.findViewById(R.id.task_image);
+
         }
     }
 }

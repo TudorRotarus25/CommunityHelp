@@ -78,20 +78,24 @@ public class LoginActivity extends AppCompatActivity {
         Profile profile = Profile.getCurrentProfile();
 
         // TODO: 24.03.2016 Configure profile pic dimensions
-        Call<LoginPostBody> loginCall = app.getRestClient().getApiService().LOGIN_POST_BODY_CALL(profile.getFirstName(), profile.getLastName(), loginResult.getAccessToken().getToken().toString(), profile.getProfilePictureUri(200, 200).toString());
-        loginCall.enqueue(new Callback<LoginPostBody>() {
-            @Override
-            public void onResponse(Response<LoginPostBody> response, Retrofit retrofit) {
-                Log.i(TAG, "Login successful");
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
+//        Call<LoginPostBody> loginCall = app.getRestClient().getApiService().LOGIN_POST_BODY_CALL(profile.getFirstName(), profile.getLastName(), loginResult.getAccessToken().getToken().toString(), profile.getProfilePictureUri(200, 200).toString());
+//        loginCall.enqueue(new Callback<LoginPostBody>() {
+//            @Override
+//            public void onResponse(Response<LoginPostBody> response, Retrofit retrofit) {
+//                Log.i(TAG, "Login successful");
+//                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                startActivity(intent);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//
+//            }
+//        });
 
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
+        Log.i(TAG, "Login successful");
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
     private void writeTokenToSharedPreferences(LoginResult loginResult) {

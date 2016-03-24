@@ -53,7 +53,7 @@ public class FavoritePeopleFragment extends Fragment {
 
         recyclerView = (RecyclerView) getView().findViewById(R.id.recycle_view);
 
-//        tasksArrayList = new ArrayList<>();
+        tasksArrayList = new ArrayList<>();
 
         //////de test
         TaskGetBody task;
