@@ -17,10 +17,7 @@
     </layouts>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dee7da23-5db8-4846-bd95-59151efb57aa" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="dee7da23-5db8-4846-bd95-59151efb57aa" name="Default" comment="" />
     <ignored path="CommunityHelp.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/build/classes/" />
@@ -51,7 +48,7 @@
       <file leaf-file-name="MyTasksFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/unibuc/communityhelpv3/fragments/MyTasksFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="0.33392859">
               <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
               <folding />
             </state>
@@ -1528,7 +1525,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/unibuc/communityhelpv3/fragments/MyTasksFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.33392859">
           <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
           <folding />
         </state>
