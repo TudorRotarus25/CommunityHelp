@@ -1,6 +1,5 @@
 package com.unibuc.communityhelpv3.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,13 +13,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 import com.facebook.appevents.AppEventsLogger;
 import com.unibuc.communityhelpv3.MyApplication;
 import com.unibuc.communityhelpv3.R;
@@ -130,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         else if (id == R.id.user_profile){
-            getApplicationContext().startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
