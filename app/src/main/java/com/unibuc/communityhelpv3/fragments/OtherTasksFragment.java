@@ -12,7 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.unibuc.communityhelpv3.R;
-import com.unibuc.communityhelpv3.adapters.TaskAdapter;
+import com.unibuc.communityhelpv3.adapters.MyTasksAdapter;
+import com.unibuc.communityhelpv3.adapters.OtherTasksAdapter;
 import com.unibuc.communityhelpv3.pojos.TaskGetBody;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class OtherTasksFragment extends Fragment {
     private final String TAG = "OtherTasksFragment";
 
     private RecyclerView recyclerView;
-    private TaskAdapter mAdapter;
+    private OtherTasksAdapter mAdapter;
     private ArrayList<TaskGetBody> tasksArrayList;
     //Context context = this;
 
@@ -60,13 +61,13 @@ public class OtherTasksFragment extends Fragment {
         while(i != 100)
         {
             i++;
-            task = new TaskGetBody("Task-uri de facut "+i);
+            task = new TaskGetBody("Task-uri de facut "+i, ""+i, ""+i, ""+i, ""+i, " "+i, " "+i, " "+i, " "+i);
             tasksArrayList.add(task);
         }
 
         ////
 
-        mAdapter = new TaskAdapter(getContext(), tasksArrayList, TAG);
+        mAdapter = new OtherTasksAdapter(getContext(), tasksArrayList, TAG);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
