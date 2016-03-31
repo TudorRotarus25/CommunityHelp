@@ -6,82 +6,100 @@
     android:paddingRight="@dimen/layout_my_task_horizontal_padding"
     android:paddingTop="@dimen/layout_my_task_vertical_padding"
     android:paddingBottom="@dimen/layout_my_task_vertical_padding"
-    android:background="#e2e2e2"
     android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <ImageView android:id="@+id/layout_my_task_icon_imageView"
-            android:src="@android:drawable/ic_menu_agenda"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+        card_view:cardCornerRadius="4dp">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:paddingTop="@dimen/layout_my_task_cardView_vertical_padding"
+            android:paddingBottom="@dimen/layout_my_task_cardView_vertical_padding"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:orientation="vertical">
 
-            <TextView android:id="@+id/layout_my_task_title_textView"
-                android:text="Test title lorem ipsum sase cuvinte"
-                android:textSize="@dimen/my_task_title_text_size"
-                android:textAlignment="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView android:id="@+id/layout_my_task_stars_textView"
-                android:text="9"
-                android:textSize="@dimen/my_task_stars_size"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableRight="@android:drawable/btn_star"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView android:id="@+id/layout_my_task_icon_imageView"
+                    android:src="@android:drawable/ic_menu_agenda"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_marginRight="@dimen/layout_my_task_title_margin_right"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
+
+                    <TextView android:id="@+id/layout_my_task_title_textView"
+                        android:text="Test title lorem ipsum sase cuvinte"
+                        android:textSize="@dimen/my_task_title_text_size"
+                        android:maxLines="2"
+                        android:textAlignment="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView android:id="@+id/layout_my_task_stars_textView"
+                        android:text="9"
+                        android:textSize="@dimen/my_task_stars_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@android:drawable/btn_star"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_my_task_vertical_between_margin"
+                android:orientation="vertical">
+
+                <TextView android:id="@+id/layout_my_task_description_textView"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus id libero vestibulum consequat. Ut interdum maximus lectus. Duis molestie."
+                    android:textAlignment="center"
+                    android:textSize="@dimen/layout_my_task_description_text_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/layout_my_task_vertical_between_margin"
+                    android:maxLines="3"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button android:id="@+id/layout_my_task_pending_button"
+                        android:layout_marginLeft="@dimen/layout_my_task_button_horizontal_margin"
+                        android:layout_marginRight="@dimen/layout_my_task_button_horizontal_margin"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+
+                    <Button android:id="@+id/layout_my_task_confirmed_button"
+                        android:layout_marginLeft="@dimen/layout_my_task_button_horizontal_margin"
+                        android:layout_marginRight="@dimen/layout_my_task_button_horizontal_margin"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/layout_my_task_vertical_between_margin"
-        android:orientation="vertical">
-
-        <TextView android:id="@+id/layout_my_task_description_textView"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus id libero vestibulum consequat. Ut interdum maximus lectus. Duis molestie."
-            android:textAlignment="center"
-            android:textSize="@dimen/layout_my_task_description_text_size"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/layout_my_task_vertical_between_margin"
-            android:maxLines="3"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button android:id="@+id/layout_my_task_pending_button"
-                android:layout_marginLeft="@dimen/layout_my_task_button_horizontal_margin"
-                android:layout_marginRight="@dimen/layout_my_task_button_horizontal_margin"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-
-            <Button android:id="@+id/layout_my_task_confirmed_button"
-                android:layout_marginLeft="@dimen/layout_my_task_button_horizontal_margin"
-                android:layout_marginRight="@dimen/layout_my_task_button_horizontal_margin"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
