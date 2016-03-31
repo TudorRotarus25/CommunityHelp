@@ -4,37 +4,27 @@ package com.unibuc.communityhelpv3.pojos;
  * Created by Tudor on 24.03.2016.
  */
 public class LoginPostBody {
-    int user_id;
-    int status;
-    String content;
+    String user_id;
+    String status;
 
-    public LoginPostBody(int user_id, int status, String content) {
+    public LoginPostBody(String user_id, String status) {
         this.user_id = user_id;
         this.status = status;
-        this.content = content;
     }
 
-    public int getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 }
