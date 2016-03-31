@@ -24,4 +24,3 @@
     <dimen name="layout_my_task_cardView_vertical_padding">10dp</dimen>
     <dimen name="layout_my_task_title_margin_right">5dp</dimen>
 </resources>
-</resources>
