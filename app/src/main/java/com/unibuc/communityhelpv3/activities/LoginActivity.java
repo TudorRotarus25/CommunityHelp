@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -15,14 +16,16 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.unibuc.communityhelpv3.MyApplication;
 import com.unibuc.communityhelpv3.R;
+import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.LoginPostBody;
+import com.unibuc.communityhelpv3.pojos.interfaces.LoginListener;
 
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoginListener{
 
     private final static String TAG = "LoginActivity";
 
@@ -78,24 +81,8 @@ public class LoginActivity extends AppCompatActivity {
         Profile profile = Profile.getCurrentProfile();
 
         // TODO: 24.03.2016 Configure profile pic dimensions
-        Call<LoginPostBody> loginCall = app.getRestClient().getApiService().LOGIN_POST_BODY_CALL(profile.getFirstName(), profile.getLastName(), loginResult.getAccessToken().getToken().toString(), profile.getProfilePictureUri(200, 200).toString());
-        loginCall.enqueue(new Callback<LoginPostBody>() {
-            @Override
-            public void onResponse(Response<LoginPostBody> response, Retrofit retrofit) {
-                Log.i(TAG, "Login successful");
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
-
-        // // TODO: 24.03.2016 Remove when we have a functional BE
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
+        NetworkManager networkManager = NetworkManager.getInstance();
+        networkManager.login(profile.getFirstName(), profile.getLastName(), loginResult.getAccessToken().getToken(), profile.getProfilePictureUri(200, 200).toString(), this);
     }
 
     private void writeTokenToSharedPreferences(LoginResult loginResult) {
@@ -118,5 +105,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onLoginSuccess(LoginPostBody response) {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onLoginFailed() {
+        Toast.makeText(this, "Login failed, please try again", Toast.LENGTH_SHORT).show();
     }
 }

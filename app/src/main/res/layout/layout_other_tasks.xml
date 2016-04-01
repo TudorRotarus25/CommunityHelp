@@ -3,8 +3,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
-
-        android:id="@+id/task_title"
+        android:id="@+id/layout_other_task_title"
         android:layout_width="60dp"
         android:layout_height="30dp" />
 

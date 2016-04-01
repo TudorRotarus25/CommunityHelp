@@ -4,16 +4,40 @@ package com.unibuc.communityhelpv3.pojos;
  * Created by Serban Theodor on 24-Mar-16.
  */
 public class UserGetBody {
-    int user_id;
-    String first_name, last_name, profile_pic, rating, rank, phone_number, email;
+    String user_id, first_name, last_name, profile_pic, rating_value, rank_value, resource_value, phone_number, email, address, city;
 
-    public int getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
+
+    public void setResource_value(String resource_value) {
+        this.resource_value = resource_value;
+    }
+
+    public String getResource_value() {
+        return resource_value;
+    }
+
+    public void setAddress(String address) {
+        this.address= address;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
 
     public String getFirst_name() {
         return first_name;
@@ -39,20 +63,20 @@ public class UserGetBody {
         this.profile_pic = profile_pic;
     }
 
-    public String getRating() {
-        return rating;
+    public String getRating_value() {
+        return rating_value;
     }
 
-    public void setRating(String rating) {
-        this.rating = rating;
+    public void setRating_value(String rating_value) {
+        this.rating_value = rating_value;
     }
 
-    public String getRank() {
-        return rank;
+    public String getRank_value() {
+        return rank_value;
     }
 
-    public void setRank(String rank) {
-        this.rank = rank;
+    public void setRank_value(String rank_value) {
+        this.rank_value = rank_value;
     }
 
     public String getPhone_number() {
@@ -71,14 +95,17 @@ public class UserGetBody {
         this.email = email;
     }
 
-    public UserGetBody(int user_id, String first_name, String last_name, String profile_pic, String rating, String rank, String phone_number, String email) {
+    public UserGetBody(String user_id, String first_name, String last_name, String profile_pic, String rating_value, String rank_value,
+                       String phone_number, String email, String address, String city) {
         this.user_id = user_id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.profile_pic = profile_pic;
-        this.rating = rating;
-        this.rank = rank;
+        this.rating_value = rating_value;
+        this.rank_value = rank_value;
         this.phone_number = phone_number;
         this.email = email;
+        this.address = address;
+        this.city = city;
     }
 }
