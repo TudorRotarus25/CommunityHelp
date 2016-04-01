@@ -65,14 +65,6 @@
                 android:src="@drawable/phone"
                 android:layout_alignParentTop="true"/>
 
-            <TextView
-                android:id="@+id/layout_task_details_estimated_time_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/task_details_estimated_time_value_text"
-                android:textSize="@dimen/task_details_tags_text_size"
-                android:layout_below="@id/layout_task_details_phone_icon_imageView"
-                android:layout_toRightOf="@id/layout_task_details_estimated_time_tag_textView"/>
 
             <TextView
                 android:id="@+id/layout_task_details_estimated_time_tag_textView"
@@ -81,6 +73,15 @@
                 android:text="@string/task_details_estimated_time_tag_text"
                 android:textSize="@dimen/task_details_tags_text_size"
                 android:layout_below="@id/layout_task_details_phone_icon_imageView"/>
+
+            <TextView
+                android:id="@+id/layout_task_details_estimated_time_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/task_details_estimated_time_value_text"
+                android:textSize="@dimen/task_details_tags_text_size"
+                android:layout_below="@id/layout_task_details_phone_icon_imageView"
+                android:layout_toRightOf="@id/layout_task_details_estimated_time_tag_textView"/>
 
         </RelativeLayout>
 
