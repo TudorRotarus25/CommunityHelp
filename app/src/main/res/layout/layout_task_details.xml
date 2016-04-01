@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="20dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/layout_task_details_title_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_details_title_string"
+            android:textColor="@color/black"
+            android:textSize="@dimen/task_details_title_size"/>
+
+        <ImageView
+            android:id="@+id/layout_task_details_image_imageView"
+            android:layout_width="@dimen/task_details_image_size"
+            android:layout_height="@dimen/task_details_image_size"
+            android:layout_margin="@dimen/task_details_image_padding"
+            android:src="@drawable/task_image"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_details_description_text"
+            android:layout_gravity="start"
+            android:textSize="@dimen/task_details_description_tag_text_size"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/layout_task_details_details_textVIew"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:text="@string/lorem_ipsum"
+            android:textSize="15sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/layout_task_details_phone_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/task_details_phone_text"
+                android:layout_toRightOf="@+id/layout_task_details_phone_icon_imageView"
+                android:layout_alignBottom="@id/layout_task_details_phone_icon_imageView"
+                android:textSize="20sp"/>
+
+            <ImageView
+                android:id="@+id/layout_task_details_phone_icon_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/phone"
+                android:layout_alignParentTop="true"/>
+
+            <TextView
+                android:id="@+id/layout_task_details_estimated_time_tag_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/task_details_estimated_time_tag_text"
+                android:textSize="@dimen/task_details_tags_text_size"
+                android:layout_below="@id/layout_task_details_phone_icon_imageView"/>
+
+            <TextView
+                android:id="@+id/layout_task_details_estimated_time_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/task_details_estimated_time_value_text"
+                android:textSize="@dimen/task_details_tags_text_size"
+                android:layout_below="@id/layout_task_details_phone_icon_imageView"
+                android:layout_toRightOf="@id/layout_task_details_estimated_time_tag_textView"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
+
+
+            <TextView
+                android:id="@+id/layout_task_details_neighbour_tag_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/task_details_neighbour_tag_text"
+                android:textSize="@dimen/task_details_tags_text_size"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:id="@+id/layout_task_details_username_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/task_details_username_text"
+                android:textSize="@dimen/task_details_tags_text_size"
+                android:textColor="@color/black"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/layout_task_details_reward_tag_textView"
+                android:layout_toRightOf="@+id/layout_task_details_neighbour_tag_textView"/>
+
+            <TextView
+                android:id="@+id/layout_task_details_rating_tag_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/task_details_rating_tag_text"
+                android:textSize="@dimen/task_details_tags_text_size"
+                android:layout_alignParentLeft="true"
+                android:layout_alignBottom="@+id/layout_task_details_star_imageView"/>
+
+            <TextView
+                android:id="@+id/layout_task_details_rating_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/task_details_tags_text_size"
+                android:textColor="@color/black"
+                android:text="@string/task_details_rating_value_text"
+                android:layout_alignBottom="@+id/layout_task_details_star_imageView"
+                android:layout_toRightOf="@+id/layout_task_details_rating_tag_textView"
+                android:layout_toLeftOf="@+id/layout_task_details_reward_textView"/>
+
+            <TextView
+                android:id="@+id/layout_task_details_reward_tag_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/task_details_reward_tag_text"
+                android:textSize="@dimen/task_details_tags_text_size"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"/>
+
+            <ImageView
+                android:id="@+id/layout_task_details_star_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/star"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/layout_task_details_reward_tag_textView"/>
+
+            <TextView
+                android:id="@+id/layout_task_details_reward_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/task_details_reward_value_text"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:layout_alignBottom="@id/layout_task_details_star_imageView"
+                android:layout_toLeftOf="@+id/layout_task_details_star_imageView"/>
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/layout_task_details_accept_task_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/follow_button_shape"
+            android:text="@string/task_details_accept_button_text"/>
+
+    </LinearLayout>
+</ScrollView>

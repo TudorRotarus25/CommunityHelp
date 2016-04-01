@@ -23,4 +23,10 @@
     <dimen name="profile_follow_button_text_size">15sp</dimen>
     <dimen name="layout_my_task_cardView_vertical_padding">10dp</dimen>
     <dimen name="layout_my_task_title_margin_right">5dp</dimen>
+    <dimen name="task_details_title_size">25sp</dimen>
+    <dimen name="task_details_image_size">150dp</dimen>
+    <dimen name="task_details_image_padding">10dp</dimen>
+    <dimen name="task_details_description_tag_text_size">20dp</dimen>
+    <dimen name="task_details_tags_text_size">18sp</dimen>
+    <dimen name="layout_my_task_cardView_margin">3dp</dimen>
 </resources>
