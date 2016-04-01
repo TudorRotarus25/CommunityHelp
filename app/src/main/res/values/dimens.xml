@@ -29,4 +29,9 @@
     <dimen name="task_details_description_tag_text_size">20dp</dimen>
     <dimen name="task_details_tags_text_size">18sp</dimen>
     <dimen name="layout_my_task_cardView_margin">3dp</dimen>
+    <dimen name="layout_other_tasks_cardView_padding_vertical">12dp</dimen>
+    <dimen name="layout_other_tasks_title_text_size">20sp</dimen>
+    <dimen name="layout_other_tasks_inner_margin_vertical">5dp</dimen>
+    <dimen name="layout_my_tasks_inner_margin_horizontal">5dp</dimen>
+    <dimen name="layout_other_tasks_right_container_text_size">17sp</dimen>
 </resources>

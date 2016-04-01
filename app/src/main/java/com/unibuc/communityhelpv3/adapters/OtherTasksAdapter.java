@@ -67,7 +67,7 @@ public class OtherTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public OtherViewHolder(View view) {
             super(view);
-            other_task_title = (TextView) itemView.findViewById(R.id.layout_other_task_title);
+            other_task_title = (TextView) itemView.findViewById(R.id.layout_other_tasks_title_textView);
 
         }
 
