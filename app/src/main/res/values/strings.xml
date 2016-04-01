@@ -9,4 +9,17 @@
     <string name="profile_fragment_email_text">Email: </string>
     <string name="profile_fragment_phone_text">Phone: </string>
     <string name="profile_fragment_follow_button_text">Follow</string>
+    <string name="task_details_title_string">Broken pipe</string>
+    <string name="task_details_description_text">Task description:</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tempus, massa mollis feugiat dapibus, nibh nulla tempor lorem, ac bibendum nunc odio sed nisl. Sed in orci massa. Nunc feugiat ut odio id aliquam. Phasellus vitae varius nibh. Nunc tempor sollicitudin justo id ultricies.</string>
+    <string name="task_details_phone_text">0720100200</string>
+    <string name="task_details_estimated_time_value_text">25 min</string>
+    <string name="task_details_estimated_time_tag_text">Estimated time:</string>
+    <string name="task_details_neighbour_tag_text">Neighbour:</string>
+    <string name="task_details_username_text">Username</string>
+    <string name="task_details_rating_tag_text">Rating:</string>
+    <string name="task_details_rating_value_text">9</string>
+    <string name="task_details_reward_tag_text">Reward:</string>
+    <string name="task_details_reward_value_text">15</string>
+    <string name="task_details_accept_button_text">Accept Task</string>
 </resources>
