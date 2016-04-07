@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unibuc.communityhelpv3.R;
-import com.unibuc.communityhelpv3.pojos.TaskGetBody;
+import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 
 import java.util.ArrayList;
 
@@ -20,9 +20,9 @@ public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     Context context;
     String fragment_type;
-    ArrayList<TaskGetBody> tasksArrayList;
+    ArrayList<TasksGetBody.Task> tasksArrayList;
 
-    public MyTasksAdapter(Context mContext, ArrayList<TaskGetBody> tasksArrayList, String fragment_type) {
+    public MyTasksAdapter(Context mContext, ArrayList<TasksGetBody.Task> tasksArrayList, String fragment_type) {
         this.context = mContext;
         this.tasksArrayList = tasksArrayList;
         this.fragment_type = fragment_type;
@@ -42,10 +42,10 @@ public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        TaskGetBody task = tasksArrayList.get(position);
-        ((MyTaskViewHolder) holder).my_task_title.setText(task.getTask_title());
-        ((MyTaskViewHolder) holder).my_task_description.setText(task.getTask_desription());
-        ((MyTaskViewHolder) holder).my_task_reward_info.setText(task.getTask_reward_info());
+        TasksGetBody.Task task = tasksArrayList.get(position);
+        ((MyTaskViewHolder) holder).titleTextView.setText(task.getTitle());
+        ((MyTaskViewHolder) holder).descriptionTextView.setText(task.getDescription());
+        ((MyTaskViewHolder) holder).resourceCostTextView.setText(task.getResource_cost());
         //Log.d("DEBUG ", "TASK ADAPTER BIND VIEW HOLDER");
     }
 
@@ -63,25 +63,17 @@ public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public class MyTaskViewHolder extends RecyclerView.ViewHolder {
 
         //my tasks
-        TextView my_task_title, my_task_time, my_task_date_added, my_task_user,
-                my_no_users, my_task_reward_info, my_task_description;
-        ImageView my_task_image_url;
-
-        //other tasks
-        TextView other_task_title, other_task_time, other_task_date_added, other_task_user,
-                other_no_users, other_task_reward_info;
-        ImageView other_task_image_url;
-
-        //favorite people
-        TextView fav_first_name, fav_last_name, fav_rating, fav_rank, fav_phone_number, fav_email;
-        ImageView fav_profile_pic;
+        TextView titleTextView;
+        TextView descriptionTextView;
+        TextView resourceCostTextView;
+        ImageView iconImageView;
 
         public MyTaskViewHolder(View view) {
             super(view);
-            my_task_title = (TextView) itemView.findViewById(R.id.layout_my_task_title_textView);
-            my_task_description = (TextView) itemView.findViewById(R.id.layout_my_task_description_textView);
-            my_task_reward_info = (TextView) itemView.findViewById(R.id.layout_my_task_stars_textView);
-            my_task_image_url = (ImageView) itemView.findViewById(R.id.layout_my_task_icon_imageView);
+            titleTextView = (TextView) itemView.findViewById(R.id.layout_my_task_title_textView);
+            descriptionTextView = (TextView) itemView.findViewById(R.id.layout_my_task_description_textView);
+            resourceCostTextView = (TextView) itemView.findViewById(R.id.layout_my_task_stars_textView);
+            iconImageView = (ImageView) itemView.findViewById(R.id.layout_my_task_icon_imageView);
         }
 
     }

@@ -7,24 +7,28 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.AccessToken;
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.adapters.MyTasksAdapter;
-import com.unibuc.communityhelpv3.pojos.TaskGetBody;
+import com.unibuc.communityhelpv3.managers.NetworkManager;
+import com.unibuc.communityhelpv3.pojos.TasksGetBody;
+import com.unibuc.communityhelpv3.pojos.interfaces.MyTasksListener;
 
 import java.util.ArrayList;
 
 
-public class MyTasksFragment extends Fragment {
+public class MyTasksFragment extends Fragment implements MyTasksListener{
 
     private final String TAG = "MyTasksFragment";
 
     private RecyclerView recyclerView;
     private MyTasksAdapter mAdapter;
-    private ArrayList<TaskGetBody> tasksArrayList;
+    private ArrayList<TasksGetBody.Task> tasksArrayList;
     //Context context = this;
 
 
@@ -60,19 +64,6 @@ public class MyTasksFragment extends Fragment {
 
         tasksArrayList = new ArrayList<>();
 
-        //////de test
-        TaskGetBody task;
-
-        int i = 0;
-        while(i != 100)
-        {
-            i++;
-            task = new TaskGetBody("Task "+i, ""+i, ""+i, ""+i, ""+i, " "+i, " "+i, " "+i, " "+i);
-            tasksArrayList.add(task);
-        }
-
-        ////
-
         mAdapter = new MyTasksAdapter(getContext(), tasksArrayList, TAG);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -81,12 +72,36 @@ public class MyTasksFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
+        populateLayouts();
+
         return v;
     }
 
     private void populateLayouts() {
 
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+
+        if(accessToken != null) {
+            Log.i(TAG, accessToken.getToken());
+            NetworkManager networkManager = NetworkManager.getInstance();
+            networkManager.getMyTasks(accessToken.getToken(), this);
+        } else {
+            Log.e(TAG, "No access token");
+        }
+
     }
 
 
+    @Override
+    public void onGetMyTasksSuccess(TasksGetBody response) {
+
+
+        tasksArrayList = response.getTasks();
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onGetMyTasksFailed() {
+
+    }
 }
