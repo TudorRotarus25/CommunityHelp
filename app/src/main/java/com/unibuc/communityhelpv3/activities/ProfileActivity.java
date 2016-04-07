@@ -9,6 +9,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.unibuc.communityhelpv3.R;
+import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.utils.DownloadImageToImageView;
 import com.unibuc.communityhelpv3.managers.LocalImageManager;
 import com.unibuc.communityhelpv3.pojos.UserGetBody;
@@ -26,6 +27,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileListene
 
     private DownloadImageToImageView downloadImageToImageView;
     private LocalImageManager localImageManager;
+    private NetworkManager networkManager;
 
 
     @Override
@@ -34,6 +36,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileListene
         setContentView(R.layout.activity_profile);
 
         init();
+        //networkManager.getProfile();
     }
 
     private void init(){
@@ -44,6 +47,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileListene
         email = (TextView) findViewById(R.id.emailTextView);
         phone = (TextView) findViewById(R.id.phoneTextView);
 
+        networkManager = NetworkManager.getInstance();
         downloadImageToImageView = new DownloadImageToImageView();
         localImageManager = new LocalImageManager(getApplicationContext());
     }
