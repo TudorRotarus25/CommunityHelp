@@ -16,6 +16,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.unibuc.communityhelpv3.MyApplication;
 import com.unibuc.communityhelpv3.R;
+import com.unibuc.communityhelpv3.managers.LocalUserManager;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.LoginPostBody;
 import com.unibuc.communityhelpv3.pojos.interfaces.LoginListener;
@@ -31,8 +32,9 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
 
     MyApplication app;
 
-    CallbackManager callbackManager;
-    LoginButton facebookLoginButton;
+    private CallbackManager callbackManager;
+    private LoginButton facebookLoginButton;
+    private LocalUserManager localUserManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
 
     private void initLayout() {
         app = (MyApplication) getApplication();
+        localUserManager = LocalUserManager.getInstance(getApplicationContext());
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
@@ -109,6 +112,9 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
 
     @Override
     public void onLoginSuccess(LoginPostBody response) {
+        String userId = response.getUser_id();
+        localUserManager.storeLocalUserId(userId);
+
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
     }
