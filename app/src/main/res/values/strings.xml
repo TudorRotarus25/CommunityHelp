@@ -22,4 +22,5 @@
     <string name="task_details_reward_tag_text">Reward:</string>
     <string name="task_details_reward_value_text">15</string>
     <string name="task_details_accept_button_text">Accept Task</string>
+    <string name="task_add_title">Add Task</string>
 </resources>
