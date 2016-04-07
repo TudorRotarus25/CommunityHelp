@@ -25,6 +25,7 @@ public class CategoriesGetBody {
         int id;
         String title;
         String text;
+        int type;
         String picture_url;
 
         public Category(int id, String title, String text, String picture_url) {
@@ -64,6 +65,14 @@ public class CategoriesGetBody {
 
         public void setText(String text) {
             this.text = text;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
         }
     }
 }
