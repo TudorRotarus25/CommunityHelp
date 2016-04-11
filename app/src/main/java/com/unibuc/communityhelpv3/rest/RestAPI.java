@@ -38,4 +38,8 @@ public interface RestAPI {
     @FormUrlEncoded
     @POST("tasks/my_tasks")
     Call<TasksGetBody> MY_TASKS_GET_BODY_CALL(@Field("facebook_token") String facebookToken);
+
+    @FormUrlEncoded
+    @POST("tasks/other_peoples_tasks")
+    Call<TasksGetBody> OTHER_PEOPLE_TASKS_GET_BODY_CALL(@Field("facebook_token") String facebookToken);
 }

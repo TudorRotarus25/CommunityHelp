@@ -18,14 +18,14 @@ import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.adapters.MyTasksAdapter;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
-import com.unibuc.communityhelpv3.pojos.interfaces.MyTasksListener;
+import com.unibuc.communityhelpv3.pojos.interfaces.TasksListener;
 
 import java.util.ArrayList;
 
 
-public class MyTasksFragment extends Fragment implements MyTasksListener{
+public class TasksFragment extends Fragment implements TasksListener {
 
-    private final String TAG = "MyTasksFragment";
+    private final String TAG = getClass().getSimpleName();
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -34,7 +34,7 @@ public class MyTasksFragment extends Fragment implements MyTasksListener{
     //Context context = this;
 
 
-    public MyTasksFragment() {
+    public TasksFragment() {
         // Required empty public constructor
     }
 

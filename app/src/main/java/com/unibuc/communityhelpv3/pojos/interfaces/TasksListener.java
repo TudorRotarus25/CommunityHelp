@@ -5,7 +5,7 @@ import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 /**
  * Created by Tudor on 07.04.2016.
  */
-public interface MyTasksListener {
+public interface TasksListener {
     void onGetMyTasksSuccess(TasksGetBody response);
     void onGetMyTasksFailed();
 }

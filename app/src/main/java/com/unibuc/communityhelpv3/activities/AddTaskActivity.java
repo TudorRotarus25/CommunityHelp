@@ -74,7 +74,7 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {
-        //
+
     }
 
     @Override

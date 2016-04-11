@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +20,7 @@ import com.facebook.login.LoginManager;
 import com.unibuc.communityhelpv3.MyApplication;
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.fragments.FavoritePeopleFragment;
-import com.unibuc.communityhelpv3.fragments.MyTasksFragment;
+import com.unibuc.communityhelpv3.fragments.TasksFragment;
 import com.unibuc.communityhelpv3.fragments.OtherTasksFragment;
 
 import java.util.ArrayList;
@@ -140,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new FavoritePeopleFragment(), "Friends");
         adapter.addFragment(new OtherTasksFragment(), "Tasks");
-        adapter.addFragment(new MyTasksFragment(), "Your tasks");
+        adapter.addFragment(new TasksFragment(), "Your tasks");
         viewPager.setAdapter(adapter);
     }
 
