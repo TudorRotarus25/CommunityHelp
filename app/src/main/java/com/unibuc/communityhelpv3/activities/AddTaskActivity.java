@@ -1,5 +1,6 @@
 package com.unibuc.communityhelpv3.activities;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -19,10 +21,7 @@ import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
-import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.interfaces.CreateTaskListener;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,6 +35,10 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
 
     private TextView task_start_time_editText;
     private TextView task_end_time_editText;
+
+    private TextView task_start_date_textView;
+    private TextView task_end_date_textView ;
+
     private TextView task_title_editText;
     private TextView task_description_editText;
     private TextView task_reward_cost_editText;
@@ -45,10 +48,15 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
 
     private Spinner task_category_spinner;
 
+    private DatePickerDialog fromDatePickerDialog;
+    private DatePickerDialog toDatePickerDialog;
     private TimePickerDialog fromTimePickerDialog;
+    private TimePickerDialog toTimePickerDialog;
 
+    private SimpleDateFormat dateFormatter;
     private SimpleDateFormat timeFormatter;
     private Calendar fromTime;
+    private Calendar toTime;
 
     ArrayList<String> categoryList;
     ArrayAdapter<String> spinnerAdapter;
@@ -121,6 +129,10 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
 
         task_start_time_editText = (TextView) findViewById(R.id.task_start_time_textView);
         task_end_time_editText = (TextView) findViewById(R.id.task_end_time_textView);
+        task_start_date_textView = (TextView) findViewById(R.id.task_start_date_textView);
+        task_end_date_textView = (TextView) findViewById(R.id.task_end_date_textView);
+
+
 
         task_title_editText = (TextView) findViewById(R.id.task_title_editText);
         task_description_editText = (TextView) findViewById(R.id.task_description_editText);
@@ -134,7 +146,40 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         task_category_spinner.setAdapter(spinnerAdapter);
         task_category_spinner.setSelection(0);
 
+        dateFormatter = new SimpleDateFormat("EEE, dd MMM yyyy", Locale.US);
         timeFormatter = new SimpleDateFormat("H:mm", Locale.US);
+
+        fromDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Log.i(TAG, year + " " + monthOfYear + " " + dayOfMonth);
+                fromTime.set(Calendar.YEAR, year);
+                fromTime.set(Calendar.MONTH, monthOfYear);
+                fromTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                task_start_date_textView.setText(dateFormatter.format(fromTime.getTime()));
+
+                toTime.set(Calendar.YEAR, year);
+                toTime.set(Calendar.MONTH, monthOfYear);
+                toTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                task_end_date_textView.setText(dateFormatter.format(toTime.getTime()));
+            }
+        }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+
+        toDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Log.i(TAG, year + " " + monthOfYear + " " + dayOfMonth);
+
+                toTime.set(Calendar.YEAR, year);
+                toTime.set(Calendar.MONTH, monthOfYear);
+                toTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                task_end_date_textView.setText(dateFormatter.format(toTime.getTime()));
+
+            }
+        }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 
         fromTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -145,10 +190,40 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
                 fromTime.set(Calendar.MINUTE, minute);
 
                 task_start_time_editText.setText(timeFormatter.format(fromTime.getTime()));
+
+                toTime.set(Calendar.HOUR_OF_DAY, hourOfDay + 1);
+                toTime.set(Calendar.MINUTE, minute);
+
+                task_end_time_editText.setText(timeFormatter.format(toTime.getTime()));
             }
         }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
 
+        toTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                Log.i(TAG, hourOfDay + ":" + minute);
+
+                toTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                toTime.set(Calendar.MINUTE, minute);
+
+                task_end_time_editText.setText(timeFormatter.format(toTime.getTime()));
+
+            }
+        }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
+
+        initFields();
         initListeners();
+    }
+
+    private void initFields() {
+        fromTime = Calendar.getInstance();
+        toTime = Calendar.getInstance();
+        toTime.add(Calendar.HOUR_OF_DAY, 1);
+
+        task_start_date_textView.setText(dateFormatter.format(fromTime.getTime()));
+        task_end_date_textView.setText(dateFormatter.format(toTime.getTime()));
+        task_start_time_editText.setText(timeFormatter.format(fromTime.getTime()));
+        task_end_time_editText.setText(timeFormatter.format(toTime.getTime()));
     }
 
 
@@ -165,7 +240,21 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
             @Override
             public void onClick(View v)
             {
-                fromTimePickerDialog.show();
+                toTimePickerDialog.show();
+            }
+        });
+
+        task_start_date_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fromDatePickerDialog.show();
+            }
+        });
+
+        task_end_date_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toDatePickerDialog.show();
             }
         });
 
@@ -173,16 +262,21 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
             @Override
             public void onClick(View v) {
 
-                String task_title = task_title_editText.toString();
-                String task_description = task_description_editText.toString();
-                String task_category = task_category_spinner.getSelectedItem().toString();
-                String task_location = task_location_editText.toString();
-                String task_cost = task_reward_cost_editText.toString();
+                String task_title = task_title_editText.getText().toString();
+                String task_description = task_description_editText.getText().toString();
+                //String task_category = task_category_spinner.getSelectedItem().toString();
+                int task_category = 1;
+                String task_location = task_location_editText.getText().toString();
+                int task_cost = Integer.parseInt(task_reward_cost_editText.getText().toString());
 
+                long duration = toTime.getTimeInMillis() - fromTime.getTimeInMillis();
+                int task_duration = (int)duration;
+                Log.i(TAG, duration+"");
 
                 if(accessToken != null) {
                     Log.i(TAG, accessToken.getToken());
-                    //networkManager.getOtherPeopleTasks(accessToken.getToken(), this);
+                    networkManager.createTask(accessToken.getToken(), task_title, task_description, task_category
+                            , task_cost, task_duration, AddTaskActivity.this);
                 } else {
                     Log.e(TAG, "No access token");
                 }
@@ -191,7 +285,7 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     }
 
     @Override
-     public void onCreateTaskSuccess()
+    public void onCreateTaskSuccess()
     {
         Toast.makeText(this, "Task added!", Toast.LENGTH_SHORT).show();
     }

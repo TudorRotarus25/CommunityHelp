@@ -7,6 +7,11 @@ public class UserGetBody {
 
     User profile;
 
+    public UserGetBody()
+    {
+        profile = new User();
+    }
+
     public UserGetBody(User profile) {
         this.profile = profile;
     }
@@ -30,6 +35,9 @@ public class UserGetBody {
         String rating;
         String rank;
         int nr_tasks;
+
+        public User() {
+        }
 
         public User(String id, String first_name, String last_name, String email, String phone_number, String profile_pic, String rating, String rank, int nr_tasks) {
             this.id = id;

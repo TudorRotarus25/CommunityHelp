@@ -54,7 +54,14 @@ public class FavoritePeopleFragment extends Fragment {
         usersArrayList = new ArrayList<>();
 
         //////de test
-        UserGetBody.User user;
+        UserGetBody user;
+        int i = 0;
+        while(i != 40)
+        {
+            user = new UserGetBody();
+            usersArrayList.add(user.getProfile());
+            i++;
+        }
 
         mAdapter = new FavoritePeopleAdapter(getContext(), usersArrayList, TAG);
 
