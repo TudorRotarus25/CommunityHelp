@@ -54,7 +54,7 @@ public class TasksFragment extends Fragment implements TasksListener {
         View v = inflater.inflate(R.layout.layout_fragment_tasks, container, false);
 
 
-        swipeRefreshLayout = (SwipeRefreshLayout)container.findViewById(R.id.content_my_tasks_swipe_refresh_layout);
+        swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.content_my_tasks_swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

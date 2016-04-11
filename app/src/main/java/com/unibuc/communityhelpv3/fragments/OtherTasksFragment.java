@@ -2,6 +2,7 @@ package com.unibuc.communityhelpv3.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -30,6 +31,7 @@ public class OtherTasksFragment extends Fragment implements TasksListener {
 
     private final String TAG = "OtherTasksFragment";
 
+    private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private OtherTasksAdapter mAdapter;
     private ArrayList<TasksGetBody.Task> tasksArrayList;
@@ -53,6 +55,14 @@ public class OtherTasksFragment extends Fragment implements TasksListener {
         // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.layout_fragment_tasks, container, false);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.content_my_tasks_swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                populateLayout();
+            }
+        });
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recycle_view);
         networkManager = NetworkManager.getInstance();
@@ -84,6 +94,8 @@ public class OtherTasksFragment extends Fragment implements TasksListener {
 
     @Override
     public void onGetMyTasksSuccess(TasksGetBody response) {
+        swipeRefreshLayout.setRefreshing(false);
+
         if(response.getTasks() != null) {
             tasksArrayList = response.getTasks();
             mAdapter.setTasksArrayList(tasksArrayList);
@@ -93,6 +105,8 @@ public class OtherTasksFragment extends Fragment implements TasksListener {
 
     @Override
     public void onGetMyTasksFailed() {
+        swipeRefreshLayout.setRefreshing(false);
+
         Toast.makeText(getActivity(), "Failed to fetch tasks", Toast.LENGTH_SHORT).show();
     }
 }

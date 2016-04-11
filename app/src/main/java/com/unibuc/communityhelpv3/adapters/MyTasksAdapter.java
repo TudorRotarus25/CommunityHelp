@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,6 +47,8 @@ public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ((MyTaskViewHolder) holder).titleTextView.setText(task.getTitle());
         ((MyTaskViewHolder) holder).descriptionTextView.setText(task.getDescription());
         ((MyTaskViewHolder) holder).resourceCostTextView.setText("" + task.getResource_cost());
+        ((MyTaskViewHolder) holder).pendingButton.setText("Pending: " + task.getParticipants_number());
+        ((MyTaskViewHolder) holder).confirmedButton.setText("Confirmed: " + task.getParticipants_number());
         //Log.d("DEBUG ", "TASK ADAPTER BIND VIEW HOLDER");
     }
 
@@ -67,6 +70,8 @@ public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView descriptionTextView;
         TextView resourceCostTextView;
         ImageView iconImageView;
+        Button pendingButton;
+        Button confirmedButton;
 
         public MyTaskViewHolder(View view) {
             super(view);
@@ -74,6 +79,8 @@ public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             descriptionTextView = (TextView) itemView.findViewById(R.id.layout_my_task_description_textView);
             resourceCostTextView = (TextView) itemView.findViewById(R.id.layout_my_task_stars_textView);
             iconImageView = (ImageView) itemView.findViewById(R.id.layout_my_task_icon_imageView);
+            pendingButton = (Button) itemView.findViewById(R.id.layout_my_task_pending_button);
+            confirmedButton = (Button) itemView.findViewById(R.id.layout_my_task_confirmed_button);
         }
 
     }
