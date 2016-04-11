@@ -70,7 +70,7 @@ public class NetworkManager {
             @Override
             public void onResponse(Response<UserGetBody> response, Retrofit retrofit) {
                 if (response != null && response.body() != null && response.code() == 200) {
-                    callback.onProfileSuccess(response.body());
+                    callback.onProfileSuccess(response.body().getProfile());
                 } else {
                     Log.e(TAG, response.code() + ": getProfile call failed");
                     callback.onProfileFailed();

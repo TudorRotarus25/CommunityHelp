@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.unibuc.communityhelpv3.R;
@@ -27,6 +28,7 @@ public class MyTasksFragment extends Fragment implements MyTasksListener{
     private final String TAG = "MyTasksFragment";
 
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private MyTasksAdapter mAdapter;
     private ArrayList<TasksGetBody.Task> tasksArrayList;
     //Context context = this;
@@ -52,7 +54,7 @@ public class MyTasksFragment extends Fragment implements MyTasksListener{
         View v = inflater.inflate(R.layout.layout_fragment_tasks, container, false);
 
 
-        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)container.findViewById(R.id.content_my_tasks_swipe_refresh_layout);
+        swipeRefreshLayout = (SwipeRefreshLayout)container.findViewById(R.id.content_my_tasks_swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -88,20 +90,24 @@ public class MyTasksFragment extends Fragment implements MyTasksListener{
         } else {
             Log.e(TAG, "No access token");
         }
-
     }
 
 
     @Override
     public void onGetMyTasksSuccess(TasksGetBody response) {
 
+        swipeRefreshLayout.setRefreshing(false);
 
         tasksArrayList = response.getTasks();
+        Log.i(TAG, "Response size: " + tasksArrayList.size());
+        mAdapter.setTasksArrayList(tasksArrayList);
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onGetMyTasksFailed() {
 
+        swipeRefreshLayout.setRefreshing(false);
+        Toast.makeText(getActivity(), "Something went wrong. Please retry", Toast.LENGTH_SHORT).show();
     }
 }

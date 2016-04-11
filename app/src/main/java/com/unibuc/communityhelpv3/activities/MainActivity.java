@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 import com.unibuc.communityhelpv3.MyApplication;
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.fragments.FavoritePeopleFragment;
@@ -123,6 +124,13 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (id == R.id.user_profile){
             startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+        }
+        else if (id == R.id.action_logout) {
+            LoginManager.getInstance().logOut();
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

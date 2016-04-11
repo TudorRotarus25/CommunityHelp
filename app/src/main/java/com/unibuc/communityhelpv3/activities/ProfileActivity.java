@@ -40,6 +40,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileListene
         init();
 
         String userId = localUserManager.getLocalUserId();
+
+        Log.i(TAG, "User id: " + userId );
         networkManager.getProfile(userId, this);
     }
 
@@ -58,14 +60,16 @@ public class ProfileActivity extends AppCompatActivity implements ProfileListene
     }
 
     @Override
-    public void onProfileSuccess(UserGetBody response) {
+    public void onProfileSuccess(UserGetBody.User response) {
         name.setText(response.getFirst_name() + " " + response.getLast_name());
-        rank.setText(response.getRank_value());
-        rating.setProgress(Integer.parseInt(response.getRating_value()));
+        rank.setText(response.getRank());
+        rating.setProgress(Integer.parseInt(response.getRating()));
         email.setText(response.getEmail());
         phone.setText(response.getPhone_number());
 
-        setProfilePicture(profilePicture, response.getProfile_pic());
+        if(response.getProfile_pic() != null) {
+            setProfilePicture(response.getProfile_pic());
+        }
     }
 
     @Override
@@ -73,7 +77,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileListene
 
     }
 
-    public void setProfilePicture(ImageView profilePicture, String profilePicUrl){
+    public void setProfilePicture(String profilePicUrl){
         String localPictureUrl = localImageManager.getProfilePictureUrl();
         if (!profilePicUrl.equals(localPictureUrl)){
             Log.e(TAG, "Set picture from SERVER");
@@ -83,7 +87,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfileListene
         else{
             Log.e(TAG, "Set picture from LOCAL");
             Bitmap localProfilePictureBmp = LocalImageManager.retrieveProfilePicture();
-            profilePicture.setImageBitmap(localProfilePictureBmp);
+            if(localProfilePictureBmp != null) {
+                profilePicture.setImageBitmap(localProfilePictureBmp);
+            }
         }
     }
 

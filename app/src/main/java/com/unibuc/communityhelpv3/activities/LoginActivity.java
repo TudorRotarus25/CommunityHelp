@@ -1,5 +1,6 @@
 package com.unibuc.communityhelpv3.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -36,6 +37,8 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
     private LoginButton facebookLoginButton;
     private LocalUserManager localUserManager;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,11 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
         app = (MyApplication) getApplication();
         localUserManager = LocalUserManager.getInstance(getApplicationContext());
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Loading");
+        progressDialog.setMessage("Please wait while loading");
+
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         facebookLoginButton = (LoginButton) findViewById(R.id.activity_login_with_facebook_button);
@@ -66,6 +74,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
             public void onSuccess(LoginResult loginResult) {
                 writeTokenToSharedPreferences(loginResult);
                 postToBE(loginResult);
+                progressDialog.show();
             }
 
             @Override
@@ -98,6 +107,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
         editor.putString("token", loginResult.getAccessToken().getToken().toString());
         editor.putString("first_name", profile.getFirstName());
         editor.putString("last_name", profile.getLastName());
+        Log.i(TAG, profile.getProfilePictureUri(100, 100).toString());
         editor.putString("profile_pic", profile.getProfilePictureUri(100, 100).toString());
 
         editor.commit();
@@ -114,6 +124,8 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
     public void onLoginSuccess(LoginPostBody response) {
         String userId = response.getUser_id();
         localUserManager.storeLocalUserId(userId);
+
+        progressDialog.dismiss();
 
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);

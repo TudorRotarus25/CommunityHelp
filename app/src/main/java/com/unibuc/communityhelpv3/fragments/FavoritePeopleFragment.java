@@ -27,7 +27,7 @@ public class FavoritePeopleFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private FavoritePeopleAdapter mAdapter;
-    private ArrayList<UserGetBody> usersArrayList;
+    private ArrayList<UserGetBody.User> usersArrayList;
     //Context context = this;
 
 
@@ -54,17 +54,7 @@ public class FavoritePeopleFragment extends Fragment {
         usersArrayList = new ArrayList<>();
 
         //////de test
-        UserGetBody user;
-
-        int i = 0;
-        while(i != 100)
-        {
-            i++;
-            user = new UserGetBody(" "+i, ""+i, ""+i, ""+i, ""+i, " "+i, " "+i, " "+i, " "+i, " "+i);
-            usersArrayList.add(user);
-        }
-
-        ////
+        UserGetBody.User user;
 
         mAdapter = new FavoritePeopleAdapter(getContext(), usersArrayList, TAG);
 

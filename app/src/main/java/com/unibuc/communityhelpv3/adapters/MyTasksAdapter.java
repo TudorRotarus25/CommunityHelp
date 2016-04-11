@@ -45,7 +45,7 @@ public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TasksGetBody.Task task = tasksArrayList.get(position);
         ((MyTaskViewHolder) holder).titleTextView.setText(task.getTitle());
         ((MyTaskViewHolder) holder).descriptionTextView.setText(task.getDescription());
-        ((MyTaskViewHolder) holder).resourceCostTextView.setText(task.getResource_cost());
+        ((MyTaskViewHolder) holder).resourceCostTextView.setText("" + task.getResource_cost());
         //Log.d("DEBUG ", "TASK ADAPTER BIND VIEW HOLDER");
     }
 
@@ -76,5 +76,13 @@ public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             iconImageView = (ImageView) itemView.findViewById(R.id.layout_my_task_icon_imageView);
         }
 
+    }
+
+    public ArrayList<TasksGetBody.Task> getTasksArrayList() {
+        return tasksArrayList;
+    }
+
+    public void setTasksArrayList(ArrayList<TasksGetBody.Task> tasksArrayList) {
+        this.tasksArrayList = tasksArrayList;
     }
 }
