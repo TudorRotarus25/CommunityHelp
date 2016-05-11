@@ -44,8 +44,8 @@ public class NetworkManager {
         return instance;
     }
 
-    public void login(String firstName, String lastName, String facebookToken, String profilePicUri, final LoginListener callback) {
-        Call<LoginPostBody> call = restAPI.LOGIN_POST_BODY_CALL(firstName, lastName, facebookToken, profilePicUri);
+    public void login(String firstName, String lastName, String facebookToken, String gcmToken, String profilePicUri, final LoginListener callback) {
+        Call<LoginPostBody> call = restAPI.LOGIN_POST_BODY_CALL(firstName, lastName, facebookToken, gcmToken, profilePicUri);
         call.enqueue(new Callback<LoginPostBody>() {
             @Override
             public void onResponse(Response<LoginPostBody> response, Retrofit retrofit) {

@@ -102,7 +102,7 @@
 
         <EditText
             android:hint="Task reward"
-            android:inputType="text"
+            android:inputType="number"
             android:id="@+id/task_reward_cost_editText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

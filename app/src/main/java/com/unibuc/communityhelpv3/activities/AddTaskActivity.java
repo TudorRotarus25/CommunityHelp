@@ -267,19 +267,29 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
                 //String task_category = task_category_spinner.getSelectedItem().toString();
                 int task_category = 1;
                 String task_location = task_location_editText.getText().toString();
-                int task_cost = Integer.parseInt(task_reward_cost_editText.getText().toString());
+                String task_cost_string = task_reward_cost_editText.getText().toString();
+                int task_cost = -1;
+                if(!task_cost_string.isEmpty())
+                    task_cost = Integer.parseInt(task_cost_string);
 
                 long duration = toTime.getTimeInMillis() - fromTime.getTimeInMillis();
                 int task_duration = (int)duration;
                 Log.i(TAG, duration+"");
 
-                if(accessToken != null) {
+                if(accessToken != null && !task_title.equals("") && !task_description.equals("") &&
+                        !task_location.equals("") && task_category > 0 && task_cost > 0 && duration > 0) {
                     Log.i(TAG, accessToken.getToken());
                     networkManager.createTask(accessToken.getToken(), task_title, task_description, task_category
                             , task_cost, task_duration, AddTaskActivity.this);
+
+                    Intent intent = new Intent(AddTaskActivity.this, MainActivity.class);
+                    startActivity(intent);
+
                 } else {
+                    Toast.makeText(AddTaskActivity.this, "All fields must be completed!", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "No access token");
                 }
+
             }
         });
     }
