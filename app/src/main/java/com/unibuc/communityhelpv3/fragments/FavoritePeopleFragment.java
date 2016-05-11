@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.adapters.FavoritePeopleAdapter;
-import com.unibuc.communityhelpv3.adapters.MyTasksAdapter;
-import com.unibuc.communityhelpv3.pojos.TaskGetBody;
 import com.unibuc.communityhelpv3.pojos.UserGetBody;
 
 import java.util.ArrayList;

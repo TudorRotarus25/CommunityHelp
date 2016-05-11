@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unibuc.communityhelpv3.R;
-import com.unibuc.communityhelpv3.pojos.TaskGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 
 import java.util.ArrayList;
@@ -68,7 +67,6 @@ public class OtherTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
     public class OtherViewHolder extends RecyclerView.ViewHolder {
-
 
         //other tasks
         TextView other_task_title, other_task_time, other_task_date_added, other_task_user,

@@ -1,5 +1,6 @@
 package com.unibuc.communityhelpv3.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unibuc.communityhelpv3.R;
+import com.unibuc.communityhelpv3.dialogs.PendingUsersDialog;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ import java.util.ArrayList;
  * Created by Serban Theodor on 17-Mar-16.
  */
 public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private final String TAG = getClass().getSimpleName();
 
     Context context;
     String fragment_type;
@@ -43,13 +47,27 @@ public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        TasksGetBody.Task task = tasksArrayList.get(position);
+        final TasksGetBody.Task task = tasksArrayList.get(position);
         ((MyTaskViewHolder) holder).titleTextView.setText(task.getTitle());
         ((MyTaskViewHolder) holder).descriptionTextView.setText(task.getDescription());
         ((MyTaskViewHolder) holder).resourceCostTextView.setText("" + task.getResource_cost());
         ((MyTaskViewHolder) holder).pendingButton.setText("Pending: " + task.getParticipants_number());
         ((MyTaskViewHolder) holder).confirmedButton.setText("Confirmed: " + task.getParticipants_number());
         //Log.d("DEBUG ", "TASK ADAPTER BIND VIEW HOLDER");
+
+        ((MyTaskViewHolder) holder).pendingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PendingUsersDialog pendingDialog = PendingUsersDialog.newInstance(task.getId());
+                pendingDialog.show(((Activity) context).getFragmentManager(), TAG);
+            }
+        });
+        ((MyTaskViewHolder) holder).confirmedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override

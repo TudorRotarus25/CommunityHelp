@@ -64,7 +64,7 @@ public class FavoritePeopleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public FavoriteViewHolder(View view) {
             super(view);
-            fav_first_name = (TextView) itemView.findViewById(R.id.layout_favourite_people_name_textView);
+            fav_first_name = (TextView) itemView.findViewById(R.id.layout_pending_users_name_textView);
 
         }
 

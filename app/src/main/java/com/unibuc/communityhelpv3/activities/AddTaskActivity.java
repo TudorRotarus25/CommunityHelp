@@ -288,6 +288,9 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     public void onCreateTaskSuccess()
     {
         Toast.makeText(this, "Task added!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
