@@ -27,7 +27,7 @@ import retrofit.Retrofit;
  */
 public class NetworkManager {
 
-    private final String TAG = getClass().getName();
+    private final String TAG = getClass().getSimpleName();
 
     private static NetworkManager instance = null;
     private RestAPI restAPI;
