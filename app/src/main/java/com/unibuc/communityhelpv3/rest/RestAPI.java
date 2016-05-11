@@ -20,7 +20,7 @@ public interface RestAPI {
 
     @FormUrlEncoded
     @POST("users/login")
-    Call<LoginPostBody> LOGIN_POST_BODY_CALL(@Field("first_name") String firstName, @Field("last_name") String lastName, @Field("facebook_token") String facebookToken, @Field("profile_pic") String profilePicUri);
+    Call<LoginPostBody> LOGIN_POST_BODY_CALL(@Field("first_name") String firstName, @Field("last_name") String lastName, @Field("facebook_token") String facebookToken, @Field("gcm_token") String gcmToken, @Field("profile_pic") String profilePicUri);
 
     @GET("users/profile/{user_id}")
     Call<UserGetBody> USER_GET_BODY_CALL(@Path("user_id") String id);
