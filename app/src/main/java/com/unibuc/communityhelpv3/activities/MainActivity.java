@@ -141,15 +141,22 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new OtherTasksFragment(), "Tasks");
         adapter.addFragment(new TasksFragment(), "Your tasks");
         viewPager.setAdapter(adapter);
+
+
+
+
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        private final FragmentManager fragmentManager;
+
 
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+            this.fragmentManager = fm;
         }
 
         public void addFragment(Fragment fragment, String title) {
@@ -159,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return mFragmentList.get(position);
+                return mFragmentList.get(position);
         }
 
         @Override
