@@ -4,108 +4,123 @@ package com.unibuc.communityhelpv3.pojos;
  * Created by Serban Theodor on 24-Mar-16.
  */
 public class UserGetBody {
-    String user_id, first_name, last_name, profile_pic, rating_value, rank_value, resource_value, phone_number, email, address, city;
 
-    public String getUser_id() {
-        return user_id;
+    User profile;
+
+    public UserGetBody()
+    {
+        profile = new User();
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public UserGetBody(User profile) {
+        this.profile = profile;
     }
 
-    public void setResource_value(String resource_value) {
-        this.resource_value = resource_value;
+    public User getProfile() {
+        return profile;
     }
 
-    public String getResource_value() {
-        return resource_value;
+    public void setProfile(User profile) {
+        this.profile = profile;
     }
 
-    public void setAddress(String address) {
-        this.address= address;
-    }
+    public class User {
 
-    public String getAddress() {
-        return address;
-    }
+        String id;
+        String first_name;
+        String last_name;
+        String email;
+        String phone_number;
+        String profile_pic;
+        String rating;
+        String rank;
+        int nr_tasks;
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+        public User() {
+        }
 
-    public String getCity() {
-        return city;
-    }
+        public User(String id, String first_name, String last_name, String email, String phone_number, String profile_pic, String rating, String rank, int nr_tasks) {
+            this.id = id;
+            this.first_name = first_name;
+            this.last_name = last_name;
+            this.email = email;
+            this.phone_number = phone_number;
+            this.profile_pic = profile_pic;
+            this.rating = rating;
+            this.rank = rank;
+            this.nr_tasks = nr_tasks;
+        }
 
+        public String getId() {
+            return id;
+        }
 
-    public String getFirst_name() {
-        return first_name;
-    }
+        public void setId(String id) {
+            this.id = id;
+        }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
+        public String getFirst_name() {
+            return first_name;
+        }
 
-    public String getLast_name() {
-        return last_name;
-    }
+        public void setFirst_name(String first_name) {
+            this.first_name = first_name;
+        }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
+        public String getLast_name() {
+            return last_name;
+        }
 
-    public String getProfile_pic() {
-        return profile_pic;
-    }
+        public void setLast_name(String last_name) {
+            this.last_name = last_name;
+        }
 
-    public void setProfile_pic(String profile_pic) {
-        this.profile_pic = profile_pic;
-    }
+        public String getEmail() {
+            return email;
+        }
 
-    public String getRating_value() {
-        return rating_value;
-    }
+        public void setEmail(String email) {
+            this.email = email;
+        }
 
-    public void setRating_value(String rating_value) {
-        this.rating_value = rating_value;
-    }
+        public String getPhone_number() {
+            return phone_number;
+        }
 
-    public String getRank_value() {
-        return rank_value;
-    }
+        public void setPhone_number(String phone_number) {
+            this.phone_number = phone_number;
+        }
 
-    public void setRank_value(String rank_value) {
-        this.rank_value = rank_value;
-    }
+        public String getProfile_pic() {
+            return profile_pic;
+        }
 
-    public String getPhone_number() {
-        return phone_number;
-    }
+        public void setProfile_pic(String profile_pic) {
+            this.profile_pic = profile_pic;
+        }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
-    }
+        public String getRating() {
+            return rating;
+        }
 
-    public String getEmail() {
-        return email;
-    }
+        public void setRating(String rating) {
+            this.rating = rating;
+        }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+        public String getRank() {
+            return rank;
+        }
 
-    public UserGetBody(String user_id, String first_name, String last_name, String profile_pic, String rating_value, String rank_value,
-                       String phone_number, String email, String address, String city) {
-        this.user_id = user_id;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.profile_pic = profile_pic;
-        this.rating_value = rating_value;
-        this.rank_value = rank_value;
-        this.phone_number = phone_number;
-        this.email = email;
-        this.address = address;
-        this.city = city;
+        public void setRank(String rank) {
+            this.rank = rank;
+        }
+
+        public int getNr_tasks() {
+            return nr_tasks;
+        }
+
+        public void setNr_tasks(int nr_tasks) {
+            this.nr_tasks = nr_tasks;
+        }
     }
 }

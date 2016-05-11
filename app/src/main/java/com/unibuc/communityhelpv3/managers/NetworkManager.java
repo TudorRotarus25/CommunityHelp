@@ -9,7 +9,7 @@ import com.unibuc.communityhelpv3.pojos.UserGetBody;
 import com.unibuc.communityhelpv3.pojos.interfaces.CategoriesListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.CreateTaskListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.LoginListener;
-import com.unibuc.communityhelpv3.pojos.interfaces.MyTasksListener;
+import com.unibuc.communityhelpv3.pojos.interfaces.TasksListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.ProfileListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.UpdateProfileListener;
 import com.unibuc.communityhelpv3.rest.RestAPI;
@@ -70,7 +70,7 @@ public class NetworkManager {
             @Override
             public void onResponse(Response<UserGetBody> response, Retrofit retrofit) {
                 if (response != null && response.body() != null && response.code() == 200) {
-                    callback.onProfileSuccess(response.body());
+                    callback.onProfileSuccess(response.body().getProfile());
                 } else {
                     Log.e(TAG, response.code() + ": getProfile call failed");
                     callback.onProfileFailed();
@@ -148,7 +148,7 @@ public class NetworkManager {
         });
     }
 
-    public void getMyTasks(String facebookToken, final MyTasksListener callback) {
+    public void getMyTasks(String facebookToken, final TasksListener callback) {
         Call<TasksGetBody> call = restAPI.MY_TASKS_GET_BODY_CALL(facebookToken);
         call.enqueue(new Callback<TasksGetBody>() {
             @Override
@@ -164,6 +164,27 @@ public class NetworkManager {
             @Override
             public void onFailure(Throwable t) {
                 Log.e(TAG, "getMyTasks failed: " + t.getMessage());
+                callback.onGetMyTasksFailed();
+            }
+        });
+    }
+
+    public void getOtherPeopleTasks(String facebookToken, final TasksListener callback) {
+        Call<TasksGetBody> call = restAPI.OTHER_PEOPLE_TASKS_GET_BODY_CALL(facebookToken);
+        call.enqueue(new Callback<TasksGetBody>() {
+            @Override
+            public void onResponse(Response<TasksGetBody> response, Retrofit retrofit) {
+                if (response != null && response.body() != null && response.code() == 200) {
+                    callback.onGetMyTasksSuccess(response.body());
+                } else {
+                    Log.e(TAG, "getOtherPeopleTasks failed: " + response.code() + " - " + response.message());
+                    callback.onGetMyTasksFailed();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e(TAG, "getOtherPeopleTasks failed: " + t.getMessage());
                 callback.onGetMyTasksFailed();
             }
         });

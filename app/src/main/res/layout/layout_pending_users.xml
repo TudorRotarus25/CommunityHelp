@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/layout_my_task_cardView_margin"
-    android:layout_marginBottom="@dimen/layout_my_task_cardView_margin"
-    android:layout_marginLeft="@dimen/layout_my_task_cardView_margin"
-    android:layout_marginRight="@dimen/layout_my_task_cardView_margin"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -26,42 +23,33 @@
             android:clickable="true"
             android:background="?android:selectableItemBackground">
 
-           <ImageView android:id="@+id/layout_favourite_people_icon"
-               android:src="@drawable/ic_person_black_36dp"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_centerVertical="true"
-               android:layout_alignParentLeft="true"/>
-
-            <Button android:id="@+id/layout_favourite_people_help_me_button"
+            <ImageView android:id="@+id/layout_pending_users_icon"
+                android:src="@drawable/ic_person_black_36dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:drawableTop="@drawable/ic_notifications_black_24dp"
-                android:textSize="12sp"
-                android:text="Help"/>
+                android:layout_alignParentLeft="true"/>
 
             <TextView android:id="@+id/layout_pending_users_name_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/layout_favourite_people_icon"
-                android:layout_toLeftOf="@+id/layout_favourite_people_help_me_button"
+                android:layout_toRightOf="@+id/layout_pending_users_icon"
                 android:layout_marginLeft="@dimen/layout_favourite_people_text_margin_left"
                 android:textSize="17sp"
+                android:maxLines="1"
                 android:text="Person Name"/>
 
-            <TextView android:id="@+id/layout_favourite_people_level_textView"
+            <TextView android:id="@+id/layout_pending_users_level_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layout_pending_users_name_textView" android:textSize="17sp"
-                android:layout_toRightOf="@+id/layout_favourite_people_icon"
-                android:layout_toLeftOf="@+id/layout_favourite_people_help_me_button"
+                android:layout_toRightOf="@+id/layout_pending_users_icon"
                 android:layout_marginLeft="@dimen/layout_favourite_people_text_margin_left"
-                android:text="Level 24"/>
+                android:text="Level 24"
+                android:maxLines="1"/>
 
         </RelativeLayout>
 
-   </android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.adapters.FavoritePeopleAdapter;
-import com.unibuc.communityhelpv3.adapters.MyTasksAdapter;
-import com.unibuc.communityhelpv3.pojos.TaskGetBody;
 import com.unibuc.communityhelpv3.pojos.UserGetBody;
 
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ public class FavoritePeopleFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private FavoritePeopleAdapter mAdapter;
-    private ArrayList<UserGetBody> usersArrayList;
+    private ArrayList<UserGetBody.User> usersArrayList;
     //Context context = this;
 
 
@@ -55,16 +53,13 @@ public class FavoritePeopleFragment extends Fragment {
 
         //////de test
         UserGetBody user;
-
         int i = 0;
-        while(i != 100)
+        while(i != 40)
         {
+            user = new UserGetBody();
+            usersArrayList.add(user.getProfile());
             i++;
-            user = new UserGetBody(" "+i, ""+i, ""+i, ""+i, ""+i, " "+i, " "+i, " "+i, " "+i, " "+i);
-            usersArrayList.add(user);
         }
-
-        ////
 
         mAdapter = new FavoritePeopleAdapter(getContext(), usersArrayList, TAG);
 

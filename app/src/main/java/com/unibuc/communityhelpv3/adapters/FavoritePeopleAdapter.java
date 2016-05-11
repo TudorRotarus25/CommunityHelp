@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unibuc.communityhelpv3.R;
-import com.unibuc.communityhelpv3.pojos.TaskGetBody;
 import com.unibuc.communityhelpv3.pojos.UserGetBody;
 
 import java.util.ArrayList;
@@ -21,15 +20,12 @@ public class FavoritePeopleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     Context context;
     String fragment_type;
-    ArrayList<UserGetBody> userArrayList;
+    ArrayList<UserGetBody.User> userArrayList;
 
-    public FavoritePeopleAdapter(Context mContext, ArrayList<UserGetBody> userArrayList, String fragment_type) {
+    public FavoritePeopleAdapter(Context mContext, ArrayList<UserGetBody.User> userArrayList, String fragment_type) {
         this.context = mContext;
         this.userArrayList = userArrayList;
         this.fragment_type = fragment_type;
-
-        //Log.d("DEBUG ", "ADAPTER CONSTRUCTOR");
-        //Log.d("DEBUG ", getItemCount()+"");
 
     }
 
@@ -43,7 +39,7 @@ public class FavoritePeopleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        UserGetBody user = userArrayList.get(position);
+        UserGetBody.User user = userArrayList.get(position);
         ((FavoriteViewHolder) holder).fav_first_name.setText(user.getFirst_name());
     }
 
@@ -68,7 +64,7 @@ public class FavoritePeopleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public FavoriteViewHolder(View view) {
             super(view);
-            fav_first_name = (TextView) itemView.findViewById(R.id.layout_favourite_people_name_textView);
+            fav_first_name = (TextView) itemView.findViewById(R.id.layout_pending_users_name_textView);
 
         }
 
