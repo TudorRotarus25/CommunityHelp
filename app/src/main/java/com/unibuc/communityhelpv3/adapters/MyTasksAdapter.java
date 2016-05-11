@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unibuc.communityhelpv3.R;
+import com.unibuc.communityhelpv3.dialogs.ConfirmedUsersDialog;
 import com.unibuc.communityhelpv3.dialogs.PendingUsersDialog;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 
@@ -53,7 +54,7 @@ public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ((MyTaskViewHolder) holder).resourceCostTextView.setText("" + task.getResource_cost());
         ((MyTaskViewHolder) holder).pendingButton.setText("Pending: " + task.getParticipants_number());
         ((MyTaskViewHolder) holder).confirmedButton.setText("Confirmed: " + task.getParticipants_number());
-        //Log.d("DEBUG ", "TASK ADAPTER BIND VIEW HOLDER");
+
 
         ((MyTaskViewHolder) holder).pendingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +66,8 @@ public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ((MyTaskViewHolder) holder).confirmedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ConfirmedUsersDialog confirmedDialog = ConfirmedUsersDialog.newInstance(task.getId());
+                confirmedDialog.show(((Activity) context).getFragmentManager(), TAG);
             }
         });
     }
