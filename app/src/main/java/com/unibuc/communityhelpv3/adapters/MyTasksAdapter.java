@@ -1,15 +1,18 @@
 package com.unibuc.communityhelpv3.adapters;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.unibuc.communityhelpv3.R;
+import com.unibuc.communityhelpv3.adapters.interfaces.OnMyTaskClickedInterface;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 
 import java.util.ArrayList;
@@ -18,15 +21,17 @@ import java.util.ArrayList;
  * Created by Serban Theodor on 17-Mar-16.
  */
 public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+    private OnMyTaskClickedInterface onMyTaskClickedInterface;
     Context context;
     String fragment_type;
     ArrayList<TasksGetBody.Task> tasksArrayList;
 
-    public MyTasksAdapter(Context mContext, ArrayList<TasksGetBody.Task> tasksArrayList, String fragment_type) {
+    public MyTasksAdapter(Context mContext, ArrayList<TasksGetBody.Task> tasksArrayList, String fragment_type,
+                          OnMyTaskClickedInterface onMyTaskClickedInterface) {
         this.context = mContext;
         this.tasksArrayList = tasksArrayList;
         this.fragment_type = fragment_type;
+        this.onMyTaskClickedInterface = onMyTaskClickedInterface;
 
         //Log.d("DEBUG ", "ADAPTER CONSTRUCTOR");
         //Log.d("DEBUG ", getItemCount()+"");
@@ -43,13 +48,20 @@ public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        TasksGetBody.Task task = tasksArrayList.get(position);
+        final TasksGetBody.Task task = tasksArrayList.get(position);
         ((MyTaskViewHolder) holder).titleTextView.setText(task.getTitle());
         ((MyTaskViewHolder) holder).descriptionTextView.setText(task.getDescription());
         ((MyTaskViewHolder) holder).resourceCostTextView.setText("" + task.getResource_cost());
         ((MyTaskViewHolder) holder).pendingButton.setText("Pending: " + task.getParticipants_number());
         ((MyTaskViewHolder) holder).confirmedButton.setText("Confirmed: " + task.getParticipants_number());
         //Log.d("DEBUG ", "TASK ADAPTER BIND VIEW HOLDER");
+
+        ((MyTaskViewHolder) holder).mainContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onMyTaskClickedInterface.onMyTaskClicked(task);
+            }
+        });
     }
 
     @Override
@@ -72,9 +84,11 @@ public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ImageView iconImageView;
         Button pendingButton;
         Button confirmedButton;
+        LinearLayout mainContent;
 
         public MyTaskViewHolder(View view) {
             super(view);
+            mainContent = (LinearLayout) itemView.findViewById(R.id.layout_my_task_mainContent);
             titleTextView = (TextView) itemView.findViewById(R.id.layout_my_task_title_textView);
             descriptionTextView = (TextView) itemView.findViewById(R.id.layout_my_task_description_textView);
             resourceCostTextView = (TextView) itemView.findViewById(R.id.layout_my_task_stars_textView);
