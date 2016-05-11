@@ -19,6 +19,7 @@
         card_view:cardCornerRadius="4dp">
 
         <LinearLayout
+            android:id="@+id/layout_my_task_mainContent"
             android:paddingTop="@dimen/layout_my_task_cardView_vertical_padding"
             android:paddingBottom="@dimen/layout_my_task_cardView_vertical_padding"
             android:layout_width="match_parent"
