@@ -72,17 +72,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        checkAuth();
+        if (checkAuth()) {
+            checkIfLocationExists();
+        }
         initLayout();
     }
 
-    private void checkAuth() {
+    private void checkIfLocationExists() {
 
-        SharedPreferences prefs = getSharedPreferences(MyApplication.SHARED_PREFERENCES_TAG, MODE_PRIVATE);
-        if(!prefs.contains("token")) {
+        if(!((MyApplication) getApplication()).getPrefManager().isLocationInserted()) {
+            Intent intent = new Intent(this, PlacePickersActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+    }
+
+    private boolean checkAuth() {
+        if(((MyApplication) getApplication()).getPrefManager().getFacebookToken() == null) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
+            finish();
+            return false;
+        } else {
+            Log.e(TAG, "null Token");
         }
+        return true;
     }
 
     private void initLayout() {

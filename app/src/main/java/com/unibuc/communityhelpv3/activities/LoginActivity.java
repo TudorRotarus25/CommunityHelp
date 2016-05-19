@@ -2,7 +2,6 @@ package com.unibuc.communityhelpv3.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -26,11 +25,6 @@ import com.unibuc.communityhelpv3.pojos.LoginPostBody;
 import com.unibuc.communityhelpv3.pojos.interfaces.LoginListener;
 import com.unibuc.communityhelpv3.services.RegistrationIntentService;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
-
 public class LoginActivity extends AppCompatActivity implements LoginListener{
 
     private final static String TAG = "LoginActivity";
@@ -46,6 +40,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
         if (checkPlayServices()) {
@@ -75,8 +70,6 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
         progressDialog.setTitle("Loading");
         progressDialog.setMessage("Please wait while loading");
 
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         facebookLoginButton = (LoginButton) findViewById(R.id.activity_login_with_facebook_button);
         facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -111,19 +104,12 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
     }
 
     private void writeTokenToSharedPreferences(LoginResult loginResult) {
-        SharedPreferences.Editor editor = getSharedPreferences(MyApplication.SHARED_PREFERENCES_TAG, MODE_PRIVATE).edit();
 
         Profile profile = Profile.getCurrentProfile();
 
         Log.i(TAG, profile.getFirstName() + "  " + profile.getLastName() + "  " + profile.getProfilePictureUri(20, 20));
 
-        editor.putString("token", loginResult.getAccessToken().getToken().toString());
-        editor.putString("first_name", profile.getFirstName());
-        editor.putString("last_name", profile.getLastName());
-        Log.i(TAG, profile.getProfilePictureUri(100, 100).toString());
-        editor.putString("profile_pic", profile.getProfilePictureUri(100, 100).toString());
-
-        editor.commit();
+        ((MyApplication) getApplication()).getPrefManager().writeProfile(loginResult.getAccessToken().getToken().toString(), profile.getFirstName(), profile.getLastName(), profile.getProfilePictureUri(100, 100).toString());
     }
 
     @Override
@@ -140,7 +126,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
 
         progressDialog.dismiss();
 
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, PlacePickersActivity.class);
         startActivity(intent);
     }
 

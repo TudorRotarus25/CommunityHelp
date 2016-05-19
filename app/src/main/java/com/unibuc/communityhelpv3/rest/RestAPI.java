@@ -51,4 +51,8 @@ public interface RestAPI {
     @FormUrlEncoded
     @POST("tasks/get_participants_confirmed")
     Call<TasksGetParticipantsBody> TASKS_GET_PARTICIPANTS_CONFIRMED_BODY_CALL(@Field("facebook_token") String facebookToken, @Field("task_id") int taskId);
+
+    @FormUrlEncoded
+    @POST("locations/add")
+    Call<Void> LOCATIONS_ADD_BODY_CALL(@Field("facebook_token") String facebookToken, @Field("name") String name, @Field("address") String address, @Field("lat") Double lat, @Field("lng") Double lng);
 }
