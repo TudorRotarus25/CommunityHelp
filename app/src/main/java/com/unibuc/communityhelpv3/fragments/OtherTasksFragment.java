@@ -1,7 +1,9 @@
 package com.unibuc.communityhelpv3.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,18 +16,21 @@ import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.unibuc.communityhelpv3.R;
+import com.unibuc.communityhelpv3.activities.TaskDetailsActivity;
+import com.unibuc.communityhelpv3.adapters.MyTasksAdapter;
 import com.unibuc.communityhelpv3.adapters.OtherTasksAdapter;
+import com.unibuc.communityhelpv3.adapters.interfaces.OnOtherTaskClickedInterface;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.interfaces.TasksListener;
+import com.unibuc.communityhelpv3.utils.AppUtils;
 
 import java.util.ArrayList;
 
 /**
  * Created by Serban Theodor on 17-Mar-16.
  */
-public class OtherTasksFragment extends Fragment implements TasksListener {
-
+public class OtherTasksFragment extends Fragment implements TasksListener, OnOtherTaskClickedInterface {
     private final String TAG = "OtherTasksFragment";
 
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -38,7 +43,6 @@ public class OtherTasksFragment extends Fragment implements TasksListener {
     public OtherTasksFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +69,7 @@ public class OtherTasksFragment extends Fragment implements TasksListener {
         networkManager = NetworkManager.getInstance();
         tasksArrayList = new ArrayList<>();
 
-        mAdapter = new OtherTasksAdapter(getContext(), tasksArrayList, TAG);
+        mAdapter = new OtherTasksAdapter(getContext(), tasksArrayList, TAG, OtherTasksFragment.this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -105,5 +109,14 @@ public class OtherTasksFragment extends Fragment implements TasksListener {
         swipeRefreshLayout.setRefreshing(false);
 
         Toast.makeText(getActivity(), "Failed to fetch tasks", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onOtherTaskClicked(TasksGetBody.Task task) {
+        Log.e("!", "task clicked");
+        AppUtils.storeCurrentTask(task, getContext());
+
+        Intent i = new Intent(getContext(), TaskDetailsActivity.class);
+        startActivity(i);
     }
 }
