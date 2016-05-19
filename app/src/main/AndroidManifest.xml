@@ -3,17 +3,16 @@
     package="com.unibuc.communityhelpv3">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
-    <permission android:name="com.unibuc.communityhelpv3.CommunityHelp.permission.C2D_MESSAGE"
+    <permission
+        android:name="com.unibuc.communityhelpv3.CommunityHelp.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="com.unibuc.communityhelpv3.CommunityHelp.permission.C2D_MESSAGE" />
-
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
-
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".MyApplication"
@@ -29,36 +28,36 @@
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.example.gcm" />
             </intent-filter>
         </receiver>
 
-        <service android:name="com.unibuc.communityhelpv3.services.RegistrationIntentService"
+        <service
+            android:name=".services.RegistrationIntentService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID"/>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
-
         <service
-            android:name="com.unibuc.communityhelpv3.services.MyGcmListenerService"
-            android:exported="false" >
+            android:name=".services.MyGcmListenerService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.message_from_server" />
             </intent-filter>
         </service>
         <service
-            android:name="com.unibuc.communityhelpv3.services.MyInstanceIDListenerService"
+            android:name=".services.MyInstanceIDListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
-
 
         <activity
             android:name="com.facebook.FacebookActivity"
@@ -67,8 +66,8 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -77,19 +76,18 @@
         </activity>
         <activity
             android:name=".activities.LoginActivity"
-     android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
-        <activity
-            android:name=".activities.ProfileActivity">
-
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.ProfileActivity" />
         <activity
             android:name=".activities.AddTaskActivity"
-            android:label="@string/task_add_title">
-        </activity>
+            android:label="@string/task_add_title" />
+        <activity android:name=".activities.TaskDetailsActivity" />
+        <activity android:name=".activities.MyTaskDetailsActivity" />
+        <activity android:name=".activities.PlacePickersActivity"></activity>
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/gcm_server_api_key" />
 
     </application>
 

@@ -10,8 +10,6 @@ import com.unibuc.communityhelpv3.rest.RestClient;
  */
 public class MyApplication extends Application {
 
-    public static final String SHARED_PREFERENCES_TAG = "SHARED_PREFERENCES_TAG";
-
     private RestClient restClient;
 
     private static MyApplication mInstance;

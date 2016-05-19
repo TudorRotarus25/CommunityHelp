@@ -24,7 +24,7 @@
     <dimen name="layout_my_task_cardView_vertical_padding">10dp</dimen>
     <dimen name="layout_my_task_title_margin_right">5dp</dimen>
     <dimen name="task_details_title_size">25sp</dimen>
-    <dimen name="task_details_image_size">150dp</dimen>
+    <dimen name="task_details_image_size">120dp</dimen>
     <dimen name="task_details_image_padding">10dp</dimen>
     <dimen name="task_details_description_tag_text_size">20dp</dimen>
     <dimen name="task_details_tags_text_size">18sp</dimen>
@@ -37,4 +37,5 @@
     <dimen name="layout_favourite_people_text_margin_left">10dp</dimen>
     <dimen name="text_extra_big">25sp</dimen>
     <dimen name="content_pending_users_title_margin_vertical">20dp</dimen>
+    <dimen name="text_big">20sp</dimen>
 </resources>

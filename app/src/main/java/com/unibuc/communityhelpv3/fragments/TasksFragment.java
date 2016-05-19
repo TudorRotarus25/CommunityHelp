@@ -1,6 +1,7 @@
 package com.unibuc.communityhelpv3.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,15 +16,19 @@ import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.unibuc.communityhelpv3.R;
+import com.unibuc.communityhelpv3.activities.MyTaskDetailsActivity;
+import com.unibuc.communityhelpv3.activities.TaskDetailsActivity;
 import com.unibuc.communityhelpv3.adapters.MyTasksAdapter;
+import com.unibuc.communityhelpv3.adapters.interfaces.OnMyTaskClickedInterface;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.interfaces.TasksListener;
+import com.unibuc.communityhelpv3.utils.AppUtils;
 
 import java.util.ArrayList;
 
 
-public class TasksFragment extends Fragment implements TasksListener {
+public class TasksFragment extends Fragment implements TasksListener, OnMyTaskClickedInterface {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -66,7 +71,7 @@ public class TasksFragment extends Fragment implements TasksListener {
 
         tasksArrayList = new ArrayList<>();
 
-        mAdapter = new MyTasksAdapter(getContext(), tasksArrayList, TAG);
+        mAdapter = new MyTasksAdapter(getContext(), tasksArrayList, TAG, TasksFragment.this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -109,5 +114,13 @@ public class TasksFragment extends Fragment implements TasksListener {
 
         swipeRefreshLayout.setRefreshing(false);
         Toast.makeText(getActivity(), "Something went wrong. Please retry", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onMyTaskClicked(TasksGetBody.Task task) {
+        AppUtils.storeCurrentTask(task, getContext());
+
+        Intent i = new Intent(getContext(), MyTaskDetailsActivity.class);
+        startActivity(i);
     }
 }

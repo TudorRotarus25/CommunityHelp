@@ -7,6 +7,7 @@ import com.unibuc.communityhelpv3.pojos.LoginPostBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetParticipantsBody;
 import com.unibuc.communityhelpv3.pojos.UserGetBody;
+import com.unibuc.communityhelpv3.pojos.interfaces.AddLocationListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.CategoriesListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.CreateTaskListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.LoginListener;
@@ -230,6 +231,28 @@ public class NetworkManager {
             public void onFailure(Throwable t) {
                 Log.e(TAG, "getTaskPendingUsers failed: " + t.getMessage());
                 callback.onGetTasksParticipantsFailed();
+            }
+        });
+    }
+
+    //// TODO: 19.05.2016 Specify location type in call
+    public void addLocation(String facebookToken, String name, String address, Double lat, Double lng, final int type, final AddLocationListener callback) {
+        Call<Void> call = restAPI.LOCATIONS_ADD_BODY_CALL(facebookToken, name, address, lat, lng);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Response<Void> response, Retrofit retrofit) {
+                if(response != null && response.code() == 200) {
+                    callback.onAddLocationSuccess(type);
+                } else {
+                    Log.e(TAG, "addLocation failed: " + response.code());
+                    callback.onAddLocationFailed();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e(TAG, "addLocation failed: " + t.getMessage());
+                callback.onAddLocationFailed();
             }
         });
     }

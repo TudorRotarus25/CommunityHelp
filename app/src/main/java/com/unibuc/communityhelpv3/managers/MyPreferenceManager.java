@@ -15,12 +15,17 @@ public class MyPreferenceManager {
     SharedPreferences.Editor editor;
 
     // Sharedpref file name
-    private static final String PREF_NAME = "android_hotel";
+    private static final String PREF_NAME = "community_help";
 
     // All Shared Preferences Keys
     private static final String KEY_GCM_TOKEN = "token";
     private static final String KEY_NOTIFICATIONS = "notifications";
     private static final String KEY_NOTFICATION_UNIQUE_ID = "notification_unique_id";
+    private static final String KEY_LOCATION = "location";
+    private static final String KEY_FACEBOOK_TOKEN = "facebook_token";
+    private static final String KEY_FIRST_NAME = "first_name";
+    private static final String KEY_LAST_NAME = "last_name";
+    private static final String KEY_PROFILE_PIC = "profile_pic";
 
     Context _context;
 
@@ -82,5 +87,26 @@ public class MyPreferenceManager {
     {
         editor.remove(KEY_NOTIFICATIONS);
         editor.commit();
+    }
+
+    public void addLocationInserted() {
+        editor.putBoolean(KEY_LOCATION, true);
+        editor.commit();
+    }
+
+    public boolean isLocationInserted() {
+        return pref.getBoolean(KEY_LOCATION, false);
+    }
+
+    public void writeProfile(String token, String firstName, String lastName, String profilePicUri) {
+        editor.putString(KEY_FACEBOOK_TOKEN, token);
+        editor.putString(KEY_FIRST_NAME, firstName);
+        editor.putString(KEY_LAST_NAME, lastName);
+        editor.putString(KEY_PROFILE_PIC, profilePicUri);
+        editor.commit();
+    }
+
+    public String getFacebookToken() {
+        return pref.getString(KEY_FACEBOOK_TOKEN, null);
     }
 }

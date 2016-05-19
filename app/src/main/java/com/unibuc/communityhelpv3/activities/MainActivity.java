@@ -72,17 +72,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        checkAuth();
+        if (checkAuth()) {
+            checkIfLocationExists();
+        }
         initLayout();
     }
 
-    private void checkAuth() {
+    private void checkIfLocationExists() {
 
-        SharedPreferences prefs = getSharedPreferences(MyApplication.SHARED_PREFERENCES_TAG, MODE_PRIVATE);
-        if(!prefs.contains("token")) {
+        if(!((MyApplication) getApplication()).getPrefManager().isLocationInserted()) {
+            Intent intent = new Intent(this, PlacePickersActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+    }
+
+    private boolean checkAuth() {
+        if(((MyApplication) getApplication()).getPrefManager().getFacebookToken() == null) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
+            finish();
+            return false;
+        } else {
+            Log.e(TAG, "null Token");
         }
+        return true;
     }
 
     private void initLayout() {
@@ -154,15 +169,22 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new OtherTasksFragment(), "Tasks");
         adapter.addFragment(new TasksFragment(), "Your tasks");
         viewPager.setAdapter(adapter);
+
+
+
+
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        private final FragmentManager fragmentManager;
+
 
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+            this.fragmentManager = fm;
         }
 
         public void addFragment(Fragment fragment, String title) {
@@ -172,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return mFragmentList.get(position);
+                return mFragmentList.get(position);
         }
 
         @Override
