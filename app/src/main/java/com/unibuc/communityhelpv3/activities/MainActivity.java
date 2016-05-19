@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -158,6 +159,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
             return true;
+        }
+        else if(id == R.id.notification_button_action_bar) {
+            Log.d(TAG, "notification button clicked");
+            startActivity(new Intent(MainActivity.this, NotificationsActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

@@ -26,6 +26,7 @@ public class MyPreferenceManager {
     private static final String KEY_FIRST_NAME = "first_name";
     private static final String KEY_LAST_NAME = "last_name";
     private static final String KEY_PROFILE_PIC = "profile_pic";
+    private static final String KEY_CURRENT_USER_ID= "current_user_id";
 
     Context _context;
 
@@ -34,6 +35,17 @@ public class MyPreferenceManager {
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, 0);
         editor = pref.edit();
+    }
+
+    public void add_current_user_id(String current_user_id)
+    {
+        editor.putString(KEY_CURRENT_USER_ID, current_user_id);
+        editor.commit();
+    }
+
+    public String get_current_user_id()
+    {
+        return pref.getString(KEY_CURRENT_USER_ID, null);
     }
 
     public void add_gcm_token(String token){

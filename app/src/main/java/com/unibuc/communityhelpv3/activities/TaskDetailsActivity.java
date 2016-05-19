@@ -12,6 +12,8 @@ public class TaskDetailsActivity extends AppCompatActivity {
     private static final String TAG = "TaskDetailsActivity";
     private TasksGetBody.Task currentTask;
 
+    private String taskId;
+
     private TextView tvTitle;
     private TextView tvDate;
     private TextView tvTime;
@@ -26,6 +28,11 @@ public class TaskDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_task_details);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            taskId = extras.getString("task_id");
+        }
 
         init();
     }

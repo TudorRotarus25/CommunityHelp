@@ -36,7 +36,6 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     private TextView task_start_time_editText;
     private TextView task_end_time_editText;
 
-
     private TextView task_start_date_textView;
     private TextView task_end_date_textView ;
 

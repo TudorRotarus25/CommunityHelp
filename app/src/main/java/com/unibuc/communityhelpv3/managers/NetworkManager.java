@@ -4,12 +4,14 @@ import android.util.Log;
 
 import com.unibuc.communityhelpv3.pojos.CategoriesGetBody;
 import com.unibuc.communityhelpv3.pojos.LoginPostBody;
+import com.unibuc.communityhelpv3.pojos.NotificationsGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetParticipantsBody;
 import com.unibuc.communityhelpv3.pojos.UserGetBody;
 import com.unibuc.communityhelpv3.pojos.interfaces.AddLocationListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.CategoriesListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.CreateTaskListener;
+import com.unibuc.communityhelpv3.pojos.interfaces.GetNotificationsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.LoginListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.TasksListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.ProfileListener;
@@ -22,6 +24,7 @@ import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
+import retrofit.http.GET;
 
 /**
  * Created by Tudor on 31.03.2016.
@@ -231,6 +234,27 @@ public class NetworkManager {
             public void onFailure(Throwable t) {
                 Log.e(TAG, "getTaskPendingUsers failed: " + t.getMessage());
                 callback.onGetTasksParticipantsFailed();
+            }
+        });
+    }
+
+    public void getMyNotifications(String facebookToken, String userId, final GetNotificationsListener callback) {
+        Call<NotificationsGetBody> call = restAPI.GET_NOTIFICATIONS_BODY_CALL(facebookToken, userId);
+        call.enqueue(new Callback<NotificationsGetBody>() {
+            @Override
+            public void onResponse(Response<NotificationsGetBody> response, Retrofit retrofit) {
+                if(response != null && response.body() != null && response.code() == 200) {
+                    callback.onGetMyNotificationsSuccess(response.body());
+                } else {
+                    Log.e(TAG, response.code() + ": getMyTasks failed");
+                    callback.onGetMyNotificationFailed();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e(TAG, "getMyTasks failed: " + t.getMessage());
+                callback.onGetMyNotificationFailed();
             }
         });
     }
