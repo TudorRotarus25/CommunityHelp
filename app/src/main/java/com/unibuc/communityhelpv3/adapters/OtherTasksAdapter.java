@@ -1,7 +1,6 @@
 package com.unibuc.communityhelpv3.adapters;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.adapters.interfaces.OnOtherTaskClickedInterface;
-import com.unibuc.communityhelpv3.pojos.TaskGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 
 import java.util.ArrayList;
