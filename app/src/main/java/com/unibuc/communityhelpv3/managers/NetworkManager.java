@@ -5,12 +5,14 @@ import android.util.Log;
 import com.unibuc.communityhelpv3.pojos.CategoriesGetBody;
 import com.unibuc.communityhelpv3.pojos.LoginPostBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
+import com.unibuc.communityhelpv3.pojos.TasksGetParticipantsBody;
 import com.unibuc.communityhelpv3.pojos.UserGetBody;
 import com.unibuc.communityhelpv3.pojos.interfaces.CategoriesListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.CreateTaskListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.LoginListener;
-import com.unibuc.communityhelpv3.pojos.interfaces.MyTasksListener;
+import com.unibuc.communityhelpv3.pojos.interfaces.TasksListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.ProfileListener;
+import com.unibuc.communityhelpv3.pojos.interfaces.TasksParticipantsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.UpdateProfileListener;
 import com.unibuc.communityhelpv3.rest.RestAPI;
 import com.unibuc.communityhelpv3.rest.RestClient;
@@ -25,7 +27,7 @@ import retrofit.Retrofit;
  */
 public class NetworkManager {
 
-    private final String TAG = getClass().getName();
+    private final String TAG = getClass().getSimpleName();
 
     private static NetworkManager instance = null;
     private RestAPI restAPI;
@@ -42,8 +44,8 @@ public class NetworkManager {
         return instance;
     }
 
-    public void login(String firstName, String lastName, String facebookToken, String profilePicUri, final LoginListener callback) {
-        Call<LoginPostBody> call = restAPI.LOGIN_POST_BODY_CALL(firstName, lastName, facebookToken, profilePicUri);
+    public void login(String firstName, String lastName, String facebookToken, String gcmToken, String profilePicUri, final LoginListener callback) {
+        Call<LoginPostBody> call = restAPI.LOGIN_POST_BODY_CALL(firstName, lastName, facebookToken, gcmToken, profilePicUri);
         call.enqueue(new Callback<LoginPostBody>() {
             @Override
             public void onResponse(Response<LoginPostBody> response, Retrofit retrofit) {
@@ -70,7 +72,7 @@ public class NetworkManager {
             @Override
             public void onResponse(Response<UserGetBody> response, Retrofit retrofit) {
                 if (response != null && response.body() != null && response.code() == 200) {
-                    callback.onProfileSuccess(response.body());
+                    callback.onProfileSuccess(response.body().getProfile());
                 } else {
                     Log.e(TAG, response.code() + ": getProfile call failed");
                     callback.onProfileFailed();
@@ -148,7 +150,7 @@ public class NetworkManager {
         });
     }
 
-    public void getMyTasks(String facebookToken, final MyTasksListener callback) {
+    public void getMyTasks(String facebookToken, final TasksListener callback) {
         Call<TasksGetBody> call = restAPI.MY_TASKS_GET_BODY_CALL(facebookToken);
         call.enqueue(new Callback<TasksGetBody>() {
             @Override
@@ -165,6 +167,69 @@ public class NetworkManager {
             public void onFailure(Throwable t) {
                 Log.e(TAG, "getMyTasks failed: " + t.getMessage());
                 callback.onGetMyTasksFailed();
+            }
+        });
+    }
+
+    public void getOtherPeopleTasks(String facebookToken, final TasksListener callback) {
+        Call<TasksGetBody> call = restAPI.OTHER_PEOPLE_TASKS_GET_BODY_CALL(facebookToken);
+        call.enqueue(new Callback<TasksGetBody>() {
+            @Override
+            public void onResponse(Response<TasksGetBody> response, Retrofit retrofit) {
+                if (response != null && response.body() != null && response.code() == 200) {
+                    callback.onGetMyTasksSuccess(response.body());
+                } else {
+                    Log.e(TAG, "getOtherPeopleTasks failed: " + response.code() + " - " + response.message());
+                    callback.onGetMyTasksFailed();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e(TAG, "getOtherPeopleTasks failed: " + t.getMessage());
+                callback.onGetMyTasksFailed();
+            }
+        });
+    }
+
+    public void getTaskPendingUsers(String facebookToken, int taskId, final TasksParticipantsListener callback) {
+        Call<TasksGetParticipantsBody> call = restAPI.TASKS_GET_PARTICIPANTS_PENDING_BODY_CALL(facebookToken, taskId);
+        call.enqueue(new Callback<TasksGetParticipantsBody>() {
+            @Override
+            public void onResponse(Response<TasksGetParticipantsBody> response, Retrofit retrofit) {
+                if (response != null && response.body() != null && response.code() == 200) {
+                    callback.onGetTasksParticipantsSuccess(response.body());
+                } else {
+                    Log.e(TAG, "getTaskPendingUsers failed: " + response.code() + " - " + response.message());
+                    callback.onGetTasksParticipantsFailed();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e(TAG, "getTaskPendingUsers failed: " + t.getMessage());
+                callback.onGetTasksParticipantsFailed();
+            }
+        });
+    }
+
+    public void getTaskConfirmedUsers(String facebookToken, int taskId, final TasksParticipantsListener callback) {
+        Call<TasksGetParticipantsBody> call = restAPI.TASKS_GET_PARTICIPANTS_CONFIRMED_BODY_CALL(facebookToken, taskId);
+        call.enqueue(new Callback<TasksGetParticipantsBody>() {
+            @Override
+            public void onResponse(Response<TasksGetParticipantsBody> response, Retrofit retrofit) {
+                if (response != null && response.body() != null && response.code() == 200) {
+                    callback.onGetTasksParticipantsSuccess(response.body());
+                } else {
+                    Log.e(TAG, "getTaskPendingUsers failed: " + response.code() + " - " + response.message());
+                    callback.onGetTasksParticipantsFailed();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e(TAG, "getTaskPendingUsers failed: " + t.getMessage());
+                callback.onGetTasksParticipantsFailed();
             }
         });
     }

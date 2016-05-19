@@ -34,4 +34,7 @@
     <dimen name="layout_other_tasks_inner_margin_vertical">5dp</dimen>
     <dimen name="layout_my_tasks_inner_margin_horizontal">5dp</dimen>
     <dimen name="layout_other_tasks_right_container_text_size">17sp</dimen>
+    <dimen name="layout_favourite_people_text_margin_left">10dp</dimen>
+    <dimen name="text_extra_big">25sp</dimen>
+    <dimen name="content_pending_users_title_margin_vertical">20dp</dimen>
 </resources>

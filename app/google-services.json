@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "114265793430",
+    "project_id": "communityhelp-d5efd"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114265793430:android:cb04605904626d7e",
+        "android_client_info": {
+          "package_name": "com.unibuc.communityhelpv3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOP10iHJcPGqzM-GfUlUMzoFHmNp53HCg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

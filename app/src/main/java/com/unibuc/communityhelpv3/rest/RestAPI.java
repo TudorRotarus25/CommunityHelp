@@ -3,6 +3,7 @@ package com.unibuc.communityhelpv3.rest;
 import com.unibuc.communityhelpv3.pojos.CategoriesGetBody;
 import com.unibuc.communityhelpv3.pojos.LoginPostBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
+import com.unibuc.communityhelpv3.pojos.TasksGetParticipantsBody;
 import com.unibuc.communityhelpv3.pojos.UserGetBody;
 
 import retrofit.Call;
@@ -19,7 +20,7 @@ public interface RestAPI {
 
     @FormUrlEncoded
     @POST("users/login")
-    Call<LoginPostBody> LOGIN_POST_BODY_CALL(@Field("first_name") String firstName, @Field("last_name") String lastName, @Field("facebook_token") String facebookToken, @Field("profile_pic") String profilePicUri);
+    Call<LoginPostBody> LOGIN_POST_BODY_CALL(@Field("first_name") String firstName, @Field("last_name") String lastName, @Field("facebook_token") String facebookToken, @Field("gcm_token") String gcmToken, @Field("profile_pic") String profilePicUri);
 
     @GET("users/profile/{user_id}")
     Call<UserGetBody> USER_GET_BODY_CALL(@Path("user_id") String id);
@@ -38,4 +39,16 @@ public interface RestAPI {
     @FormUrlEncoded
     @POST("tasks/my_tasks")
     Call<TasksGetBody> MY_TASKS_GET_BODY_CALL(@Field("facebook_token") String facebookToken);
+
+    @FormUrlEncoded
+    @POST("tasks/other_peoples_tasks")
+    Call<TasksGetBody> OTHER_PEOPLE_TASKS_GET_BODY_CALL(@Field("facebook_token") String facebookToken);
+
+    @FormUrlEncoded
+    @POST("tasks/get_participants_pending")
+    Call<TasksGetParticipantsBody> TASKS_GET_PARTICIPANTS_PENDING_BODY_CALL(@Field("facebook_token") String facebookToken, @Field("task_id") int taskId);
+
+    @FormUrlEncoded
+    @POST("tasks/get_participants_confirmed")
+    Call<TasksGetParticipantsBody> TASKS_GET_PARTICIPANTS_CONFIRMED_BODY_CALL(@Field("facebook_token") String facebookToken, @Field("task_id") int taskId);
 }

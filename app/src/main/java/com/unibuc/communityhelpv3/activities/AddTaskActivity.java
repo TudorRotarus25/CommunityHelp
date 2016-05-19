@@ -18,9 +18,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.unibuc.communityhelpv3.R;
-
-import org.w3c.dom.Text;
+import com.unibuc.communityhelpv3.managers.NetworkManager;
+import com.unibuc.communityhelpv3.pojos.interfaces.CreateTaskListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,10 +31,14 @@ import java.util.Locale;
 /**
  * Created by Serban Theodor on 01-Apr-16.
  */
-public class AddTaskActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AddTaskActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, CreateTaskListener {
 
     private TextView task_start_time_editText;
     private TextView task_end_time_editText;
+
+    private TextView task_start_date_textView;
+    private TextView task_end_date_textView ;
+
 
     private TextView task_start_date_textView;
     private TextView task_end_date_textView ;
@@ -44,6 +49,7 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     private TextView task_title_editText;
     private TextView task_description_editText;
     private TextView task_reward_cost_editText;
+    private TextView task_location_editText;
 
     private Button task_post_button;
 
@@ -57,9 +63,13 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     private SimpleDateFormat dateFormatter;
     private SimpleDateFormat timeFormatter;
     private Calendar fromTime;
+    private Calendar toTime;
 
     ArrayList<String> categoryList;
     ArrayAdapter<String> spinnerAdapter;
+
+    private NetworkManager networkManager;
+    AccessToken accessToken;
 
     private static final String TAG = "AddTaskActivity";
 
@@ -68,10 +78,14 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
+        networkManager = NetworkManager.getInstance();
+
         categoryList = new ArrayList<>();
         categoryList.add("Select a category");
         spinnerAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, categoryList);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        accessToken = AccessToken.getCurrentAccessToken();
 
         initLayout();
     }
@@ -81,13 +95,13 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         // On selecting a spinner item
         if (position > 0) {
             String item = parent.getItemAtPosition(position).toString();
-            Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+            Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
 
         }
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {
-        //
+
     }
 
     @Override
@@ -129,6 +143,8 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
 
         task_title_editText = (TextView) findViewById(R.id.task_title_editText);
         task_description_editText = (TextView) findViewById(R.id.task_description_editText);
+        task_location_editText = (TextView) findViewById(R.id.task_location_editText);
+        task_reward_cost_editText = (TextView) findViewById(R.id.task_reward_cost_editText);
 
         task_post_button = (Button) findViewById(R.id.task_post_button);
 
@@ -252,9 +268,52 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         task_post_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //cacat la tava
+
+                String task_title = task_title_editText.getText().toString();
+                String task_description = task_description_editText.getText().toString();
+                //String task_category = task_category_spinner.getSelectedItem().toString();
+                int task_category = 1;
+                String task_location = task_location_editText.getText().toString();
+                String task_cost_string = task_reward_cost_editText.getText().toString();
+                int task_cost = -1;
+                if(!task_cost_string.isEmpty())
+                    task_cost = Integer.parseInt(task_cost_string);
+
+                long duration = toTime.getTimeInMillis() - fromTime.getTimeInMillis();
+                int task_duration = (int)duration;
+                Log.i(TAG, duration+"");
+
+                if(accessToken != null && !task_title.equals("") && !task_description.equals("") &&
+                        !task_location.equals("") && task_category > 0 && task_cost > 0 && duration > 0) {
+                    Log.i(TAG, accessToken.getToken());
+                    networkManager.createTask(accessToken.getToken(), task_title, task_description, task_category
+                            , task_cost, task_duration, AddTaskActivity.this);
+
+                    Intent intent = new Intent(AddTaskActivity.this, MainActivity.class);
+                    startActivity(intent);
+
+                } else {
+                    Toast.makeText(AddTaskActivity.this, "All fields must be completed!", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "No access token");
+                }
+
             }
         });
+    }
+
+    @Override
+    public void onCreateTaskSuccess()
+    {
+        Toast.makeText(this, "Task added!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onCreateTaskFailed()
+    {
+        Toast.makeText(this, "Failed to fetch tasks!", Toast.LENGTH_SHORT).show();
     }
 
 

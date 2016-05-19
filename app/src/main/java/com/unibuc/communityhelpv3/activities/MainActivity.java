@@ -8,19 +8,23 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 import com.unibuc.communityhelpv3.MyApplication;
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.fragments.FavoritePeopleFragment;
-import com.unibuc.communityhelpv3.fragments.MyTasksFragment;
+import com.unibuc.communityhelpv3.fragments.TasksFragment;
 import com.unibuc.communityhelpv3.fragments.OtherTasksFragment;
 
 import java.util.ArrayList;
@@ -107,6 +111,16 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        /*
+        MenuItem item = menu.findItem(R.id.notification_button_action_bar);
+        MenuItemCompat.setActionView(item, R.layout.layout_action_bar);
+        RelativeLayout notifCount = (RelativeLayout) MenuItemCompat.getActionView(item);
+
+        TextView tv = (TextView) notifCount.findViewById(R.id.actionbar_notification_badge);
+        tv.setText("12");
+        */
+
         return true;
     }
 
@@ -124,6 +138,17 @@ public class MainActivity extends AppCompatActivity {
         else if (id == R.id.user_profile){
             startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         }
+        else if (id == R.id.action_logout) {
+            LoginManager.getInstance().logOut();
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        else if(id == R.id.notification_button_action_bar) {
+            Log.d(TAG, "notification button clicked");
+            startActivity(new Intent(MainActivity.this, NotificationsActivity.class));
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -132,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new FavoritePeopleFragment(), "Friends");
         adapter.addFragment(new OtherTasksFragment(), "Tasks");
-        adapter.addFragment(new MyTasksFragment(), "Your tasks");
+        adapter.addFragment(new TasksFragment(), "Your tasks");
         viewPager.setAdapter(adapter);
     }
 

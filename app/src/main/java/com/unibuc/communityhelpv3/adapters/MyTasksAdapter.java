@@ -1,15 +1,19 @@
 package com.unibuc.communityhelpv3.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unibuc.communityhelpv3.R;
-import com.unibuc.communityhelpv3.pojos.TaskGetBody;
+import com.unibuc.communityhelpv3.dialogs.ConfirmedUsersDialog;
+import com.unibuc.communityhelpv3.dialogs.PendingUsersDialog;
+import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 
 import java.util.ArrayList;
 
@@ -18,11 +22,13 @@ import java.util.ArrayList;
  */
 public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private final String TAG = getClass().getSimpleName();
+
     Context context;
     String fragment_type;
-    ArrayList<TaskGetBody> tasksArrayList;
+    ArrayList<TasksGetBody.Task> tasksArrayList;
 
-    public MyTasksAdapter(Context mContext, ArrayList<TaskGetBody> tasksArrayList, String fragment_type) {
+    public MyTasksAdapter(Context mContext, ArrayList<TasksGetBody.Task> tasksArrayList, String fragment_type) {
         this.context = mContext;
         this.tasksArrayList = tasksArrayList;
         this.fragment_type = fragment_type;
@@ -42,11 +48,28 @@ public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        TaskGetBody task = tasksArrayList.get(position);
-        ((MyTaskViewHolder) holder).my_task_title.setText(task.getTask_title());
-        ((MyTaskViewHolder) holder).my_task_description.setText(task.getTask_desription());
-        ((MyTaskViewHolder) holder).my_task_reward_info.setText(task.getTask_reward_info());
-        //Log.d("DEBUG ", "TASK ADAPTER BIND VIEW HOLDER");
+        final TasksGetBody.Task task = tasksArrayList.get(position);
+        ((MyTaskViewHolder) holder).titleTextView.setText(task.getTitle());
+        ((MyTaskViewHolder) holder).descriptionTextView.setText(task.getDescription());
+        ((MyTaskViewHolder) holder).resourceCostTextView.setText("" + task.getResource_cost());
+        ((MyTaskViewHolder) holder).pendingButton.setText("Pending: " + task.getParticipants_number());
+        ((MyTaskViewHolder) holder).confirmedButton.setText("Confirmed: " + task.getParticipants_number());
+
+
+        ((MyTaskViewHolder) holder).pendingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PendingUsersDialog pendingDialog = PendingUsersDialog.newInstance(task.getId());
+                pendingDialog.show(((Activity) context).getFragmentManager(), TAG);
+            }
+        });
+        ((MyTaskViewHolder) holder).confirmedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConfirmedUsersDialog confirmedDialog = ConfirmedUsersDialog.newInstance(task.getId());
+                confirmedDialog.show(((Activity) context).getFragmentManager(), TAG);
+            }
+        });
     }
 
     @Override
@@ -63,26 +86,30 @@ public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public class MyTaskViewHolder extends RecyclerView.ViewHolder {
 
         //my tasks
-        TextView my_task_title, my_task_time, my_task_date_added, my_task_user,
-                my_no_users, my_task_reward_info, my_task_description;
-        ImageView my_task_image_url;
-
-        //other tasks
-        TextView other_task_title, other_task_time, other_task_date_added, other_task_user,
-                other_no_users, other_task_reward_info;
-        ImageView other_task_image_url;
-
-        //favorite people
-        TextView fav_first_name, fav_last_name, fav_rating, fav_rank, fav_phone_number, fav_email;
-        ImageView fav_profile_pic;
+        TextView titleTextView;
+        TextView descriptionTextView;
+        TextView resourceCostTextView;
+        ImageView iconImageView;
+        Button pendingButton;
+        Button confirmedButton;
 
         public MyTaskViewHolder(View view) {
             super(view);
-            my_task_title = (TextView) itemView.findViewById(R.id.layout_my_task_title_textView);
-            my_task_description = (TextView) itemView.findViewById(R.id.layout_my_task_description_textView);
-            my_task_reward_info = (TextView) itemView.findViewById(R.id.layout_my_task_stars_textView);
-            my_task_image_url = (ImageView) itemView.findViewById(R.id.layout_my_task_icon_imageView);
+            titleTextView = (TextView) itemView.findViewById(R.id.layout_my_task_title_textView);
+            descriptionTextView = (TextView) itemView.findViewById(R.id.layout_my_task_description_textView);
+            resourceCostTextView = (TextView) itemView.findViewById(R.id.layout_my_task_stars_textView);
+            iconImageView = (ImageView) itemView.findViewById(R.id.layout_my_task_icon_imageView);
+            pendingButton = (Button) itemView.findViewById(R.id.layout_my_task_pending_button);
+            confirmedButton = (Button) itemView.findViewById(R.id.layout_my_task_confirmed_button);
         }
 
+    }
+
+    public ArrayList<TasksGetBody.Task> getTasksArrayList() {
+        return tasksArrayList;
+    }
+
+    public void setTasksArrayList(ArrayList<TasksGetBody.Task> tasksArrayList) {
+        this.tasksArrayList = tasksArrayList;
     }
 }
