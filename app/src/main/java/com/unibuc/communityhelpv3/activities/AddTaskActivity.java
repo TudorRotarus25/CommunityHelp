@@ -36,16 +36,8 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     private TextView task_start_time_editText;
     private TextView task_end_time_editText;
 
-
     private TextView task_start_date_textView;
     private TextView task_end_date_textView ;
-
-
-    private TextView task_start_date_textView;
-    private TextView task_end_date_textView ;
-
-    private Calendar toTime;
-
 
     private TextView task_title_editText;
     private TextView task_description_editText;

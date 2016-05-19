@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.adapters.interfaces.OnOtherTaskClickedInterface;
-import com.unibuc.communityhelpv3.pojos.TaskGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 
 import java.util.ArrayList;

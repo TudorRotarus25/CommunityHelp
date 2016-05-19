@@ -90,6 +90,12 @@
             android:label="@string/task_add_title">
         </activity>
 
+
+        <activity android:name=".activities.TaskDetailsActivity" />
+
+        <activity android:name=".activities.MyTaskDetailsActivity">
+        </activity>
+
         <activity
             android:name=".activities.NotificationsActivity"
             android:label="@string/task_notifications">

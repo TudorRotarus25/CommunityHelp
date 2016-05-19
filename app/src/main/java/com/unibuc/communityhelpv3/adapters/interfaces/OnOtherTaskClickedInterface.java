@@ -1,6 +1,5 @@
 package com.unibuc.communityhelpv3.adapters.interfaces;
 
-import com.unibuc.communityhelpv3.pojos.TaskGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 
 /**
