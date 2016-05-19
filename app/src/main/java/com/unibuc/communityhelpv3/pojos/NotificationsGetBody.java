@@ -13,16 +13,16 @@ public class NotificationsGetBody {
 
     }
 
-    public NotificationsGetBody(ArrayList<Notification> tasks) {
-        this.notifications = tasks;
+    public NotificationsGetBody(ArrayList<Notification> notifications) {
+        this.notifications = notifications;
     }
 
     public ArrayList<Notification> getNotifications() {
         return notifications;
     }
 
-    public void setNotifications(ArrayList<Notification> tasks) {
-        this.notifications = tasks;
+    public void setNotifications(ArrayList<Notification> notifications) {
+        this.notifications = notifications;
     }
 
     public class Notification{

@@ -21,6 +21,7 @@ public class MyPreferenceManager {
     private static final String KEY_GCM_TOKEN = "token";
     private static final String KEY_NOTIFICATIONS = "notifications";
     private static final String KEY_NOTFICATION_UNIQUE_ID = "notification_unique_id";
+    private static final String KEY_CURRENT_USER_ID= "current_user_id";
 
     Context _context;
 
@@ -29,6 +30,17 @@ public class MyPreferenceManager {
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, 0);
         editor = pref.edit();
+    }
+
+    public void add_current_user_id(String current_user_id)
+    {
+        editor.putString(KEY_CURRENT_USER_ID, current_user_id);
+        editor.commit();
+    }
+
+    public String get_current_user_id()
+    {
+        return pref.getString(KEY_CURRENT_USER_ID, null);
     }
 
     public void add_gcm_token(String token){

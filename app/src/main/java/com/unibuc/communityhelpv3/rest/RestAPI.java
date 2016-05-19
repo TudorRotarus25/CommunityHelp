@@ -2,6 +2,7 @@ package com.unibuc.communityhelpv3.rest;
 
 import com.unibuc.communityhelpv3.pojos.CategoriesGetBody;
 import com.unibuc.communityhelpv3.pojos.LoginPostBody;
+import com.unibuc.communityhelpv3.pojos.NotificationsGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetParticipantsBody;
 import com.unibuc.communityhelpv3.pojos.UserGetBody;
@@ -51,4 +52,8 @@ public interface RestAPI {
     @FormUrlEncoded
     @POST("tasks/get_participants_confirmed")
     Call<TasksGetParticipantsBody> TASKS_GET_PARTICIPANTS_CONFIRMED_BODY_CALL(@Field("facebook_token") String facebookToken, @Field("task_id") int taskId);
+
+    @FormUrlEncoded
+    @POST("web service nu exista")
+    Call<NotificationsGetBody> GET_NOTIFICATIONS_BODY_CALL(@Field("facebook_token") String facebookToken, @Field("user_id") String userId);
 }

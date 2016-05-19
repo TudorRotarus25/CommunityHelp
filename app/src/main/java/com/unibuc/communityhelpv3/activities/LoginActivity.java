@@ -136,7 +136,11 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
     @Override
     public void onLoginSuccess(LoginPostBody response) {
         String userId = response.getUser_id();
+        Log.d(TAG, userId);
         localUserManager.storeLocalUserId(userId);
+
+        MyPreferenceManager preferenceManager = MyApplication.getInstance().getPrefManager();
+        preferenceManager.add_current_user_id(userId);
 
         progressDialog.dismiss();
 

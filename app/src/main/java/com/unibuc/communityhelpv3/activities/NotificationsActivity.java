@@ -19,11 +19,17 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
+import com.unibuc.communityhelpv3.MyApplication;
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.adapters.NotificationsListAdapter;
+import com.unibuc.communityhelpv3.managers.MyPreferenceManager;
+import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.NotificationsGetBody;
+import com.unibuc.communityhelpv3.pojos.interfaces.GetNotificationsListener;
 import com.unibuc.communityhelpv3.utils.NotificationUtils;
 
 import java.util.ArrayList;
@@ -31,18 +37,29 @@ import java.util.ArrayList;
 /**
  * Created by Serban Theodor on 13-May-16.
  */
-public class NotificationsActivity extends AppCompatActivity {
+public class NotificationsActivity extends AppCompatActivity implements GetNotificationsListener{
 
     private static final String TAG = "NotificationActivity";
     private NotificationsListAdapter notificationsListAdapter;
     private ArrayList<NotificationsGetBody.Notification> notifications;
     private ListView listView;
     private TextView textview;
+    private String userId;
+
+    private NetworkManager networkManager;
+
+    AccessToken accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications_layout);
+
+        accessToken = AccessToken.getCurrentAccessToken();
+        networkManager = NetworkManager.getInstance();
+        MyPreferenceManager preferenceManager = MyApplication.getInstance().getPrefManager();
+        userId = preferenceManager.get_current_user_id();
+
         notifications = new ArrayList<>();
         initLayout();
         setList(null);
@@ -94,7 +111,20 @@ public class NotificationsActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, position+"");
+
+
+                if(notifications.get(position).getNotification_type().equals("my_task_notification")) {
+                    Intent intent = new Intent(NotificationsActivity.this, MyTaskDetailsActivity.class);
+                    intent.putExtra("task_id", notifications.get(position).getTask_id());
+                    startActivity(intent);
+                }
+                else
+                if(notifications.get(position).getNotification_type().equals("other_task_notification")){
+                    Intent intent = new Intent(NotificationsActivity.this, TaskDetailsActivity.class);
+                    intent.putExtra("task_id", notifications.get(position).getTask_id());
+                    startActivity(intent);
+                }
+                    Log.d(TAG, position+"");
             }
         });
 
@@ -150,6 +180,14 @@ public class NotificationsActivity extends AppCompatActivity {
 
     public void setList(Intent intent)
     {
+        if(accessToken != null) {
+            Log.i(TAG, accessToken.getToken());
+            //networkManager.getMyNotifications(accessToken.getToken(), userId, NotificationsActivity.this);
+        } else {
+            Toast.makeText(NotificationsActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "No access token");
+        }
+
         if(notifications.size() == 0)
         {
             textview.setText("No notifications");
@@ -180,5 +218,15 @@ public class NotificationsActivity extends AppCompatActivity {
         listView.setAdapter(notificationsListAdapter);
         notificationsListAdapter.notifyDataSetChanged();
         Log.d(TAG, "setList reached");
+    }
+
+    @Override
+    public void onGetMyNotificationsSuccess(NotificationsGetBody response) {
+        notifications = response.getNotifications();
+    }
+
+    @Override
+    public void onGetMyNotificationFailed() {
+        Toast.makeText(this, "Failed to fetch notifications!", Toast.LENGTH_SHORT).show();
     }
 }
