@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.unibuc.communityhelpv3">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -83,6 +85,7 @@
             android:name=".activities.AddTaskActivity"
             android:label="@string/task_add_title" />
         <activity android:name=".activities.TaskDetailsActivity" />
+        <activity android:name=".activities.OtherProfileActivity" />
         <activity android:name=".activities.MyTaskDetailsActivity"></activity>
     </application>
 

@@ -1,9 +1,10 @@
 package com.unibuc.communityhelpv3.fragments;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,9 +16,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.activities.TaskDetailsActivity;
-import com.unibuc.communityhelpv3.adapters.MyTasksAdapter;
 import com.unibuc.communityhelpv3.adapters.OtherTasksAdapter;
 import com.unibuc.communityhelpv3.adapters.interfaces.OnOtherTaskClickedInterface;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
@@ -30,7 +32,8 @@ import java.util.ArrayList;
 /**
  * Created by Serban Theodor on 17-Mar-16.
  */
-public class OtherTasksFragment extends Fragment implements TasksListener, OnOtherTaskClickedInterface {
+public class OtherTasksFragment extends Fragment implements TasksListener, OnOtherTaskClickedInterface,
+        GoogleApiClient.ConnectionCallbacks{
     private final String TAG = "OtherTasksFragment";
 
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -38,17 +41,38 @@ public class OtherTasksFragment extends Fragment implements TasksListener, OnOth
     private OtherTasksAdapter mAdapter;
     private ArrayList<TasksGetBody.Task> tasksArrayList;
 
+    private GoogleApiClient googleApiClient;
+    public Location lastLocation;
+
     private NetworkManager networkManager;
 
     public OtherTasksFragment() {
-        // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        googleApiClient = new GoogleApiClient.Builder(getContext())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .build();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (lastLocation == null) {
+            googleApiClient.connect();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        googleApiClient.disconnect();
+
+        super.onStop();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,7 +101,7 @@ public class OtherTasksFragment extends Fragment implements TasksListener, OnOth
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        populateLayout();
+        //populateLayout();
 
         return v;
     }
@@ -118,5 +142,23 @@ public class OtherTasksFragment extends Fragment implements TasksListener, OnOth
 
         Intent i = new Intent(getContext(), TaskDetailsActivity.class);
         startActivity(i);
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        if (lastLocation != null) {
+            googleApiClient.disconnect();
+
+        }
+        if (lastLocation != null)
+            Log.e(TAG, lastLocation.getLatitude() +  " " + lastLocation.getLongitude());
+
+        populateLayout();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
     }
 }

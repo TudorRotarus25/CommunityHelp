@@ -1,14 +1,18 @@
 package com.unibuc.communityhelpv3.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.unibuc.communityhelpv3.R;
+import com.unibuc.communityhelpv3.activities.OtherProfileActivity;
 import com.unibuc.communityhelpv3.pojos.UserGetBody;
 
 import java.util.ArrayList;
@@ -21,12 +25,10 @@ public class FavoritePeopleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     Context context;
     String fragment_type;
     ArrayList<UserGetBody.User> userArrayList;
-
     public FavoritePeopleAdapter(Context mContext, ArrayList<UserGetBody.User> userArrayList, String fragment_type) {
         this.context = mContext;
         this.userArrayList = userArrayList;
         this.fragment_type = fragment_type;
-
     }
 
 
@@ -41,7 +43,16 @@ public class FavoritePeopleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         UserGetBody.User user = userArrayList.get(position);
         ((FavoriteViewHolder) holder).fav_first_name.setText(user.getFirst_name());
+        ((FavoriteViewHolder) holder).mainContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, OtherProfileActivity.class);
+                ((Activity) context).startActivity(i);
+            }
+        });
     }
+
+
 
     @Override
     public long getItemId(int position) {
@@ -61,10 +72,12 @@ public class FavoritePeopleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView fav_first_name, fav_last_name, other_task_date_added, other_task_user,
                 other_no_users, other_task_reward_info;
         ImageView other_task_image_url;
+        RelativeLayout mainContent;
 
         public FavoriteViewHolder(View view) {
             super(view);
             fav_first_name = (TextView) itemView.findViewById(R.id.layout_pending_users_name_textView);
+            mainContent = (RelativeLayout) itemView.findViewById(R.id.layout_favourite_people_mainContent);
 
         }
 
