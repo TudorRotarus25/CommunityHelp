@@ -2,15 +2,21 @@ package com.unibuc.communityhelpv3.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
 import com.unibuc.communityhelpv3.R;
+import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.utils.AppUtils;
 
 public class TaskDetailsActivity extends AppCompatActivity {
     private static final String TAG = "TaskDetailsActivity";
     private TasksGetBody.Task currentTask;
+    private AccessToken accessToken;
+    private NetworkManager networkManager;
 
     private String taskId;
 
@@ -23,6 +29,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
     private TextView tvRating;
     private TextView tvReward;
     private TextView tvPhone;
+    private Button acceptTaskButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +45,9 @@ public class TaskDetailsActivity extends AppCompatActivity {
     }
 
     private void init(){
+        accessToken = AccessToken.getCurrentAccessToken();
         currentTask = AppUtils.getCurrentTask(getApplicationContext());
+        networkManager = NetworkManager.getInstance();
 
         tvTitle = (TextView) findViewById(R.id.layout_task_details_title_textView);
         tvDate = (TextView) findViewById(R.id.task_details_tvDate);
@@ -49,6 +58,15 @@ public class TaskDetailsActivity extends AppCompatActivity {
         tvRating = (TextView) findViewById(R.id.layout_task_details_rating_textView);
         tvReward = (TextView) findViewById(R.id.layout_task_details_reward_textView);
         tvPhone = (TextView) findViewById(R.id.layout_task_details_phone_textView);
+        acceptTaskButton = (Button) findViewById(R.id.layout_task_details_accept_task_button);
+
+        acceptTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                networkManager.acceptTask(accessToken.getToken(), currentTask.getId());
+                finish();
+            }
+        });
 
         tvTitle.setText(currentTask.getTitle());
 //        tvDate.setText(currentTask.getCreated_at());
