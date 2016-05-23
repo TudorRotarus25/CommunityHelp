@@ -2,6 +2,7 @@ package com.unibuc.communityhelpv3.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -9,16 +10,19 @@ import android.widget.TextView;
 import com.facebook.AccessToken;
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
+import com.unibuc.communityhelpv3.pojos.TaskDetails;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
+import com.unibuc.communityhelpv3.pojos.interfaces.TaskListener;
 import com.unibuc.communityhelpv3.utils.AppUtils;
 
-public class TaskDetailsActivity extends AppCompatActivity {
+public class TaskDetailsActivity extends AppCompatActivity implements TaskListener {
     private static final String TAG = "TaskDetailsActivity";
     private TasksGetBody.Task currentTask;
     private AccessToken accessToken;
     private NetworkManager networkManager;
 
     private String taskId;
+    private int currentTaskId;
 
     private TextView tvTitle;
     private TextView tvDate;
@@ -47,6 +51,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
     private void init(){
         accessToken = AccessToken.getCurrentAccessToken();
         currentTask = AppUtils.getCurrentTask(getApplicationContext());
+        currentTaskId = getIntent().getIntExtra("task_id", 0);
         networkManager = NetworkManager.getInstance();
 
         tvTitle = (TextView) findViewById(R.id.layout_task_details_title_textView);
@@ -69,16 +74,30 @@ public class TaskDetailsActivity extends AppCompatActivity {
         });
 
         tvTitle.setText(currentTask.getTitle());
-//        tvDate.setText(currentTask.getCreated_at());
-//        tvEstimatedTime.setText(currentTask.getTime_cost());
-//        tvDetails.setText(currentTask.getDescription());
-//        tvUserame.setText(currentTask.getOwner_id());
-//        tvReward.setText(currentTask.getResource_cost());
+
+        Log.e("!!! id", currentTask.getId()+" " + currentTaskId);
+        networkManager.getTask(19, TaskDetailsActivity.this);
+
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    public void onGetTaskSucces(TaskDetails task) {
+        Log.e("!!!", "SUCCESS");
+        tvDate.setText(task.getCreated_at());
+        tvEstimatedTime.setText(task.getTime_cost());
+        tvDetails.setText(task.getDescription());
+        tvUserame.setText(task.getOwner_id());
+        tvReward.setText(task.getResource_cost());
+    }
+
+    @Override
+    public void onGetTaskFailed() {
+
     }
 }

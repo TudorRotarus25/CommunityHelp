@@ -101,7 +101,7 @@ public class OtherTasksFragment extends Fragment implements TasksListener, OnOth
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        //populateLayout();
+        populateLayout();
 
         return v;
     }
@@ -141,6 +141,7 @@ public class OtherTasksFragment extends Fragment implements TasksListener, OnOth
         AppUtils.storeCurrentTask(task, getContext());
 
         Intent i = new Intent(getContext(), TaskDetailsActivity.class);
+        i.putExtra("task_id", task.getId());
         startActivity(i);
     }
 

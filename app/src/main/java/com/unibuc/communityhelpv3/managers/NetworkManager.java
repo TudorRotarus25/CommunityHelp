@@ -2,9 +2,11 @@ package com.unibuc.communityhelpv3.managers;
 
 import android.util.Log;
 
+import com.google.android.gms.gcm.Task;
 import com.unibuc.communityhelpv3.pojos.CategoriesGetBody;
 import com.unibuc.communityhelpv3.pojos.LoginPostBody;
 import com.unibuc.communityhelpv3.pojos.NotificationsGetBody;
+import com.unibuc.communityhelpv3.pojos.TaskDetails;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetParticipantsBody;
 import com.unibuc.communityhelpv3.pojos.UserGetBody;
@@ -13,6 +15,7 @@ import com.unibuc.communityhelpv3.pojos.interfaces.CategoriesListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.CreateTaskListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.GetNotificationsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.LoginListener;
+import com.unibuc.communityhelpv3.pojos.interfaces.TaskListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.TasksListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.ProfileListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.TasksParticipantsListener;
@@ -192,6 +195,27 @@ public class NetworkManager {
             public void onFailure(Throwable t) {
                 Log.e(TAG, "getOtherPeopleTasks failed: " + t.getMessage());
                 callback.onGetMyTasksFailed();
+            }
+        });
+    }
+
+    public void getTask(int taskId, final TaskListener callback) {
+        Call<TaskDetails> call = restAPI.GET_TASK(taskId);
+        call.enqueue(new Callback<TaskDetails>() {
+            @Override
+            public void onResponse(Response<TaskDetails> response, Retrofit retrofit) {
+                if (response != null && response.body() != null && response.code() == 200) {
+                    callback.onGetTaskSucces(response.body());
+                } else {
+                    Log.e(TAG, "getTask failed: " + response.code() + " - " + response.message());
+                    callback.onGetTaskFailed();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e(TAG, "getTask failed: " + t.getMessage());
+                callback.onGetTaskFailed();
             }
         });
     }

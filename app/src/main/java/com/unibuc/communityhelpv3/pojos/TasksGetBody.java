@@ -1,5 +1,6 @@
 package com.unibuc.communityhelpv3.pojos;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -21,7 +22,7 @@ public class TasksGetBody {
         this.tasks = tasks;
     }
 
-    public class Task {
+    public class Task implements Serializable {
 
         int id;
         String title;

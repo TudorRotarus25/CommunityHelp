@@ -3,6 +3,7 @@ package com.unibuc.communityhelpv3.rest;
 import com.unibuc.communityhelpv3.pojos.CategoriesGetBody;
 import com.unibuc.communityhelpv3.pojos.LoginPostBody;
 import com.unibuc.communityhelpv3.pojos.NotificationsGetBody;
+import com.unibuc.communityhelpv3.pojos.TaskDetails;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetParticipantsBody;
 import com.unibuc.communityhelpv3.pojos.UserGetBody;
@@ -44,6 +45,10 @@ public interface RestAPI {
     @FormUrlEncoded
     @POST("tasks/other_peoples_tasks")
     Call<TasksGetBody> OTHER_PEOPLE_TASKS_GET_BODY_CALL(@Field("facebook_token") String facebookToken);
+
+    @FormUrlEncoded
+    @POST("tasks/get_task")
+    Call<TaskDetails> GET_TASK(@Field("task_id") int taskId);
 
     @FormUrlEncoded
     @POST("tasks/get_participants_pending")
