@@ -111,7 +111,7 @@ public class OtherTasksFragment extends Fragment implements TasksListener, OnOth
 
         if(accessToken != null) {
             Log.i(TAG, accessToken.getToken());
-            networkManager.getOtherPeopleTasks(accessToken.getToken(), this);
+//            networkManager.getOtherPeopleTasks(accessToken.getToken(), this);
         } else {
             Log.e(TAG, "No access token");
         }
