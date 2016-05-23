@@ -1,8 +1,10 @@
 package com.unibuc.communityhelpv3.managers;
 
+import android.location.LocationListener;
 import android.util.Log;
 
 import com.unibuc.communityhelpv3.pojos.CategoriesGetBody;
+import com.unibuc.communityhelpv3.pojos.LocationsGetBody;
 import com.unibuc.communityhelpv3.pojos.LoginPostBody;
 import com.unibuc.communityhelpv3.pojos.NotificationsGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
@@ -12,6 +14,7 @@ import com.unibuc.communityhelpv3.pojos.interfaces.AddLocationListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.CategoriesListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.CreateTaskListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.GetNotificationsListener;
+import com.unibuc.communityhelpv3.pojos.interfaces.LocationsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.LoginListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.RateParticipantsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.TasksListener;
@@ -42,7 +45,7 @@ public class NetworkManager {
     }
 
     public static NetworkManager getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new NetworkManager();
             instance.restAPI = (new RestClient()).getApiService();
         }
@@ -55,7 +58,7 @@ public class NetworkManager {
         call.enqueue(new Callback<LoginPostBody>() {
             @Override
             public void onResponse(Response<LoginPostBody> response, Retrofit retrofit) {
-                if(response != null && response.body() != null && response.code() == 200) {
+                if (response != null && response.body() != null && response.code() == 200) {
                     Log.i(TAG, "Login successful");
                     callback.onLoginSuccess(response.body());
                 } else {
@@ -98,7 +101,7 @@ public class NetworkManager {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Response<Void> response, Retrofit retrofit) {
-                if(response != null && response.code() == 200) {
+                if (response != null && response.code() == 200) {
                     callback.onUpdateProfileSuccess();
                 } else {
                     Log.e(TAG, response.code() + ": updateProfile failed");
@@ -135,12 +138,34 @@ public class NetworkManager {
         });
     }
 
-    public void createTask(String facebookToken, String title, String description, int categoryId, int resourceCost, int timeCost, final CreateTaskListener callback) {
-        Call<Void> call = restAPI.TASK_POST_CREATE_CALL(facebookToken, title, description, categoryId, resourceCost, timeCost);
+    public void getLocations(String facebookToken, final LocationsListener callback) {
+        Call<LocationsGetBody> call = restAPI.LOCATIONS_GET_BODY_CALL(facebookToken);
+        call.enqueue(new Callback<LocationsGetBody>() {
+            @Override
+            public void onResponse(Response<LocationsGetBody> response, Retrofit retrofit) {
+                if(response != null && response.body() != null && response.code() == 200) {
+                    callback.onGetLocationsSuccess(response.body());
+                } else {
+                    Log.e(TAG, "getLocation failed: " + (response != null ? response.code() : 0));
+                    callback.onGetLocationsFailed();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e(TAG, "getLocation failed: " + t.getMessage());
+                callback.onGetLocationsFailed();
+            }
+        });
+
+    }
+
+    public void createTask(String facebookToken, String title, String description, int categoryId, int resourceCost, int timeCost, int locationId, final CreateTaskListener callback) {
+        Call<Void> call = restAPI.TASK_POST_CREATE_CALL(facebookToken, title, description, categoryId, resourceCost, timeCost, locationId);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Response<Void> response, Retrofit retrofit) {
-                if(response != null && response.code() == 200) {
+                if (response != null && response.code() == 200) {
                     callback.onCreateTaskSuccess();
                 } else {
                     Log.e(TAG, response.code() + ": createTask Failed");
@@ -161,7 +186,7 @@ public class NetworkManager {
         call.enqueue(new Callback<TasksGetBody>() {
             @Override
             public void onResponse(Response<TasksGetBody> response, Retrofit retrofit) {
-                if(response != null && response.body() != null && response.code() == 200) {
+                if (response != null && response.body() != null && response.code() == 200) {
                     callback.onGetMyTasksSuccess(response.body());
                 } else {
                     Log.e(TAG, response.code() + ": getMyTasks failed");
@@ -177,8 +202,8 @@ public class NetworkManager {
         });
     }
 
-    public void getOtherPeopleTasks(String facebookToken, final TasksListener callback) {
-        Call<TasksGetBody> call = restAPI.OTHER_PEOPLE_TASKS_GET_BODY_CALL(facebookToken);
+    public void getOtherPeopleTasks(String facebookToken, Double lat, Double lng, final TasksListener callback) {
+        Call<TasksGetBody> call = restAPI.OTHER_PEOPLE_TASKS_GET_BODY_CALL(facebookToken, lat, lng);
         call.enqueue(new Callback<TasksGetBody>() {
             @Override
             public void onResponse(Response<TasksGetBody> response, Retrofit retrofit) {
@@ -245,7 +270,7 @@ public class NetworkManager {
         call.enqueue(new Callback<NotificationsGetBody>() {
             @Override
             public void onResponse(Response<NotificationsGetBody> response, Retrofit retrofit) {
-                if(response != null && response.body() != null && response.code() == 200) {
+                if (response != null && response.body() != null && response.code() == 200) {
                     callback.onGetMyNotificationsSuccess(response.body());
                 } else {
                     Log.e(TAG, response.code() + ": getMyTasks failed");
@@ -267,7 +292,7 @@ public class NetworkManager {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Response<Void> response, Retrofit retrofit) {
-                if(response != null && response.code() == 200) {
+                if (response != null && response.code() == 200) {
                     callback.onAddLocationSuccess(type);
                 } else {
                     Log.e(TAG, "addLocation failed: " + response.code());
@@ -288,7 +313,7 @@ public class NetworkManager {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Response<Void> response, Retrofit retrofit) {
-                if(response != null && response.code() == 200) {
+                if (response != null && response.code() == 200) {
                     callback.onRateParticipantsSuccess();
                 } else {
                     Log.e(TAG, "rateParticipants failed: " + response.code());
