@@ -38,6 +38,7 @@ public class PendingUsersDialog extends DialogFragment implements TasksParticipa
     private static final int BUNDLE_TASK_DEFAULT_VALUE = -1;
 
     private int taskId;
+    private int firstTimeGettingUsers = 1;
 
     ArrayList<UserGetBody.User> pendingUsers;
 
@@ -48,6 +49,14 @@ public class PendingUsersDialog extends DialogFragment implements TasksParticipa
     private NetworkManager networkManager;
 
     public PendingUsersDialog() {
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (firstTimeGettingUsers == 0)
+            getUsers();
+        firstTimeGettingUsers = 0;
     }
 
     @Nullable
