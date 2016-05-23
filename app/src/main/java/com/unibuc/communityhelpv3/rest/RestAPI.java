@@ -6,8 +6,10 @@ import com.unibuc.communityhelpv3.pojos.NotificationsGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetParticipantsBody;
 import com.unibuc.communityhelpv3.pojos.UserGetBody;
+import com.unibuc.communityhelpv3.pojos.requests.RatingPostBody;
 
 import retrofit.Call;
+import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
@@ -60,4 +62,7 @@ public interface RestAPI {
     @FormUrlEncoded
     @POST("locations/add")
     Call<Void> LOCATIONS_ADD_BODY_CALL(@Field("facebook_token") String facebookToken, @Field("name") String name, @Field("address") String address, @Field("lat") Double lat, @Field("lng") Double lng);
+
+    @POST("tasks/rate_participants")
+    Call<Void> RATE_PARTICIPANTS_BODY_CALL(@Body RatingPostBody ratingPostBody);
 }

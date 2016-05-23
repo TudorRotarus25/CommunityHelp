@@ -13,10 +13,12 @@ import com.unibuc.communityhelpv3.pojos.interfaces.CategoriesListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.CreateTaskListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.GetNotificationsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.LoginListener;
+import com.unibuc.communityhelpv3.pojos.interfaces.RateParticipantsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.TasksListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.ProfileListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.TasksParticipantsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.UpdateProfileListener;
+import com.unibuc.communityhelpv3.pojos.requests.RatingPostBody;
 import com.unibuc.communityhelpv3.rest.RestAPI;
 import com.unibuc.communityhelpv3.rest.RestClient;
 
@@ -259,7 +261,7 @@ public class NetworkManager {
         });
     }
 
-    //// TODO: 19.05.2016 Specify location type in call
+    // TODO: 19.05.2016 Specify location type in call
     public void addLocation(String facebookToken, String name, String address, Double lat, Double lng, final int type, final AddLocationListener callback) {
         Call<Void> call = restAPI.LOCATIONS_ADD_BODY_CALL(facebookToken, name, address, lat, lng);
         call.enqueue(new Callback<Void>() {
@@ -277,6 +279,27 @@ public class NetworkManager {
             public void onFailure(Throwable t) {
                 Log.e(TAG, "addLocation failed: " + t.getMessage());
                 callback.onAddLocationFailed();
+            }
+        });
+    }
+
+    public void rateParticipants(RatingPostBody body, final RateParticipantsListener callback) {
+        Call<Void> call = restAPI.RATE_PARTICIPANTS_BODY_CALL(body);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Response<Void> response, Retrofit retrofit) {
+                if(response != null && response.code() == 200) {
+                    callback.onRateParticipantsSuccess();
+                } else {
+                    Log.e(TAG, "rateParticipants failed: " + response.code());
+                    callback.onRateParticipantsFailed();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e(TAG, "rateParticipants failed: " + t.getMessage());
+                callback.onRateParticipantsFailed();
             }
         });
     }

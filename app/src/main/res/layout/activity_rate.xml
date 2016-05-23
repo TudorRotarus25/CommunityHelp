@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:gravity="center"
+    tools:context="com.unibuc.communityhelpv3.activities.RateActivity">
+
+    <TextView
+        android:id="@+id/activity_rate_title_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_extra_big"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:text="Rate participants"/>
+
+    <RelativeLayout
+        android:id="@+id/activity_rate_username_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/activity_rate_title_textView">
+
+        <TextView
+            android:id="@+id/activity_rate_fixed_name_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_big"
+            android:textStyle="bold"
+            android:text="Username: "/>
+
+        <TextView
+            android:id="@+id/activity_rate_name_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/activity_rate_fixed_name_textView"
+            android:layout_alignTop="@+id/activity_rate_fixed_name_textView"
+            android:textSize="@dimen/text_big"
+            android:text="Tudor Rotarus"/>
+
+    </RelativeLayout>
+
+    <RatingBar
+        android:id="@+id/activity_rate_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@+id/activity_rate_username_container"
+        android:layout_centerHorizontal="true"
+        android:numStars="5"/>
+
+    <Button
+        android:id="@+id/activity_rate_previous_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_below="@+id/activity_rate_rating"
+        android:textAllCaps="false"
+        android:text="Previous"/>
+
+    <Button
+        android:id="@+id/activity_rate_next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:layout_alignTop="@+id/activity_rate_previous_button"
+        android:layout_alignParentRight="true"
+        android:textAllCaps="false"
+        android:text="Next"/>
+
+</RelativeLayout>
