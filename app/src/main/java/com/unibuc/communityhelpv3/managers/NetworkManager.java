@@ -25,6 +25,7 @@ import com.unibuc.communityhelpv3.pojos.interfaces.ProfileListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.TasksParticipantsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.UpdateProfileListener;
 import com.unibuc.communityhelpv3.pojos.requests.RatingPostBody;
+import com.unibuc.communityhelpv3.pojos.requests.TaskDetailsGetBody;
 import com.unibuc.communityhelpv3.rest.RestAPI;
 import com.unibuc.communityhelpv3.rest.RestClient;
 
@@ -227,10 +228,10 @@ public class NetworkManager {
     }
 
     public void getTask(int taskId, final TaskListener callback) {
-        Call<TaskDetails> call = restAPI.GET_TASK(taskId);
-        call.enqueue(new Callback<TaskDetails>() {
+        Call<TaskDetailsGetBody> call = restAPI.GET_TASK(taskId);
+        call.enqueue(new Callback<TaskDetailsGetBody>() {
             @Override
-            public void onResponse(Response<TaskDetails> response, Retrofit retrofit) {
+            public void onResponse(Response<TaskDetailsGetBody> response, Retrofit retrofit) {
                 if (response != null && response.body() != null && response.code() == 200) {
                     callback.onGetTaskSucces(response.body());
                 } else {

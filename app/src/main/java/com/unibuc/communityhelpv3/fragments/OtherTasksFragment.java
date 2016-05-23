@@ -102,7 +102,6 @@ public class OtherTasksFragment extends Fragment implements TasksListener, OnOth
         recyclerView.setAdapter(mAdapter);
 
 //        populateLayout();
-        populateLayout();
 
         return v;
     }

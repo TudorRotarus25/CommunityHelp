@@ -9,6 +9,7 @@ import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetParticipantsBody;
 import com.unibuc.communityhelpv3.pojos.UserGetBody;
 import com.unibuc.communityhelpv3.pojos.requests.RatingPostBody;
+import com.unibuc.communityhelpv3.pojos.requests.TaskDetailsGetBody;
 
 import retrofit.Call;
 import retrofit.http.Body;
@@ -55,7 +56,7 @@ public interface RestAPI {
 
     @FormUrlEncoded
     @POST("tasks/get_task")
-    Call<TaskDetails> GET_TASK(@Field("task_id") int taskId);
+    Call<TaskDetailsGetBody> GET_TASK(@Field("task_id") int taskId);
 
     @FormUrlEncoded
     @POST("tasks/get_participants_pending")

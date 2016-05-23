@@ -13,6 +13,7 @@ import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.TaskDetails;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.interfaces.TaskListener;
+import com.unibuc.communityhelpv3.pojos.requests.TaskDetailsGetBody;
 import com.unibuc.communityhelpv3.utils.AppUtils;
 
 public class TaskDetailsActivity extends AppCompatActivity implements TaskListener {
@@ -76,7 +77,7 @@ public class TaskDetailsActivity extends AppCompatActivity implements TaskListen
         tvTitle.setText(currentTask.getTitle());
 
         Log.e("!!! id", currentTask.getId()+" " + currentTaskId);
-        networkManager.getTask(19, TaskDetailsActivity.this);
+        networkManager.getTask(currentTaskId, TaskDetailsActivity.this);
 
     }
 
@@ -87,8 +88,10 @@ public class TaskDetailsActivity extends AppCompatActivity implements TaskListen
     }
 
     @Override
-    public void onGetTaskSucces(TaskDetails task) {
-        Log.e("!!!", "SUCCESS");
+    public void onGetTaskSucces(TaskDetailsGetBody taskResponse) {
+        TaskDetails task = taskResponse.getTask();
+
+        Log.e("!!!", "SUCCESS" + task.getTitle());
         tvDate.setText(task.getCreated_at());
         tvEstimatedTime.setText(task.getTime_cost());
         tvDetails.setText(task.getDescription());
