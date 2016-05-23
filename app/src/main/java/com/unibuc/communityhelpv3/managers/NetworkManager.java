@@ -160,8 +160,8 @@ public class NetworkManager {
 
     }
 
-    public void createTask(String facebookToken, String title, String description, int categoryId, int resourceCost, int timeCost, final CreateTaskListener callback) {
-        Call<Void> call = restAPI.TASK_POST_CREATE_CALL(facebookToken, title, description, categoryId, resourceCost, timeCost);
+    public void createTask(String facebookToken, String title, String description, int categoryId, int resourceCost, int timeCost, int locationId, final CreateTaskListener callback) {
+        Call<Void> call = restAPI.TASK_POST_CREATE_CALL(facebookToken, title, description, categoryId, resourceCost, timeCost, locationId);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Response<Void> response, Retrofit retrofit) {
