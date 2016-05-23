@@ -33,7 +33,7 @@ import java.util.ArrayList;
  * Created by Serban Theodor on 17-Mar-16.
  */
 public class OtherTasksFragment extends Fragment implements TasksListener, OnOtherTaskClickedInterface,
-        GoogleApiClient.ConnectionCallbacks{
+        GoogleApiClient.ConnectionCallbacks {
     private final String TAG = "OtherTasksFragment";
 
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -109,9 +109,13 @@ public class OtherTasksFragment extends Fragment implements TasksListener, OnOth
     public void populateLayout() {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
 
-        if(accessToken != null) {
+        if (accessToken != null) {
             Log.i(TAG, accessToken.getToken());
-            networkManager.getOtherPeopleTasks(accessToken.getToken(), lastLocation.getLatitude(), lastLocation.getLongitude(), this);
+            if (lastLocation != null) {
+                networkManager.getOtherPeopleTasks(accessToken.getToken(), lastLocation.getLatitude(), lastLocation.getLongitude(), this);
+            } else {
+                Toast.makeText(getActivity(), "You need to start your GPS", Toast.LENGTH_SHORT).show();
+            }
         } else {
             Log.e(TAG, "No access token");
         }
@@ -121,7 +125,7 @@ public class OtherTasksFragment extends Fragment implements TasksListener, OnOth
     public void onGetMyTasksSuccess(TasksGetBody response) {
         swipeRefreshLayout.setRefreshing(false);
 
-        if(response.getTasks() != null) {
+        if (response.getTasks() != null) {
             tasksArrayList = response.getTasks();
             mAdapter.setTasksArrayList(tasksArrayList);
             mAdapter.notifyDataSetChanged();
@@ -152,7 +156,7 @@ public class OtherTasksFragment extends Fragment implements TasksListener, OnOth
 
         }
         if (lastLocation != null)
-            Log.e(TAG, lastLocation.getLatitude() +  " " + lastLocation.getLongitude());
+            Log.e(TAG, lastLocation.getLatitude() + " " + lastLocation.getLongitude());
 
         populateLayout();
     }
