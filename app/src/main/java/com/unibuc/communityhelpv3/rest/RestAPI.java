@@ -50,8 +50,17 @@ public interface RestAPI {
     Call<TasksGetParticipantsBody> TASKS_GET_PARTICIPANTS_PENDING_BODY_CALL(@Field("facebook_token") String facebookToken, @Field("task_id") int taskId);
 
     @FormUrlEncoded
+    @POST("tasks/decline_participant")
+    Call<Void> TASKS_DECLINE_PARTICIPANT(@Field("facebook_token") String facebookToken,@Field("participant_id") String participantId, @Field("task_id") int taskId);
+
+            @FormUrlEncoded
+    @POST("tasks/confirm_participant")
+    Call<Void> TASKS_COMFIRM_PARTICIPANT(@Field("facebook_token") String facebookToken,@Field("participant_id") String participantId, @Field("task_id") int taskId);
+
+    @FormUrlEncoded
     @POST("tasks/get_participants_confirmed")
     Call<TasksGetParticipantsBody> TASKS_GET_PARTICIPANTS_CONFIRMED_BODY_CALL(@Field("facebook_token") String facebookToken, @Field("task_id") int taskId);
+
 
     @FormUrlEncoded
     @POST("web service nu exista")

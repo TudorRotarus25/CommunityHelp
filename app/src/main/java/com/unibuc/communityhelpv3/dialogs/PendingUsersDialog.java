@@ -1,6 +1,7 @@
 package com.unibuc.communityhelpv3.dialogs;
 
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,13 +10,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.unibuc.communityhelpv3.R;
+import com.unibuc.communityhelpv3.activities.OtherProfileActivity;
 import com.unibuc.communityhelpv3.adapters.PendingUsersAdapter;
+import com.unibuc.communityhelpv3.adapters.interfaces.OnPendingUserClickedInterface;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.TasksGetParticipantsBody;
 import com.unibuc.communityhelpv3.pojos.UserGetBody;
@@ -26,7 +30,7 @@ import java.util.ArrayList;
 /**
  * Created by Tudor on 09.05.2016.
  */
-public class PendingUsersDialog extends DialogFragment implements TasksParticipantsListener {
+public class PendingUsersDialog extends DialogFragment implements TasksParticipantsListener, OnPendingUserClickedInterface {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -69,7 +73,7 @@ public class PendingUsersDialog extends DialogFragment implements TasksParticipa
 
         pendingUsers = new ArrayList<>();
 
-        pendingUsersAdapter = new PendingUsersAdapter(getActivity(), pendingUsers);
+        pendingUsersAdapter = new PendingUsersAdapter(getActivity(), pendingUsers, this);
         recyclerView.setAdapter(pendingUsersAdapter);
 
         getUsers();
@@ -115,5 +119,13 @@ public class PendingUsersDialog extends DialogFragment implements TasksParticipa
         swipeRefreshLayout.setRefreshing(false);
 
         Toast.makeText(getActivity(), "Failed to fetch participants", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPendingUserClicked(UserGetBody.User user) {
+        Intent i = new Intent(getActivity(), OtherProfileActivity.class);
+        i.putExtra("user", user);
+        i.putExtra("taskId", taskId);
+        startActivity(i);
     }
 }

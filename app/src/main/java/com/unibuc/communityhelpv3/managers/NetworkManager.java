@@ -259,6 +259,36 @@ public class NetworkManager {
         });
     }
 
+    public void confirmParticipant(String facebookToken, String participantId, int taskId){
+        Call<Void> call = restAPI.TASKS_COMFIRM_PARTICIPANT(facebookToken, participantId, taskId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Response<Void> response, Retrofit retrofit) {
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+    }
+
+    public void declineParticipant(String facebookToken, String participantId, int taskId){
+        Call<Void> call = restAPI.TASKS_DECLINE_PARTICIPANT(facebookToken, participantId, taskId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Response<Void> response, Retrofit retrofit) {
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+    }
+
     //// TODO: 19.05.2016 Specify location type in call
     public void addLocation(String facebookToken, String name, String address, Double lat, Double lng, final int type, final AddLocationListener callback) {
         Call<Void> call = restAPI.LOCATIONS_ADD_BODY_CALL(facebookToken, name, address, lat, lng);

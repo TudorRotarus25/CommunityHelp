@@ -1,5 +1,7 @@
 package com.unibuc.communityhelpv3.pojos;
 
+import java.io.Serializable;
+
 /**
  * Created by Serban Theodor on 24-Mar-16.
  */
@@ -24,7 +26,7 @@ public class UserGetBody {
         this.profile = profile;
     }
 
-    public class User {
+    public class User implements Serializable{
 
         String id;
         String first_name;
