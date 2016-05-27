@@ -34,14 +34,38 @@ public class TasksGetBody {
         String location_lng;
         int time_cost;
         String owner_id;
+        String name;
         int status;
         int participants_number;
         String created_at;
         String updated_at;
+        String rating;
 
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+
+        public String getRating() {
+            return rating;
+        }
+
+        public void setRating(String rating) {
+            this.rating = rating;
+        }
+
+        public Task(int id, String title, int category_id, int resource_cost, String description, String location_name,
+                    String rating, String location_lat, String location_lng, int time_cost, String owner_id, int status,
+                    int participants_number, String created_at, String updated_at, String name) {
         public Task(String participant_status, int id, String title, int category_id, int resource_cost, String description, String location_name, String location_lat, String location_lng, int time_cost, String owner_id, int status, int participants_number, String created_at, String updated_at) {
             this.participant_status = participant_status;
             this.id = id;
+            this.name = name;
+            this.rating = rating;
             this.title = title;
             this.category_id = category_id;
             this.resource_cost = resource_cost;

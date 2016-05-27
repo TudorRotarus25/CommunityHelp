@@ -1,23 +1,40 @@
 package com.unibuc.communityhelpv3.activities;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.util.Log;
+import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.unibuc.communityhelpv3.MyApplication;
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.TaskDetails;
+import com.unibuc.communityhelpv3.managers.MyPreferenceManager;
+import com.unibuc.communityhelpv3.managers.NetworkManager;
+import com.unibuc.communityhelpv3.pojos.TaskDetailsGetBody;
+import com.unibuc.communityhelpv3.dialogs.ConfirmedUsersDialog;
+import com.unibuc.communityhelpv3.dialogs.PendingUsersDialog;
+import com.unibuc.communityhelpv3.managers.MyPreferenceManager;
+import com.unibuc.communityhelpv3.managers.NetworkManager;
+import com.unibuc.communityhelpv3.pojos.TaskDetailsGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.interfaces.TaskListener;
 import com.unibuc.communityhelpv3.pojos.requests.TaskDetailsGetBody;
+import com.unibuc.communityhelpv3.pojos.interfaces.GetMyTaskDetailsListener;
 import com.unibuc.communityhelpv3.utils.AppUtils;
 import com.unibuc.communityhelpv3.utils.DownloadImageToImageView;
 
 public class MyTaskDetailsActivity extends AppCompatActivity implements TaskListener {
+public class MyTaskDetailsActivity extends AppCompatActivity implements GetMyTaskDetailsListener {
     private static final String TAG = "MyTaskDetailsActivity";
     private TasksGetBody.Task currentTask;
     private NetworkManager networkManager;
@@ -52,6 +69,29 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements TaskList
         }
 
         init();
+    }
+
+    private void populateTask()
+    {
+        Log.d(TAG, currentTask.getTitle());
+        Log.d(TAG, currentTask.getDescription());
+        Log.d(TAG, currentTask.getCreated_at());
+        Log.d(TAG, currentTask.getTime_cost()+"");
+        Log.d(TAG, currentTask.getName());
+        Log.d(TAG, currentTask.getResource_cost()+"");
+
+        Log.d(TAG, currentTask.getRating()+"");
+        tvTitle.setText(currentTask.getTitle());
+        tvDate.setText(currentTask.getCreated_at());
+
+        String aux = currentTask.getTime_cost()+"";
+        tvEstimatedTime.setText(aux);
+
+        tvDetails.setText(currentTask.getDescription());
+        tvUserame.setText(currentTask.getName());
+        aux = currentTask.getResource_cost() + "";
+        tvReward.setText(aux);
+        tvRating.setText(currentTask.getRating());
     }
 
     private void init(){
@@ -106,6 +146,21 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements TaskList
 
         Log.e("!!! id", currentTask.getId()+" " + currentTaskId);
         networkManager.getTask(currentTaskId, MyTaskDetailsActivity.this);
+        pendingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PendingUsersDialog pendingDialog = PendingUsersDialog.newInstance(currentTask.getId());
+                pendingDialog.show(MyTaskDetailsActivity.this.getFragmentManager(), TAG);
+            }
+        });
+
+        confirmedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConfirmedUsersDialog confirmedDialog = ConfirmedUsersDialog.newInstance(currentTask.getId());
+                confirmedDialog.show(MyTaskDetailsActivity.this.getFragmentManager(), TAG);
+            }
+        });
     }
 
     @Override

@@ -27,20 +27,44 @@ public class NotificationsGetBody {
 
     public class Notification{
         String title;
-        String text;
+        String message;
         String notification_type;
 
         String task_id;
         String user_id;
-        String date_received;
+        String created_at;
+        String id;
 
-        public Notification(String title, String text, String notification_type, String task_id, String user_id, String date_received) {
+
+        String seen;
+
+        public Notification(String title, String text, String notification_type, String task_id, String user_id,
+                            String notification_id, String created_at, String first_time) {
             this.title = title;
-            this.text = text;
+            this.message = text;
             this.notification_type = notification_type;
             this.task_id = task_id;
             this.user_id = user_id;
-            this.date_received = date_received;
+            this.created_at = created_at;
+            this.id = notification_id;
+            this.seen = first_time;
+        }
+
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getSeen() {
+            return seen;
+        }
+
+        public void setSeen(String seen) {
+            this.seen = seen;
         }
 
         public String getTitle() {
@@ -51,12 +75,12 @@ public class NotificationsGetBody {
             this.title = title;
         }
 
-        public String getText() {
-            return text;
+        public String getMessage() {
+            return message;
         }
 
-        public void setText(String text) {
-            this.text = text;
+        public void setMessage(String message) {
+            this.message = message;
         }
 
         public String getNotification_type() {
@@ -83,12 +107,12 @@ public class NotificationsGetBody {
             this.user_id = user_id;
         }
 
-        public String getDate_received() {
-            return date_received;
+        public String getCreated_at() {
+            return created_at;
         }
 
-        public void setDate_received(String date_received) {
-            this.date_received = date_received;
+        public void setCreated_at(String created_at) {
+            this.created_at = created_at;
         }
     }
 }

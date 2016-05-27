@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.android.gms.gcm.GcmListenerService;
 import com.unibuc.communityhelpv3.MyApplication;
 import com.unibuc.communityhelpv3.activities.MainActivity;
+import com.unibuc.communityhelpv3.activities.NotificationsActivity;
 import com.unibuc.communityhelpv3.managers.MyPreferenceManager;
 import com.unibuc.communityhelpv3.utils.NotificationUtils;
 
@@ -35,6 +36,8 @@ public class MyGcmListenerService extends GcmListenerService {
 
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
         Log.d(TAG, currentDateTimeString);
+        String first_time = bundle.getString("seen");
+        String notification_id = bundle.getString("id");
         String data = bundle.getString("message");
         String title =  bundle.getString("title");
         String notification_type = bundle.getString("notification_type");
@@ -52,6 +55,9 @@ public class MyGcmListenerService extends GcmListenerService {
             Log.d(TAG, "Broadcasting notification: " + data);
             resultIntent.putExtra("message", data);
             resultIntent.putExtra("title", title);
+            resultIntent.putExtra("notification_id", notification_id);
+
+            resultIntent.putExtra("first_time", first_time);
             resultIntent.putExtra("type", notification_type);
             resultIntent.putExtra("date_received", currentDateTimeString);
 
@@ -77,7 +83,7 @@ public class MyGcmListenerService extends GcmListenerService {
         int notification_unique_id = preferenceManager.get_notification_unique_id();
 
 
-        Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent resultIntent = new Intent(getApplicationContext(), NotificationsActivity.class);
         String flag;
 
         flag = "show";
