@@ -1,176 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent">
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fitsSystemWindows="true"
-    android:layout_gravity="center"
-    tools:context=".activities.AddTaskActivity">
-
-    <LinearLayout
-        android:layout_gravity="center"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:paddingBottom="40dp"
         android:orientation="vertical"
-        android:layout_above="@+id/task_post_button">
+        tools:context=".activities.AddTaskActivity">
 
-
-        <Spinner
-            android:padding="20dp"
+        <TextView
+            android:id="@+id/activity_add_task_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="30dp"
+            android:text="Add task"
             android:textAlignment="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/task_category_spinner">
-        </Spinner>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
-
-
-        <EditText
-            android:hint="Task title"
-            android:inputType="text"
-            android:id="@+id/task_title_editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
-
-
-        <EditText
-            android:padding="20dp"
-            android:hint="Task description"
-            android:inputType="text"
-            android:id="@+id/task_description_editText"
-            android:minLines="3"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
-
-        <EditText
-            android:padding="20dp"
-            android:hint="Location"
-            android:inputType="text"
-            android:id="@+id/task_location_editText"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
-
-        <TextView
-            android:padding="20dp"
-            android:id="@+id/task_start_time_label_textView"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="Task start time:"
-            />
+            android:textSize="@dimen/text_extra_big"
+            android:textStyle="bold" />
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/activity_add_task_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/activity_add_task_title"
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
-            <TextView
-                android:padding="20dp"
-                android:id="@+id/task_start_time_textView"
-                android:layout_width="wrap_content"
+            <Spinner
+                android:id="@+id/task_category_spinner"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:paddingBottom="@dimen/activity_add_task_vertical_margin"
+                android:paddingLeft="@dimen/activity_add_task_horizontal_margin"
+                android:paddingRight="@dimen/activity_add_task_horizontal_margin"
+                android:paddingTop="@dimen/activity_add_task_vertical_margin"
+                android:textAlignment="center" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+
+            <EditText
+                android:id="@+id/task_title_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Task title"
+                android:inputType="text"
+                android:paddingBottom="@dimen/activity_add_task_vertical_margin"
+                android:paddingLeft="@dimen/activity_add_task_horizontal_margin"
+                android:paddingRight="@dimen/activity_add_task_horizontal_margin"
+                android:paddingTop="@dimen/activity_add_task_vertical_margin" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+
+            <EditText
+                android:id="@+id/task_description_editText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="Task description"
+                android:inputType="text"
+                android:minLines="3"
+                android:paddingBottom="@dimen/activity_add_task_vertical_margin"
+                android:paddingLeft="@dimen/activity_add_task_horizontal_margin"
+                android:paddingRight="@dimen/activity_add_task_horizontal_margin"
+                android:paddingTop="@dimen/activity_add_task_vertical_margin" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/task_location_editText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="Location"
+                android:inputType="text"
+                android:paddingBottom="@dimen/activity_add_task_vertical_margin"
+                android:paddingLeft="@dimen/activity_add_task_horizontal_margin"
+                android:paddingRight="@dimen/activity_add_task_horizontal_margin"
+                android:paddingTop="@dimen/activity_add_task_vertical_margin" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <Spinner
+                android:id="@+id/task_location_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/activity_add_task_vertical_margin"
+                android:paddingLeft="@dimen/activity_add_task_horizontal_margin"
+                android:paddingRight="@dimen/activity_add_task_horizontal_margin"
+                android:paddingTop="@dimen/activity_add_task_vertical_margin"
+                android:textAlignment="center"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
 
             <TextView
-                android:padding="20dp"
-                android:id="@+id/task_start_date_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:id="@+id/task_start_time_label_textView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/activity_add_task_horizontal_margin"
+                android:paddingRight="@dimen/activity_add_task_horizontal_margin"
+                android:paddingTop="@dimen/activity_add_task_vertical_margin"
+                android:text="Task start time:"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/task_start_time_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"/>
+
+                <TextView
+                    android:id="@+id/task_start_date_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/task_end_time_label_textView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/activity_add_task_horizontal_margin"
+                android:paddingRight="@dimen/activity_add_task_horizontal_margin"
+                android:paddingTop="@dimen/activity_add_task_vertical_margin"
+                android:text="Task end time:"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/task_end_time_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp" />
+
+                <TextView
+                    android:id="@+id/task_end_date_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/task_reward_cost_editText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="Task reward"
+                android:inputType="text"
+                android:paddingBottom="@dimen/activity_add_task_vertical_margin"
+                android:paddingLeft="@dimen/activity_add_task_horizontal_margin"
+                android:paddingRight="@dimen/activity_add_task_horizontal_margin"
+                android:paddingTop="@dimen/activity_add_task_vertical_margin" />
 
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
-
-        <TextView
-            android:padding="20dp"
-            android:textSize="20dp"
-            android:id="@+id/task_end_time_label_textView"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Task end time:"
-        />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:padding="20dp"
-                android:id="@+id/task_end_time_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:padding="20dp"
-                android:id="@+id/task_end_date_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
-
-        <EditText
-            android:padding="20dp"
-            android:hint="Task reward"
-            android:inputType="text"
-            android:id="@+id/task_reward_cost_editText"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-        />
-
-    </LinearLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
 
         <Button
-            android:padding="20dp"
-            android:layout_alignParentBottom="true"
             android:id="@+id/task_post_button"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Post Task"/>
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/activity_add_task_container"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/activity_add_task_vertical_margin"
+            android:background="@drawable/follow_button_shape"
+            android:text="Post Task" />
 
-</RelativeLayout>
+    </RelativeLayout>
+
 </ScrollView>

@@ -38,4 +38,6 @@
     <dimen name="text_extra_big">25sp</dimen>
     <dimen name="content_pending_users_title_margin_vertical">20dp</dimen>
     <dimen name="text_big">20sp</dimen>
+    <dimen name="activity_add_task_vertical_margin">20dp</dimen>
+    <dimen name="activity_add_task_horizontal_margin">10dp</dimen>
 </resources>

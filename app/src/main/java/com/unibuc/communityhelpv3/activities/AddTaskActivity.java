@@ -21,7 +21,13 @@ import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
+import com.unibuc.communityhelpv3.pojos.CategoriesGetBody;
+import com.unibuc.communityhelpv3.pojos.CategoriesGetBody.Category;
+import com.unibuc.communityhelpv3.pojos.LocationsGetBody;
+import com.unibuc.communityhelpv3.pojos.LocationsGetBody.Locations;
+import com.unibuc.communityhelpv3.pojos.interfaces.CategoriesListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.CreateTaskListener;
+import com.unibuc.communityhelpv3.pojos.interfaces.LocationsListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,13 +37,13 @@ import java.util.Locale;
 /**
  * Created by Serban Theodor on 01-Apr-16.
  */
-public class AddTaskActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, CreateTaskListener {
+public class AddTaskActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, CreateTaskListener, CategoriesListener, LocationsListener {
 
     private TextView task_start_time_editText;
     private TextView task_end_time_editText;
 
     private TextView task_start_date_textView;
-    private TextView task_end_date_textView ;
+    private TextView task_end_date_textView;
 
     private TextView task_title_editText;
     private TextView task_description_editText;
@@ -47,6 +53,10 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     private Button task_post_button;
 
     private Spinner task_category_spinner;
+    private Spinner task_location_spinner;
+
+    private ArrayList<Category> categoriesResponse;
+    private ArrayList<Locations> locationsResponse;
 
     private DatePickerDialog fromDatePickerDialog;
     private DatePickerDialog toDatePickerDialog;
@@ -59,7 +69,9 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     private Calendar toTime;
 
     ArrayList<String> categoryList;
-    ArrayAdapter<String> spinnerAdapter;
+    ArrayList<String> locationList;
+    ArrayAdapter<String> categoriesSpinnerAdapter;
+    ArrayAdapter<String> locationsSpinnerAdapter;
 
     private NetworkManager networkManager;
     AccessToken accessToken;
@@ -72,11 +84,6 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         setContentView(R.layout.activity_add_task);
 
         networkManager = NetworkManager.getInstance();
-
-        categoryList = new ArrayList<>();
-        categoryList.add("Select a category");
-        spinnerAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, categoryList);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
 
         accessToken = AccessToken.getCurrentAccessToken();
 
@@ -114,7 +121,7 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        } else if (id == R.id.user_profile){
+        } else if (id == R.id.user_profile) {
             startActivity(new Intent(AddTaskActivity.this, ProfileActivity.class));
         }
 
@@ -127,11 +134,13 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         TextView title = (TextView) actionBar.getCustomView().findViewById(R.id.title_action_bar_layout_textView);
         title.setText(R.string.task_add_title);
 
+        networkManager.getCategories(this);
+        networkManager.getLocations(accessToken.getToken(), this);
+
         task_start_time_editText = (TextView) findViewById(R.id.task_start_time_textView);
         task_end_time_editText = (TextView) findViewById(R.id.task_end_time_textView);
         task_start_date_textView = (TextView) findViewById(R.id.task_start_date_textView);
         task_end_date_textView = (TextView) findViewById(R.id.task_end_date_textView);
-
 
 
         task_title_editText = (TextView) findViewById(R.id.task_title_editText);
@@ -142,9 +151,7 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         task_post_button = (Button) findViewById(R.id.task_post_button);
 
         task_category_spinner = (Spinner) findViewById(R.id.task_category_spinner);
-
-        task_category_spinner.setAdapter(spinnerAdapter);
-        task_category_spinner.setSelection(0);
+        task_location_spinner = (Spinner) findViewById(R.id.task_location_spinner);
 
         dateFormatter = new SimpleDateFormat("EEE, dd MMM yyyy", Locale.US);
         timeFormatter = new SimpleDateFormat("H:mm", Locale.US);
@@ -227,8 +234,7 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     }
 
 
-    private void initListeners()
-    {
+    private void initListeners() {
         task_start_time_editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,8 +244,7 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
 
         task_end_time_editText.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 toTimePickerDialog.show();
             }
         });
@@ -262,25 +267,27 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
             @Override
             public void onClick(View v) {
 
+                int locationId = locationsResponse.get(task_location_spinner.getSelectedItemPosition()).getId();
+
                 String task_title = task_title_editText.getText().toString();
                 String task_description = task_description_editText.getText().toString();
                 //String task_category = task_category_spinner.getSelectedItem().toString();
-                int task_category = 1;
+                int categoryId = categoriesResponse.get(task_category_spinner.getSelectedItemPosition()).getId();
                 String task_location = task_location_editText.getText().toString();
                 String task_cost_string = task_reward_cost_editText.getText().toString();
                 int task_cost = -1;
-                if(!task_cost_string.isEmpty())
+                if (!task_cost_string.isEmpty())
                     task_cost = Integer.parseInt(task_cost_string);
 
                 long duration = toTime.getTimeInMillis() - fromTime.getTimeInMillis();
-                int task_duration = (int)duration;
-                Log.i(TAG, duration+"");
+                int task_duration = (int) duration;
+                Log.i(TAG, duration + "");
 
-                if(accessToken != null && !task_title.equals("") && !task_description.equals("") &&
-                        !task_location.equals("") && task_category > 0 && task_cost > 0 && duration > 0) {
+                if (accessToken != null && !task_title.equals("") && !task_description.equals("") &&
+                        !task_location.equals("") && categoryId >= 0 && task_cost >= 0 && duration > 0) {
                     Log.i(TAG, accessToken.getToken());
-                    networkManager.createTask(accessToken.getToken(), task_title, task_description, task_category
-                            , task_cost, task_duration, AddTaskActivity.this);
+                    networkManager.createTask(accessToken.getToken(), task_title, task_description, categoryId
+                            , task_cost, task_duration, locationId , AddTaskActivity.this);
 
                     Intent intent = new Intent(AddTaskActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -295,8 +302,7 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     }
 
     @Override
-    public void onCreateTaskSuccess()
-    {
+    public void onCreateTaskSuccess() {
         Toast.makeText(this, "Task added!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -304,10 +310,46 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     }
 
     @Override
-    public void onCreateTaskFailed()
-    {
-        Toast.makeText(this, "Failed to fetch tasks!", Toast.LENGTH_SHORT).show();
+    public void onCreateTaskFailed() {
+        Toast.makeText(this, "Failed!", Toast.LENGTH_SHORT).show();
     }
 
 
+    @Override
+    public void onCategoryGetSuccess(CategoriesGetBody response) {
+        categoryList = new ArrayList<>();
+        categoriesResponse = response.getCategories();
+        for (int i = 0; i < categoriesResponse.size(); i++) {
+            categoryList.add(categoriesResponse.get(i).getText());
+        }
+        categoriesSpinnerAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, categoryList);
+        categoriesSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        task_category_spinner.setAdapter(categoriesSpinnerAdapter);
+        task_category_spinner.setSelection(0);
+    }
+
+    @Override
+    public void onCategoryGetFailed() {
+        Toast.makeText(this, "Failed to fetch categories!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onGetLocationsSuccess(LocationsGetBody response) {
+        locationList = new ArrayList<>();
+        locationsResponse = response.getLocations();
+        for (int i = 0; i < locationsResponse.size(); i++) {
+            locationList.add(locationsResponse.get(i).getAddress());
+        }
+        locationsSpinnerAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, locationList);
+        locationsSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        task_location_spinner.setAdapter(locationsSpinnerAdapter);
+        task_location_spinner.setSelection(0);
+    }
+
+    @Override
+    public void onGetLocationsFailed() {
+        Toast.makeText(this, "Failed to fetch locations!", Toast.LENGTH_SHORT).show();
+    }
 }

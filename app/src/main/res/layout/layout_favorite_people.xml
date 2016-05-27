@@ -19,6 +19,7 @@
         card_view:cardCornerRadius="4dp">
 
         <RelativeLayout
+            android:id="@+id/layout_favourite_people_mainContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/layout_other_tasks_cardView_padding_vertical"
