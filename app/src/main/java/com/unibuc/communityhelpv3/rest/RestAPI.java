@@ -4,6 +4,7 @@ import com.unibuc.communityhelpv3.pojos.CategoriesGetBody;
 import com.unibuc.communityhelpv3.pojos.LocationsGetBody;
 import com.unibuc.communityhelpv3.pojos.LoginPostBody;
 import com.unibuc.communityhelpv3.pojos.NotificationsGetBody;
+import com.unibuc.communityhelpv3.pojos.TaskDetailsGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetParticipantsBody;
 import com.unibuc.communityhelpv3.pojos.UserGetBody;
@@ -70,8 +71,8 @@ public interface RestAPI {
 
 
     @FormUrlEncoded
-    @POST("web service nu exista")
-    Call<NotificationsGetBody> GET_NOTIFICATIONS_BODY_CALL(@Field("facebook_token") String facebookToken, @Field("user_id") String userId);
+    @POST("notifications/get_mine")
+    Call<NotificationsGetBody> GET_NOTIFICATIONS_BODY_CALL(@Field("facebook_token") String facebookToken);
 
     @FormUrlEncoded
     @POST("locations/add")
@@ -79,4 +80,16 @@ public interface RestAPI {
 
     @POST("tasks/rate_participants")
     Call<Void> RATE_PARTICIPANTS_BODY_CALL(@Body RatingPostBody ratingPostBody);
+
+    @FormUrlEncoded
+    @POST("tasks/get_task")
+    Call<TaskDetailsGetBody> GET_MY_TASK(@Field("facebook_token") String facebookToken, @Field("task_id") String taskId);
+
+    @FormUrlEncoded
+    @POST("tasks/get_task")
+    Call<TaskDetailsGetBody> GET_OTHER_TASK(@Field("facebook_token") String facebookToken, @Field("task_id") String taskId);
+
+    @FormUrlEncoded
+    @POST("notification/set_seen")
+    Call<Void> SET_NOTIFICATION_SEEN(@Field("facebook_token") String facebookToken, @Field("notification_id") String notificationId);
 }

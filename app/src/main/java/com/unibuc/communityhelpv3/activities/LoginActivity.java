@@ -96,6 +96,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
         Profile profile = Profile.getCurrentProfile();
         MyPreferenceManager preferenceManager = MyApplication.getInstance().getPrefManager();
         String gcmToken = preferenceManager.get_gcm_token();
+        preferenceManager.set_facebook_logged_in(true);
         preferenceManager.add_notification_unique_id(0);
 
         // TODO: 24.03.2016 Configure profile pic dimensions
@@ -127,6 +128,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
 
         MyPreferenceManager preferenceManager = MyApplication.getInstance().getPrefManager();
         preferenceManager.add_current_user_id(userId);
+        preferenceManager.set_facebook_logged_in(true);
 
         progressDialog.dismiss();
 

@@ -141,10 +141,11 @@ public class OtherTasksFragment extends Fragment implements TasksListener, OnOth
 
     @Override
     public void onOtherTaskClicked(TasksGetBody.Task task) {
-        Log.e("!", "task clicked");
-        AppUtils.storeCurrentTask(task, getContext());
-
+        Log.e(TAG, "task clicked");
+        //AppUtils.storeCurrentTask(task, getContext());
         Intent i = new Intent(getContext(), TaskDetailsActivity.class);
+        String string_task_id = task.getId() + "";
+        i.putExtra("task_id", string_task_id);
         startActivity(i);
     }
 
