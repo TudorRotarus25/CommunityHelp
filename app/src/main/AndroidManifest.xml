@@ -102,20 +102,6 @@
 
         </activity>
 
-
-
-
-
-        <activity android:name=".activities.TaskDetailsActivity"
-            />
-
-        <activity
-            android:name=".activities.MyTaskDetailsActivity">
-        </activity>
-
-        <activity
-            android:name=".activities.PlacePickersActivity">
-        </activity>
         <activity
             android:name=".activities.NotificationsActivity"
             android:label="@string/task_notifications">
