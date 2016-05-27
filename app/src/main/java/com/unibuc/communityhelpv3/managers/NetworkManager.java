@@ -5,14 +5,18 @@ import android.util.Log;
 import com.unibuc.communityhelpv3.pojos.CategoriesGetBody;
 import com.unibuc.communityhelpv3.pojos.LoginPostBody;
 import com.unibuc.communityhelpv3.pojos.NotificationsGetBody;
+import com.unibuc.communityhelpv3.pojos.TaskDetailsGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetParticipantsBody;
 import com.unibuc.communityhelpv3.pojos.UserGetBody;
 import com.unibuc.communityhelpv3.pojos.interfaces.AddLocationListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.CategoriesListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.CreateTaskListener;
+import com.unibuc.communityhelpv3.pojos.interfaces.GetMyTaskDetailsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.GetNotificationsListener;
+import com.unibuc.communityhelpv3.pojos.interfaces.GetOtherTaskDetailsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.LoginListener;
+import com.unibuc.communityhelpv3.pojos.interfaces.SetNotificationSeenListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.TasksListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.ProfileListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.TasksParticipantsListener;
@@ -238,8 +242,8 @@ public class NetworkManager {
         });
     }
 
-    public void getMyNotifications(String facebookToken, String userId, final GetNotificationsListener callback) {
-        Call<NotificationsGetBody> call = restAPI.GET_NOTIFICATIONS_BODY_CALL(facebookToken, userId);
+    public void getMyNotifications(String facebookToken, final GetNotificationsListener callback) {
+        Call<NotificationsGetBody> call = restAPI.GET_NOTIFICATIONS_BODY_CALL(facebookToken);
         call.enqueue(new Callback<NotificationsGetBody>() {
             @Override
             public void onResponse(Response<NotificationsGetBody> response, Retrofit retrofit) {
@@ -255,6 +259,49 @@ public class NetworkManager {
             public void onFailure(Throwable t) {
                 Log.e(TAG, "getMyTasks failed: " + t.getMessage());
                 callback.onGetMyNotificationFailed();
+            }
+        });
+    }
+
+    public void getMyTaskDetails(String facebookToken, String taskId, final GetMyTaskDetailsListener callback) {
+        Call<TaskDetailsGetBody> call = restAPI.GET_MY_TASK(facebookToken, taskId);
+        call.enqueue(new Callback<TaskDetailsGetBody>() {
+            @Override
+            public void onResponse(Response<TaskDetailsGetBody> response, Retrofit retrofit) {
+                if(response != null && response.body() != null && response.code() == 200) {
+                    callback.onGetMyTaskDetailsSuccess(response.body());
+                } else {
+                    Log.e(TAG, response.code() + ": getMyTasks failed");
+                    callback.onGetMyTaskDetailsFailed();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e(TAG, "getMyTasks failed: " + t.getMessage());
+                callback.onGetMyTaskDetailsFailed();
+            }
+        });
+    }
+
+
+    public void getOtherTaskDetails(String facebookToken, String taskId, final GetOtherTaskDetailsListener callback) {
+        Call<TaskDetailsGetBody> call = restAPI.GET_OTHER_TASK(facebookToken, taskId);
+        call.enqueue(new Callback<TaskDetailsGetBody>() {
+            @Override
+            public void onResponse(Response<TaskDetailsGetBody> response, Retrofit retrofit) {
+                if(response != null && response.body() != null && response.code() == 200) {
+                    callback.onGetOtherTaskDetailsSuccess(response.body());
+                } else {
+                    Log.e(TAG, response.code() + ": getMyTasks failed");
+                    callback.onGetOtherTaskDetailsFailed();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e(TAG, "getMyTasks failed: " + t.getMessage());
+                callback.onGetOtherTaskDetailsFailed();
             }
         });
     }
@@ -277,6 +324,27 @@ public class NetworkManager {
             public void onFailure(Throwable t) {
                 Log.e(TAG, "addLocation failed: " + t.getMessage());
                 callback.onAddLocationFailed();
+            }
+        });
+    }
+
+    public void setNotificationSeen(String facebookToken, String notificationId, final SetNotificationSeenListener callback) {
+        Call<Void> call = restAPI.SET_NOTIFICATION_SEEN(facebookToken, notificationId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Response<Void> response, Retrofit retrofit) {
+                if(response != null && response.code() == 200) {
+                    callback.onSetNotificationSeenSuccess();
+                } else {
+                    Log.e(TAG, "Set notification as seen: " + response.code());
+                    callback.onSetNotificationSeenFailed();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e(TAG, "Set notification as seen: " + t.getMessage());
+                callback.onSetNotificationSeenFailed();
             }
         });
     }

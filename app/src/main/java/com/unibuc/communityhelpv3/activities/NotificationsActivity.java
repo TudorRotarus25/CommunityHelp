@@ -5,18 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.service.notification.NotificationListenerService;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +25,7 @@ import com.unibuc.communityhelpv3.managers.MyPreferenceManager;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.NotificationsGetBody;
 import com.unibuc.communityhelpv3.pojos.interfaces.GetNotificationsListener;
+import com.unibuc.communityhelpv3.pojos.interfaces.SetNotificationSeenListener;
 import com.unibuc.communityhelpv3.utils.NotificationUtils;
 
 import java.util.ArrayList;
@@ -37,7 +33,7 @@ import java.util.ArrayList;
 /**
  * Created by Serban Theodor on 13-May-16.
  */
-public class NotificationsActivity extends AppCompatActivity implements GetNotificationsListener{
+public class NotificationsActivity extends AppCompatActivity implements GetNotificationsListener, SetNotificationSeenListener{
 
     private static final String TAG = "NotificationActivity";
     private NotificationsListAdapter notificationsListAdapter;
@@ -79,7 +75,7 @@ public class NotificationsActivity extends AppCompatActivity implements GetNotif
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 MessageReceivedBroadcastReceiver, new IntentFilter("notification_received_from_server"));
 
-        //setList();
+        setList(null);
         // clearing the notification tray
         NotificationUtils.clearNotifications();
     }
@@ -108,25 +104,7 @@ public class NotificationsActivity extends AppCompatActivity implements GetNotif
         listView = (ListView) findViewById(R.id.listview_notifications);
         textview = (TextView) findViewById(R.id.no_notifications_view);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-                if(notifications.get(position).getNotification_type().equals("my_task_notification")) {
-                    Intent intent = new Intent(NotificationsActivity.this, MyTaskDetailsActivity.class);
-                    intent.putExtra("task_id", notifications.get(position).getTask_id());
-                    startActivity(intent);
-                }
-                else
-                if(notifications.get(position).getNotification_type().equals("other_task_notification")){
-                    Intent intent = new Intent(NotificationsActivity.this, TaskDetailsActivity.class);
-                    intent.putExtra("task_id", notifications.get(position).getTask_id());
-                    startActivity(intent);
-                }
-                    Log.d(TAG, position+"");
-            }
-        });
+        listViewListener();
 
     }
 
@@ -172,22 +150,76 @@ public class NotificationsActivity extends AppCompatActivity implements GetNotif
         {
             startActivity(new Intent(NotificationsActivity.this, MainActivity.class));
             //Log.d(TAG, "notification button clicked");
-
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void listViewListener()
+    {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if(notifications.get(position).getSeen().equals("0"))
+                {
+                    networkManager.setNotificationSeen(accessToken.getToken(), notifications.get(position).getId(), NotificationsActivity.this);
+                    notifications.get(position).setSeen("1");
+                    Log.d(TAG, "set notification as seen");
+                }
+
+                String type = notifications.get(position).getNotification_type();
+                if(type.equals("new_participant"))
+                {
+                    Intent intent = new Intent(NotificationsActivity.this, MyTaskDetailsActivity.class);
+                    intent.putExtra("task_id", notifications.get(position).getTask_id());
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     public void setList(Intent intent)
     {
         if(accessToken != null) {
             Log.i(TAG, accessToken.getToken());
-            //networkManager.getMyNotifications(accessToken.getToken(), userId, NotificationsActivity.this);
+            networkManager.getMyNotifications(accessToken.getToken(), NotificationsActivity.this);
         } else {
             Toast.makeText(NotificationsActivity.this, "Error!", Toast.LENGTH_SHORT).show();
             Log.e(TAG, "No access token");
         }
 
+        Log.d(TAG, notifications.size() + " MUIE SIZE");
+
+        if(intent != null) {
+            String message, title, user_id, task_id, current_time, type, notification_id, first_time;
+            title = intent.getStringExtra("title");
+            message = intent.getStringExtra("message");
+            user_id = intent.getStringExtra("user_id");
+            task_id = intent.getStringExtra("task_id");
+            current_time = intent.getStringExtra("date_received");
+            type = intent.getStringExtra("type");
+            first_time = intent.getStringExtra("first_time");
+            notification_id = intent.getStringExtra("notification_id");
+
+            NotificationsGetBody.Notification not = new NotificationsGetBody().
+                    new Notification(title, message, type, task_id, user_id, notification_id, current_time, first_time);
+
+            notifications.add(not);
+
+            NotificationsGetBody notificationsGetBody = new NotificationsGetBody(notifications);
+            notificationsListAdapter = new NotificationsListAdapter(notificationsGetBody, NotificationsActivity.this);
+            notificationsListAdapter.notifyDataSetChanged();
+            listView.setAdapter(notificationsListAdapter);
+
+            notificationsNumber();
+        }
+
+        Log.d(TAG, "setList reached");
+    }
+
+    public void notificationsNumber()
+    {
         if(notifications.size() == 0)
         {
             textview.setText("No notifications");
@@ -195,38 +227,36 @@ public class NotificationsActivity extends AppCompatActivity implements GetNotif
         }
         else
         {
-            textview.setVisibility(View.INVISIBLE);
+            textview.setVisibility(View.GONE);
+            //textview.setVisibility(View.INVISIBLE);
         }
-
-        if(intent != null) {
-            String message, title, user_id, task_id, current_time, type;
-            title = intent.getStringExtra("title");
-            message = intent.getStringExtra("message");
-            user_id = intent.getStringExtra("user_id");
-            task_id = intent.getStringExtra("task_id");
-            current_time = intent.getStringExtra("date_received");
-            type = intent.getStringExtra("type");
-
-            NotificationsGetBody.Notification not = new NotificationsGetBody().
-                    new Notification(title, message, type, task_id, user_id, current_time);
-
-            notifications.add(not);
-        }
-
-        NotificationsGetBody notificationsGetBody = new NotificationsGetBody(notifications);
-        notificationsListAdapter = new NotificationsListAdapter(notificationsGetBody);
-        listView.setAdapter(notificationsListAdapter);
-        notificationsListAdapter.notifyDataSetChanged();
-        Log.d(TAG, "setList reached");
     }
 
     @Override
     public void onGetMyNotificationsSuccess(NotificationsGetBody response) {
         notifications = response.getNotifications();
+        Log.d(TAG, notifications.size() + "");
+
+        NotificationsGetBody notificationsGetBody = new NotificationsGetBody(notifications);
+        notificationsListAdapter = new NotificationsListAdapter(notificationsGetBody, NotificationsActivity.this);
+        notificationsListAdapter.notifyDataSetChanged();
+        listView.setAdapter(notificationsListAdapter);
+
+        notificationsNumber();
     }
 
     @Override
     public void onGetMyNotificationFailed() {
         Toast.makeText(this, "Failed to fetch notifications!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSetNotificationSeenSuccess() {
+
+    }
+
+    @Override
+    public void onSetNotificationSeenFailed() {
+        Toast.makeText(this, "Failed to mark notification as seen!", Toast.LENGTH_SHORT).show();
     }
 }

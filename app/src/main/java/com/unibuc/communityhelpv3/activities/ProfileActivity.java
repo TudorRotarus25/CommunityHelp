@@ -63,7 +63,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileListene
     public void onProfileSuccess(UserGetBody.User response) {
         name.setText(response.getFirst_name() + " " + response.getLast_name());
         rank.setText(response.getRank());
-        rating.setProgress(Integer.parseInt(response.getRating()));
+        int aux = (int) (20 * Double.parseDouble(response.getRating()));
+        rating.setProgress(aux);
         email.setText(response.getEmail());
         phone.setText(response.getPhone_number());
 

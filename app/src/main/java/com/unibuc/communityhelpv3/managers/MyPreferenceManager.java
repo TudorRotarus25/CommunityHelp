@@ -27,6 +27,7 @@ public class MyPreferenceManager {
     private static final String KEY_LAST_NAME = "last_name";
     private static final String KEY_PROFILE_PIC = "profile_pic";
     private static final String KEY_CURRENT_USER_ID= "current_user_id";
+    private static final String KEY_FACEBOOK_LOGGED_IN = "facebook_logged_in";
 
     Context _context;
 
@@ -35,6 +36,17 @@ public class MyPreferenceManager {
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, 0);
         editor = pref.edit();
+    }
+
+    public void set_facebook_logged_in(boolean facebook_logged_in)
+    {
+        editor.putBoolean(KEY_FACEBOOK_LOGGED_IN, facebook_logged_in);
+        editor.commit();
+    }
+
+    public boolean get_facebook_logged_in()
+    {
+        return pref.getBoolean(KEY_FACEBOOK_LOGGED_IN, false);
     }
 
     public void add_current_user_id(String current_user_id)

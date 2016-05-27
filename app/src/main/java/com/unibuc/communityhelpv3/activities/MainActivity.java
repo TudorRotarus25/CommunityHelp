@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean checkAuth() {
-        if(((MyApplication) getApplication()).getPrefManager().getFacebookToken() == null) {
+        if(!((MyApplication) getApplication()).getPrefManager().get_facebook_logged_in()) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         }
         else if (id == R.id.action_logout) {
+            ((MyApplication) getApplication()).getPrefManager().set_facebook_logged_in(false);
             LoginManager.getInstance().logOut();
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
