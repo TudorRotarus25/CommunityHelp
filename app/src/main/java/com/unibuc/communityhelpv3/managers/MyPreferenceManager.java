@@ -28,6 +28,7 @@ public class MyPreferenceManager {
     private static final String KEY_PROFILE_PIC = "profile_pic";
     private static final String KEY_CURRENT_USER_ID= "current_user_id";
     private static final String KEY_FACEBOOK_LOGGED_IN = "facebook_logged_in";
+    private static final String KEY_USER_RESOURCES = "user_resources";
 
     Context _context;
 
@@ -36,6 +37,17 @@ public class MyPreferenceManager {
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, 0);
         editor = pref.edit();
+    }
+
+    public void set_user_resources(String user_resources)
+    {
+        editor.putString(KEY_USER_RESOURCES, user_resources);
+        editor.commit();
+    }
+
+    public String get_user_resources()
+    {
+        return pref.getString(KEY_USER_RESOURCES, null);
     }
 
     public void set_facebook_logged_in(boolean facebook_logged_in)

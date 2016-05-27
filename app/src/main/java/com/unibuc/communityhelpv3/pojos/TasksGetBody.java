@@ -26,6 +26,8 @@ public class TasksGetBody {
         int id;
         String title;
         int category_id;
+
+        String category_picture;
         int resource_cost;
         String description;
         String location_name;
@@ -39,6 +41,14 @@ public class TasksGetBody {
         String created_at;
         String updated_at;
         String rating;
+
+        public String getCategory_picture() {
+            return category_picture;
+        }
+
+        public void setCategory_picture(String category_picture) {
+            this.category_picture = category_picture;
+        }
 
         public String getName() {
             return name;
@@ -59,7 +69,7 @@ public class TasksGetBody {
 
         public Task(int id, String title, int category_id, int resource_cost, String description, String location_name,
                     String rating, String location_lat, String location_lng, int time_cost, String owner_id, int status,
-                    int participants_number, String created_at, String updated_at, String name) {
+                    int participants_number, String created_at, String updated_at, String name, String category_picture) {
             this.id = id;
             this.name = name;
             this.rating = rating;
@@ -76,6 +86,7 @@ public class TasksGetBody {
             this.participants_number = participants_number;
             this.created_at = created_at;
             this.updated_at = updated_at;
+            this.category_picture = category_picture;
         }
 
         public int getId() {

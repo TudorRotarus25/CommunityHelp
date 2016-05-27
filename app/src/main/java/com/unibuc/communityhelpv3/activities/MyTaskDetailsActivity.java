@@ -1,12 +1,16 @@
 package com.unibuc.communityhelpv3.activities;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +28,10 @@ import com.unibuc.communityhelpv3.pojos.TaskDetailsGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.interfaces.GetMyTaskDetailsListener;
 import com.unibuc.communityhelpv3.utils.AppUtils;
+import com.unibuc.communityhelpv3.utils.DownloadImageToImageView;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MyTaskDetailsActivity extends AppCompatActivity implements GetMyTaskDetailsListener {
     private static final String TAG = "MyTaskDetailsActivity";
@@ -41,6 +49,7 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements GetMyTas
     private TextView tvReward;
     private Button pendingButton;
     private Button confirmedButton;
+    private ImageView ivCategoryPicture;
 
     private MyPreferenceManager preferenceManager;
     private NetworkManager networkManager;
@@ -94,6 +103,9 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements GetMyTas
         aux = currentTask.getResource_cost() + "";
         tvReward.setText(aux);
         tvRating.setText(currentTask.getRating());
+        //ivCategoryPicture.setImage;
+        DownloadImageToImageView down = new DownloadImageToImageView();
+        down.downloadImageToIV(currentTask.getCategory_picture(), ivCategoryPicture);
     }
 
     private void init(){
@@ -107,6 +119,7 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements GetMyTas
         tvUserame = (TextView) findViewById(R.id.layout_my_task_details_username_textView);
         tvRating = (TextView) findViewById(R.id.layout_my_task_details_rating_textView);
         tvReward = (TextView) findViewById(R.id.layout_my_task_details_reward_textView);
+        ivCategoryPicture = (ImageView) findViewById(R.id.layout_my_task_details_image_imageView);
 
         pendingButton = (Button) findViewById(R.id.layout_my_task_details_pending_button);
         confirmedButton = (Button) findViewById(R.id.layout_my_task_details_confirmed_button);
@@ -145,4 +158,5 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements GetMyTas
     public void onGetMyTaskDetailsFailed() {
         Toast.makeText(this, "Failed to fetch details!", Toast.LENGTH_SHORT).show();
     }
+
 }

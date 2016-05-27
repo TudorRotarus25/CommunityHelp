@@ -36,12 +36,15 @@ public class UserGetBody {
         String profile_pic;
         String rating;
         String rank;
+
+        String resource_value;
         int nr_tasks;
 
         public User() {
         }
 
-        public User(String id, String first_name, String last_name, String email, String phone_number, String profile_pic, String rating, String rank, int nr_tasks) {
+        public User(String id, String first_name, String last_name, String email, String phone_number, String profile_pic,
+                    String rating, String rank, int nr_tasks, String resource_value) {
             this.id = id;
             this.first_name = first_name;
             this.last_name = last_name;
@@ -51,6 +54,7 @@ public class UserGetBody {
             this.rating = rating;
             this.rank = rank;
             this.nr_tasks = nr_tasks;
+            this.resource_value = resource_value;
         }
 
         public String getId() {
@@ -123,6 +127,14 @@ public class UserGetBody {
 
         public void setNr_tasks(int nr_tasks) {
             this.nr_tasks = nr_tasks;
+        }
+
+        public String getResource_value() {
+            return resource_value;
+        }
+
+        public void setResource_value(String resource_value) {
+            this.resource_value = resource_value;
         }
     }
 }

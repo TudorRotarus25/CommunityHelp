@@ -22,10 +22,12 @@ import com.unibuc.communityhelpv3.managers.LocalUserManager;
 import com.unibuc.communityhelpv3.managers.MyPreferenceManager;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.LoginPostBody;
+import com.unibuc.communityhelpv3.pojos.UserGetBody;
 import com.unibuc.communityhelpv3.pojos.interfaces.LoginListener;
+import com.unibuc.communityhelpv3.pojos.interfaces.ProfileListener;
 import com.unibuc.communityhelpv3.services.RegistrationIntentService;
 
-public class LoginActivity extends AppCompatActivity implements LoginListener{
+public class LoginActivity extends AppCompatActivity implements LoginListener, ProfileListener {
 
     private final static String TAG = "LoginActivity";
 
@@ -34,6 +36,8 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
     private CallbackManager callbackManager;
     private LoginButton facebookLoginButton;
     private LocalUserManager localUserManager;
+
+    private NetworkManager networkManager;
 
     private ProgressDialog progressDialog;
 
@@ -126,6 +130,9 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
         Log.d(TAG, userId);
         localUserManager.storeLocalUserId(userId);
 
+        networkManager = NetworkManager.getInstance();
+        networkManager.getProfile(userId, this);
+
         MyPreferenceManager preferenceManager = MyApplication.getInstance().getPrefManager();
         preferenceManager.add_current_user_id(userId);
         preferenceManager.set_facebook_logged_in(true);
@@ -155,5 +162,18 @@ public class LoginActivity extends AppCompatActivity implements LoginListener{
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onProfileSuccess(UserGetBody.User response) {
+        String resources = response.getResource_value();
+        MyPreferenceManager preferenceManager = MyApplication.getInstance().getPrefManager();
+
+        preferenceManager.set_user_resources(resources);
+    }
+
+    @Override
+    public void onProfileFailed() {
+
     }
 }

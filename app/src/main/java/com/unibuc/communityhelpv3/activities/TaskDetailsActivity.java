@@ -104,4 +104,6 @@ public class TaskDetailsActivity extends AppCompatActivity implements GetOtherTa
     public void onGetOtherTaskDetailsFailed() {
         Toast.makeText(this, "Failed to fetch details!", Toast.LENGTH_SHORT).show();
     }
+
+
 }
