@@ -166,4 +166,10 @@ public class OtherTasksFragment extends Fragment implements TasksListener, OnOth
     public void onConnectionSuspended(int i) {
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        populateLayout();
+    }
 }

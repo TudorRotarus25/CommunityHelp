@@ -50,8 +50,11 @@ public class LocalImageManager {
         FileOutputStream outStream;
         try {
             outStream = new FileOutputStream(image);
-            Log.e("!!!!", bmp.toString());
-            bmp.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+            if (bmp != null){
+                Log.e("!!!!", bmp.toString());
+                bmp.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+            }
+
 
             outStream.flush();
             outStream.close();

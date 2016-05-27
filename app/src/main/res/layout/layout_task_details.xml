@@ -236,6 +236,15 @@
                 android:text="@string/task_details_accept_button_text"
                 android:layout_below="@+id/layout_task_details_phone_textView"/>
 
+            <Button
+                android:id="@+id/layout_task_details_decline_task_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/follow_button_shape"
+                android:text="Decline task"
+                android:layout_below="@+id/layout_task_details_phone_textView"/>
+
         </RelativeLayout>
 
 

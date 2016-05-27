@@ -153,17 +153,18 @@
                 android:text="@string/task_details_rating_tag_text"
                 android:textSize="@dimen/task_details_tags_text_size"
                 android:layout_alignParentLeft="true"
+                android:paddingBottom="8dp"
                 android:layout_alignBottom="@+id/layout_my_task_details_star_imageView"/>
 
             <TextView
                 android:id="@+id/layout_my_task_details_rating_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:text="@string/task_details_rating_value_text"
-                android:paddingLeft="40dp"
+                android:paddingLeft="15dp"
                 android:layout_alignBottom="@+id/layout_my_task_details_star_imageView"
                 android:layout_toRightOf="@+id/layout_my_task_details_rating_tag_textView"/>
 
@@ -178,8 +179,8 @@
 
             <ImageView
                 android:id="@+id/layout_my_task_details_star_imageView"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:src="@drawable/star"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/layout_my_task_details_reward_tag_textView"/>
@@ -190,7 +191,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/task_details_reward_value_text"
                 android:textColor="@color/black"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 android:layout_alignBottom="@id/layout_my_task_details_star_imageView"
                 android:layout_toLeftOf="@+id/layout_my_task_details_star_imageView"/>
 
@@ -200,24 +201,77 @@
             android:text="Pending: "
             android:textAllCaps="false"
             android:layout_marginLeft="@dimen/layout_my_task_button_horizontal_margin"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:layout_below="@+id/layout_my_task_details_info_container"
             android:layout_alignParentLeft="true"
             android:drawableRight="@drawable/ic_nature_people_24dp"/>
 
+
+
         <Button android:id="@+id/layout_my_task_details_confirmed_button"
             android:text="Confirmed: "
             android:textAllCaps="false"
             android:layout_marginLeft="@dimen/layout_my_task_button_horizontal_margin"
             android:layout_marginRight="@dimen/layout_my_task_button_horizontal_margin"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout_my_task_details_info_container"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/layout_my_task_details_pending_button"
             android:drawableRight="@drawable/ic_person_black_18dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_below="@+id/layout_my_task_details_confirmed_button">
+
+            <Button
+                android:id="@+id/layout_my_task_details_start_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="Start"
+                android:visibility="gone"
+                android:layout_margin="10dp"
+                android:background="@drawable/circle_green_shape"
+                android:textColor="@color/white"
+                android:layout_alignBottom="@+id/layout_my_task_details_pending_button"
+                android:layout_toRightOf="@+id/layout_my_task_details_pending_button"
+                android:layout_toLeftOf="@+id/layout_my_task_details_confirmed_button"
+                />
+
+            <Button
+                android:id="@+id/layout_my_task_details_finish_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="Finish"
+                android:layout_margin="10dp"
+                android:visibility="gone"
+                android:background="@drawable/circle_green_shape"
+                android:textColor="@color/white"
+                android:layout_alignBottom="@+id/layout_my_task_details_pending_button"
+                android:layout_toRightOf="@+id/layout_my_task_details_pending_button"
+                android:layout_toLeftOf="@+id/layout_my_task_details_confirmed_button"
+                />
+
+            <Button
+                android:id="@+id/layout_my_task_details_delete_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="Delete"
+                android:layout_margin="10dp"
+                android:visibility="gone"
+                android:background="@drawable/circle_red_shape"
+                android:textColor="@color/white"
+                android:layout_below="@+id/layout_my_task_details_pending_button"
+                android:layout_toRightOf="@+id/layout_my_task_details_pending_button"
+                android:layout_toLeftOf="@+id/layout_my_task_details_confirmed_button"
+                />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

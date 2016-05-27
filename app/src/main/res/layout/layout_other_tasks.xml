@@ -100,13 +100,6 @@
                     android:layout_marginBottom="@dimen/layout_other_tasks_inner_margin_vertical"
                     android:orientation="horizontal">
 
-                    <TextView android:id="@+id/layout_other_tasks_participants_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
-                        android:textSize="@dimen/layout_other_tasks_right_container_text_size"
-                        android:text="0/1"
-                        android:drawableRight="@drawable/ic_person_black_18dp"/>
 
                     <TextView android:id="@+id/layout_other_tasks_reward_textView"
                         android:layout_width="wrap_content"

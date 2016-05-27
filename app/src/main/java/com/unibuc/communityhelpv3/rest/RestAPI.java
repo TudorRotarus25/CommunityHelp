@@ -75,6 +75,10 @@ public interface RestAPI {
     Call<Void> TASKS_ACCEPT_TASK(@Field("facebook_token") String facebookToken, @Field("task_id") int taskId);
 
     @FormUrlEncoded
+    @POST("tasks/cancel")
+    Call<Void> TASKS_DECLINE_TASK(@Field("facebook_token") String facebookToken, @Field("task_id") int taskId);
+
+    @FormUrlEncoded
     @POST("tasks/get_participants_confirmed")
     Call<TasksGetParticipantsBody> TASKS_GET_PARTICIPANTS_CONFIRMED_BODY_CALL(@Field("facebook_token") String facebookToken, @Field("task_id") int taskId);
 

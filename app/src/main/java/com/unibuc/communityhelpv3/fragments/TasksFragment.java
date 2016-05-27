@@ -121,6 +121,7 @@ public class TasksFragment extends Fragment implements TasksListener, OnMyTaskCl
         AppUtils.storeCurrentTask(task, getContext());
 
         Intent i = new Intent(getContext(), MyTaskDetailsActivity.class);
+        i.putExtra("task_id", task.getId());
         startActivity(i);
     }
 }

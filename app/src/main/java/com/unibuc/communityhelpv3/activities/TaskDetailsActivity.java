@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -15,12 +16,14 @@ import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.interfaces.TaskListener;
 import com.unibuc.communityhelpv3.pojos.requests.TaskDetailsGetBody;
 import com.unibuc.communityhelpv3.utils.AppUtils;
+import com.unibuc.communityhelpv3.utils.DownloadImageToImageView;
 
 public class TaskDetailsActivity extends AppCompatActivity implements TaskListener {
     private static final String TAG = "TaskDetailsActivity";
     private TasksGetBody.Task currentTask;
     private AccessToken accessToken;
     private NetworkManager networkManager;
+    private DownloadImageToImageView downloadImageToImageView;
 
     private String taskId;
     private int currentTaskId;
@@ -35,6 +38,8 @@ public class TaskDetailsActivity extends AppCompatActivity implements TaskListen
     private TextView tvReward;
     private TextView tvPhone;
     private Button acceptTaskButton;
+    private Button declineTaskButton;
+    private ImageView ivCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +59,9 @@ public class TaskDetailsActivity extends AppCompatActivity implements TaskListen
         currentTask = AppUtils.getCurrentTask(getApplicationContext());
         currentTaskId = getIntent().getIntExtra("task_id", 0);
         networkManager = NetworkManager.getInstance();
+        downloadImageToImageView = new DownloadImageToImageView();
 
+        ivCategory = (ImageView) findViewById(R.id.layout_task_details_image_imageView);
         tvTitle = (TextView) findViewById(R.id.layout_task_details_title_textView);
         tvDate = (TextView) findViewById(R.id.task_details_tvDate);
         tvTime = (TextView) findViewById(R.id.task_details_tvTime);
@@ -65,11 +72,30 @@ public class TaskDetailsActivity extends AppCompatActivity implements TaskListen
         tvReward = (TextView) findViewById(R.id.layout_task_details_reward_textView);
         tvPhone = (TextView) findViewById(R.id.layout_task_details_phone_textView);
         acceptTaskButton = (Button) findViewById(R.id.layout_task_details_accept_task_button);
+        declineTaskButton = (Button) findViewById(R.id.layout_task_details_decline_task_button);
+
+        if (currentTask.getParticipant_status() != null){
+            acceptTaskButton.setVisibility(View.GONE);
+            if (currentTask.getParticipant_status().equals("1")){
+                acceptTaskButton.setVisibility(View.GONE);
+            }
+        }
+        else {
+            declineTaskButton.setVisibility(View.GONE);
+        }
 
         acceptTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 networkManager.acceptTask(accessToken.getToken(), currentTask.getId());
+                finish();
+            }
+        });
+
+        declineTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                networkManager.declineTask(accessToken.getToken(), currentTask.getId());
                 finish();
             }
         });
@@ -97,6 +123,8 @@ public class TaskDetailsActivity extends AppCompatActivity implements TaskListen
         tvDetails.setText(task.getDescription());
         tvUserame.setText(task.getOwner_id());
         tvReward.setText(task.getResource_cost());
+
+        downloadImageToImageView.downloadImageToIV(task.getCategory_picture(), ivCategory);
     }
 
     @Override

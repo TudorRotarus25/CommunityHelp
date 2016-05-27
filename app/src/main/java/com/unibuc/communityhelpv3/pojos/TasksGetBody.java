@@ -23,7 +23,7 @@ public class TasksGetBody {
     }
 
     public class Task implements Serializable {
-
+        String participant_status;
         int id;
         String title;
         int category_id;
@@ -39,7 +39,8 @@ public class TasksGetBody {
         String created_at;
         String updated_at;
 
-        public Task(int id, String title, int category_id, int resource_cost, String description, String location_name, String location_lat, String location_lng, int time_cost, String owner_id, int status, int participants_number, String created_at, String updated_at) {
+        public Task(String participant_status, int id, String title, int category_id, int resource_cost, String description, String location_name, String location_lat, String location_lng, int time_cost, String owner_id, int status, int participants_number, String created_at, String updated_at) {
+            this.participant_status = participant_status;
             this.id = id;
             this.title = title;
             this.category_id = category_id;
@@ -54,6 +55,14 @@ public class TasksGetBody {
             this.participants_number = participants_number;
             this.created_at = created_at;
             this.updated_at = updated_at;
+        }
+
+        public String getParticipant_status() {
+            return participant_status;
+        }
+
+        public void setParticipant_status(String participant_status) {
+            this.participant_status = participant_status;
         }
 
         public int getId() {
