@@ -1,47 +1,33 @@
 package com.unibuc.communityhelpv3.activities;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.util.Log;
-import android.view.View;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.facebook.AccessToken;
-import com.unibuc.communityhelpv3.MyApplication;
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.TaskDetails;
-import com.unibuc.communityhelpv3.managers.MyPreferenceManager;
-import com.unibuc.communityhelpv3.managers.NetworkManager;
-import com.unibuc.communityhelpv3.pojos.TaskDetailsGetBody;
 import com.unibuc.communityhelpv3.dialogs.ConfirmedUsersDialog;
 import com.unibuc.communityhelpv3.dialogs.PendingUsersDialog;
-import com.unibuc.communityhelpv3.managers.MyPreferenceManager;
-import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.TaskDetailsGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.interfaces.TaskListener;
-import com.unibuc.communityhelpv3.pojos.requests.TaskDetailsGetBody;
-import com.unibuc.communityhelpv3.pojos.interfaces.GetMyTaskDetailsListener;
 import com.unibuc.communityhelpv3.utils.AppUtils;
 import com.unibuc.communityhelpv3.utils.DownloadImageToImageView;
 
 public class MyTaskDetailsActivity extends AppCompatActivity implements TaskListener {
-public class MyTaskDetailsActivity extends AppCompatActivity implements GetMyTaskDetailsListener {
     private static final String TAG = "MyTaskDetailsActivity";
     private TasksGetBody.Task currentTask;
     private NetworkManager networkManager;
     DownloadImageToImageView downloadImageToImageView;
 
     private String taskId;
-    private int currentTaskId;
+    private String currentTaskId;
 
     private TextView tvTitle;
     private TextView tvDate;
@@ -97,7 +83,7 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements GetMyTas
     private void init(){
         currentTask = AppUtils.getCurrentTask(getApplicationContext());
         networkManager = NetworkManager.getInstance();
-        currentTaskId = getIntent().getIntExtra("task_id", 0);
+        currentTaskId = getIntent().getStringExtra("task_id");
 
         downloadImageToImageView = new DownloadImageToImageView();
 
@@ -145,11 +131,11 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements GetMyTas
 //        tvReward.setText(currentTask.getResource_cost());
 
         Log.e("!!! id", currentTask.getId()+" " + currentTaskId);
-        networkManager.getTask(currentTaskId, MyTaskDetailsActivity.this);
+        networkManager.getTask(Integer.parseInt(currentTaskId), MyTaskDetailsActivity.this);
         pendingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PendingUsersDialog pendingDialog = PendingUsersDialog.newInstance(currentTask.getId());
+                PendingUsersDialog pendingDialog = PendingUsersDialog.newInstance(Integer.parseInt(currentTask.getId()));
                 pendingDialog.show(MyTaskDetailsActivity.this.getFragmentManager(), TAG);
             }
         });
@@ -157,7 +143,7 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements GetMyTas
         confirmedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConfirmedUsersDialog confirmedDialog = ConfirmedUsersDialog.newInstance(currentTask.getId());
+                ConfirmedUsersDialog confirmedDialog = ConfirmedUsersDialog.newInstance(Integer.parseInt(currentTask.getId()));
                 confirmedDialog.show(MyTaskDetailsActivity.this.getFragmentManager(), TAG);
             }
         });
@@ -171,7 +157,7 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements GetMyTas
 
     @Override
     public void onGetTaskSucces(TaskDetailsGetBody taskResponse) {
-        TaskDetails task = taskResponse.getTask();
+        TasksGetBody.Task task = taskResponse.getTask();
 
         Log.e("!!!", "SUCCESS" + task.getTitle());
         tvDate.setText(task.getCreated_at());

@@ -65,14 +65,14 @@ public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ((MyTaskViewHolder) holder).pendingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PendingUsersDialog pendingDialog = PendingUsersDialog.newInstance(task.getId());
+                PendingUsersDialog pendingDialog = PendingUsersDialog.newInstance(Integer.parseInt(task.getId()));
                 pendingDialog.show(((Activity) context).getFragmentManager(), TAG);
             }
         });
         ((MyTaskViewHolder) holder).confirmedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConfirmedUsersDialog confirmedDialog = ConfirmedUsersDialog.newInstance(task.getId());
+                ConfirmedUsersDialog confirmedDialog = ConfirmedUsersDialog.newInstance(Integer.parseInt(task.getId()));
                 confirmedDialog.show(((Activity) context).getFragmentManager(), TAG);
             }
         });

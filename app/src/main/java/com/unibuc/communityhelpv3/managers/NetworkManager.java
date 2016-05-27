@@ -1,14 +1,11 @@
 package com.unibuc.communityhelpv3.managers;
 
-import android.location.LocationListener;
 import android.util.Log;
 
-import com.google.android.gms.gcm.Task;
 import com.unibuc.communityhelpv3.pojos.CategoriesGetBody;
 import com.unibuc.communityhelpv3.pojos.LocationsGetBody;
 import com.unibuc.communityhelpv3.pojos.LoginPostBody;
 import com.unibuc.communityhelpv3.pojos.NotificationsGetBody;
-import com.unibuc.communityhelpv3.pojos.TaskDetails;
 import com.unibuc.communityhelpv3.pojos.TaskDetailsGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetParticipantsBody;
@@ -20,18 +17,15 @@ import com.unibuc.communityhelpv3.pojos.interfaces.GetMyTaskDetailsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.GetNotificationsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.GetOtherTaskDetailsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.LocationsListener;
-import com.unibuc.communityhelpv3.pojos.interfaces.GetOtherTaskDetailsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.LoginListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.SetNotificationSeenListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.RateParticipantsListener;
-import com.unibuc.communityhelpv3.pojos.interfaces.SetNotificationSeenListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.TaskListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.TasksListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.ProfileListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.TasksParticipantsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.UpdateProfileListener;
 import com.unibuc.communityhelpv3.pojos.requests.RatingPostBody;
-import com.unibuc.communityhelpv3.pojos.requests.TaskDetailsGetBody;
 import com.unibuc.communityhelpv3.rest.RestAPI;
 import com.unibuc.communityhelpv3.rest.RestClient;
 
@@ -39,7 +33,6 @@ import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
-import retrofit.http.GET;
 
 /**
  * Created by Tudor on 31.03.2016.

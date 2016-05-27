@@ -7,15 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.TaskDetails;
+import com.unibuc.communityhelpv3.pojos.TaskDetailsGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
 import com.unibuc.communityhelpv3.pojos.interfaces.TaskListener;
-import com.unibuc.communityhelpv3.pojos.requests.TaskDetailsGetBody;
 import com.unibuc.communityhelpv3.utils.AppUtils;
 import com.unibuc.communityhelpv3.utils.DownloadImageToImageView;
 
@@ -27,7 +26,7 @@ public class TaskDetailsActivity extends AppCompatActivity implements TaskListen
     private DownloadImageToImageView downloadImageToImageView;
 
     private String taskId;
-    private int currentTaskId;
+    private String currentTaskId;
 
     private TextView tvTitle;
     private TextView tvDate;
@@ -58,7 +57,7 @@ public class TaskDetailsActivity extends AppCompatActivity implements TaskListen
     private void init(){
         accessToken = AccessToken.getCurrentAccessToken();
         currentTask = AppUtils.getCurrentTask(getApplicationContext());
-        currentTaskId = getIntent().getIntExtra("task_id", 0);
+        currentTaskId = getIntent().getStringExtra("task_id");
         networkManager = NetworkManager.getInstance();
         downloadImageToImageView = new DownloadImageToImageView();
 
@@ -88,7 +87,7 @@ public class TaskDetailsActivity extends AppCompatActivity implements TaskListen
         acceptTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                networkManager.acceptTask(accessToken.getToken(), currentTask.getId());
+                networkManager.acceptTask(accessToken.getToken(), Integer.parseInt(currentTask.getId()));
                 finish();
             }
         });
@@ -96,7 +95,7 @@ public class TaskDetailsActivity extends AppCompatActivity implements TaskListen
         declineTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                networkManager.declineTask(accessToken.getToken(), currentTask.getId());
+                networkManager.declineTask(accessToken.getToken(), Integer.parseInt(currentTask.getId()));
                 finish();
             }
         });
@@ -104,7 +103,7 @@ public class TaskDetailsActivity extends AppCompatActivity implements TaskListen
         tvTitle.setText(currentTask.getTitle());
 
         Log.e("!!! id", currentTask.getId()+" " + currentTaskId);
-        networkManager.getTask(currentTaskId, TaskDetailsActivity.this);
+        networkManager.getTask(Integer.parseInt(currentTaskId), TaskDetailsActivity.this);
 
     }
 
@@ -116,7 +115,7 @@ public class TaskDetailsActivity extends AppCompatActivity implements TaskListen
 
     @Override
     public void onGetTaskSucces(TaskDetailsGetBody taskResponse) {
-        TaskDetails task = taskResponse.getTask();
+        TasksGetBody.Task task = taskResponse.getTask();
 
         Log.e("!!!", "SUCCESS" + task.getTitle());
         tvDate.setText(task.getCreated_at());
@@ -130,6 +129,6 @@ public class TaskDetailsActivity extends AppCompatActivity implements TaskListen
 
     @Override
     public void onGetTaskFailed() {
-
+        Log.e("!!!!","Cyka");
     }
 }
