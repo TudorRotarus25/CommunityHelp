@@ -1,40 +1,28 @@
 package com.unibuc.communityhelpv3.activities;
 
-import android.Manifest;
+
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 import com.unibuc.communityhelpv3.MyApplication;
 import com.unibuc.communityhelpv3.R;
-import com.unibuc.communityhelpv3.fragments.FavoritePeopleFragment;
-import com.unibuc.communityhelpv3.fragments.TasksFragment;
 import com.unibuc.communityhelpv3.fragments.OtherTasksFragment;
-import com.unibuc.communityhelpv3.managers.NetworkManager;
+import com.unibuc.communityhelpv3.fragments.TasksFragment;
+import com.unibuc.communityhelpv3.managers.MyPreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +84,6 @@ public class MainActivity extends AppCompatActivity{
             startActivity(intent);
             finish();
         }
-
     }
 
     private boolean checkAuth() {
@@ -114,6 +101,9 @@ public class MainActivity extends AppCompatActivity{
     private void initLayout() {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setCustomView(R.layout.layout_action_bar);
+        MyPreferenceManager preferenceManager = MyApplication.getInstance().getPrefManager();
+        String resources = preferenceManager.get_user_resources();
+        actionBar.setTitle("Resources available: " + resources);
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         setupViewPager(mViewPager);

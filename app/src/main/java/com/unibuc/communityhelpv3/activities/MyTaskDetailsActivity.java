@@ -8,11 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
-import com.unibuc.communityhelpv3.pojos.TaskDetails;
 import com.unibuc.communityhelpv3.dialogs.ConfirmedUsersDialog;
 import com.unibuc.communityhelpv3.dialogs.PendingUsersDialog;
 import com.unibuc.communityhelpv3.pojos.TaskDetailsGetBody;
@@ -86,15 +86,35 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements TaskList
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, currentTask.getParticipants_number() + "");
+                Log.d(TAG, currentTaskId + "");
+                Log.d(TAG, accessToken.getToken() + "");
                 networkManager.startTask(accessToken.getToken(), Integer.parseInt(currentTaskId));
                 startButton.setVisibility(View.GONE);
+                deleteButton.setVisibility(View.GONE);
                 finishButton.setVisibility(View.VISIBLE);
+                /*
+                if(currentTask.getParticipants_number() <= 0)
+                {
+                    Toast.makeText(MyTaskDetailsActivity.this, "No people confirmed!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Log.d(TAG, currentTaskId + "");
+                    Log.d(TAG, accessToken.getToken() + "");
+                    networkManager.startTask(accessToken.getToken(), Integer.parseInt(currentTaskId));
+                    startButton.setVisibility(View.GONE);
+                    deleteButton.setVisibility(View.GONE);
+                    finishButton.setVisibility(View.VISIBLE);
+                }
+                */
             }
         });
 
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, currentTaskId + "");
+                Log.d(TAG, accessToken.getToken() + "");
                 networkManager.finishTask(accessToken.getToken(), Integer.parseInt(currentTaskId));
 
                 Intent intent = new Intent(MyTaskDetailsActivity.this, RateActivity.class);
@@ -108,6 +128,8 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements TaskList
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, currentTaskId + "");
+                Log.d(TAG, accessToken.getToken() + "");
                 networkManager.deleteTask(accessToken.getToken(), Integer.parseInt(currentTaskId));
 
                 finish();
@@ -164,6 +186,7 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements TaskList
             startButton.setVisibility(View.VISIBLE);
         }
         else if (task.getStatus().equals("1")){
+            deleteButton.setVisibility(View.GONE);
             finishButton.setVisibility(View.VISIBLE);
         }
     }

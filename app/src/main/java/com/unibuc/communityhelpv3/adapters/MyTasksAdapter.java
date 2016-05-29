@@ -58,8 +58,6 @@ public class MyTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ((MyTaskViewHolder) holder).titleTextView.setText(task.getTitle());
         ((MyTaskViewHolder) holder).descriptionTextView.setText(task.getDescription());
         ((MyTaskViewHolder) holder).resourceCostTextView.setText("" + task.getResource_cost());
-        ((MyTaskViewHolder) holder).pendingButton.setText("Pending: " + task.getParticipants_number());
-        ((MyTaskViewHolder) holder).confirmedButton.setText("Confirmed: " + task.getParticipants_number());
 
 
         ((MyTaskViewHolder) holder).pendingButton.setOnClickListener(new View.OnClickListener() {

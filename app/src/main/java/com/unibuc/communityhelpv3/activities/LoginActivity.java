@@ -103,13 +103,11 @@ public class LoginActivity extends AppCompatActivity implements LoginListener, P
         preferenceManager.set_facebook_logged_in(true);
         preferenceManager.add_notification_unique_id(0);
 
-        // TODO: 24.03.2016 Configure profile pic dimensions
         NetworkManager networkManager = NetworkManager.getInstance();
         networkManager.login(profile.getFirstName(), profile.getLastName(), loginResult.getAccessToken().getToken(), gcmToken, profile.getProfilePictureUri(200, 200).toString(), this);
     }
 
     private void writeTokenToSharedPreferences(LoginResult loginResult) {
-
         Profile profile = Profile.getCurrentProfile();
 
         Log.i(TAG, profile.getFirstName() + "  " + profile.getLastName() + "  " + profile.getProfilePictureUri(20, 20));
@@ -167,6 +165,8 @@ public class LoginActivity extends AppCompatActivity implements LoginListener, P
     @Override
     public void onProfileSuccess(UserGetBody.User response) {
         String resources = response.getResource_value();
+        Log.d(TAG, response.getResource_value() + " login ");
+        Log.d(TAG, resources + " login ");
         MyPreferenceManager preferenceManager = MyApplication.getInstance().getPrefManager();
 
         preferenceManager.set_user_resources(resources);

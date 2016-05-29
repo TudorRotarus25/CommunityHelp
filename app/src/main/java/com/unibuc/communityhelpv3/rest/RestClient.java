@@ -28,7 +28,6 @@ public class RestClient {
                 Response response = chain.proceed(chain.request());
 
                 Log.i("Request", response.code() + " - " + chain.request().urlString());
-
                 return response;
             }
         });

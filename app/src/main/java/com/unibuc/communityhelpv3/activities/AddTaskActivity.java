@@ -19,7 +19,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
+import com.unibuc.communityhelpv3.MyApplication;
 import com.unibuc.communityhelpv3.R;
+import com.unibuc.communityhelpv3.managers.MyPreferenceManager;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.CategoriesGetBody;
 import com.unibuc.communityhelpv3.pojos.CategoriesGetBody.Category;
@@ -131,8 +133,9 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     private void initLayout() {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setCustomView(R.layout.layout_action_bar);
-        TextView title = (TextView) actionBar.getCustomView().findViewById(R.id.title_action_bar_layout_textView);
-        title.setText(R.string.task_add_title);
+        MyPreferenceManager preferenceManager = MyApplication.getInstance().getPrefManager();
+        String resources = preferenceManager.get_user_resources();
+        actionBar.setTitle("Resources available: " + resources);
 
         networkManager.getCategories(this);
         networkManager.getLocations(accessToken.getToken(), this);

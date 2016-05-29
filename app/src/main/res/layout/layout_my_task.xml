@@ -49,7 +49,6 @@
                     android:gravity="center_horizontal">
 
                     <TextView android:id="@+id/layout_my_task_title_textView"
-                        android:text="Test title lorem ipsum sase cuvinte"
                         android:textSize="@dimen/my_task_title_text_size"
                         android:maxLines="2"
                         android:textAlignment="center"
@@ -57,7 +56,6 @@
                         android:layout_height="wrap_content" />
 
                     <TextView android:id="@+id/layout_my_task_stars_textView"
-                        android:text="9"
                         android:textSize="@dimen/my_task_stars_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -74,7 +72,6 @@
                 android:orientation="vertical">
 
                 <TextView android:id="@+id/layout_my_task_description_textView"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus id libero vestibulum consequat. Ut interdum maximus lectus. Duis molestie."
                     android:textAlignment="center"
                     android:textSize="@dimen/layout_my_task_description_text_size"
                     android:layout_width="match_parent"
@@ -88,7 +85,7 @@
                     android:orientation="horizontal">
 
                     <Button android:id="@+id/layout_my_task_pending_button"
-                        android:text="Pending: "
+                        android:text="Pending"
                         android:textAllCaps="false"
                         android:layout_marginLeft="@dimen/layout_my_task_button_horizontal_margin"
                         android:layout_marginRight="@dimen/layout_my_task_button_horizontal_margin"
@@ -98,7 +95,7 @@
                         android:drawableRight="@drawable/ic_nature_people_24dp"/>
 
                     <Button android:id="@+id/layout_my_task_confirmed_button"
-                        android:text="Confirmed: "
+                        android:text="Confirmed"
                         android:textAllCaps="false"
                         android:layout_marginLeft="@dimen/layout_my_task_button_horizontal_margin"
                         android:layout_marginRight="@dimen/layout_my_task_button_horizontal_margin"

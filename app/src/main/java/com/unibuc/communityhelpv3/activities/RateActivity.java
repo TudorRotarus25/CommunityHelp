@@ -43,6 +43,8 @@ public class RateActivity extends AppCompatActivity implements TasksParticipants
     private ArrayList<UserGetBody.User> participants;
 
     private NetworkManager networkManager;
+    private String fbToken;
+    private int taskId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +70,13 @@ public class RateActivity extends AppCompatActivity implements TasksParticipants
         ratingPostBody = new RatingPostBody();
 
         String taskIdString = getIntent().getStringExtra(BUNDLE_KEY_TASK_ID);
-        int taskId;
+
         if(taskIdString != null)
             taskId = Integer.parseInt(taskIdString);
         else
             taskId = -1;
-        //int taskId = bundle.getInt(BUNDLE_KEY_TASK_ID, -1);
-        String fbToken = AccessToken.getCurrentAccessToken().getToken();
+
+        fbToken = AccessToken.getCurrentAccessToken().getToken();
 
         if (taskId == -1) {
             Log.e(TAG, "task id is null");
@@ -110,7 +112,7 @@ public class RateActivity extends AppCompatActivity implements TasksParticipants
                     for(int i = 0 ; i < ratings.size() ; i++)
                     {
                         Ratings r = ratings.get(i);
-                        Log.d(TAG, r.getUserId() + " " + r.getRating());
+                        Log.d(TAG, r.getUserId() + " - " + r.getRating());
                     }
 
                     networkManager.rateParticipants(ratingPostBody, RateActivity.this);
@@ -132,7 +134,7 @@ public class RateActivity extends AppCompatActivity implements TasksParticipants
         if (position == participants.size()-1) {
             nextButton.setText("Finish");
         }
-        nameTextView.setText(String.format("%s %s", participants.get(position).getFirst_name(), participants.get(position).getLast_name()));
+            nameTextView.setText(String.format("%s %s", participants.get(position).getFirst_name(), participants.get(position).getLast_name()));
         ratingBar.setRating(0);
     }
 
@@ -152,6 +154,7 @@ public class RateActivity extends AppCompatActivity implements TasksParticipants
     @Override
     public void onRateParticipantsSuccess() {
         progressDialog.dismiss();
+        networkManager.deleteTask(fbToken, taskId);
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }
