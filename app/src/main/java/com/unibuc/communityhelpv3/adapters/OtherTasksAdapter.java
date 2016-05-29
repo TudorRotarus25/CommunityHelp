@@ -54,7 +54,7 @@ public class OtherTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         ((OtherViewHolder) holder).other_task_title.setText(task.getTitle());
         ((OtherViewHolder) holder).other_task_time.setText("" + task.getTime_cost());
         ((OtherViewHolder) holder).other_task_date_added.setText(task.getCreated_at());
-        ((OtherViewHolder) holder).other_task_user.setText("" + task.getOwner_id());
+        ((OtherViewHolder) holder).other_task_user.setText(task.getName());
         //((OtherViewHolder) holder).other_no_users.setText("" + task.getParticipants_number());
         ((OtherViewHolder) holder).other_task_reward_info.setText("" + task.getResource_cost());
         ((OtherViewHolder) holder).mainContent.setBackgroundResource(R.color.white);
@@ -68,9 +68,9 @@ public class OtherTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         if (task.getParticipant_status() != null){
             if (task.getParticipant_status().equals("2"))
-                ((OtherViewHolder) holder).mainContent.setBackgroundResource(R.color.colorAccent);
+                ((OtherViewHolder) holder).mainContent.setBackgroundResource(R.color.taskAccepted);
             else if (task.getParticipant_status().equals("1"))
-                ((OtherViewHolder) holder).mainContent.setBackgroundResource(R.color.colorPrimary);
+                ((OtherViewHolder) holder).mainContent.setBackgroundResource(R.color.taskPending);
         }
     }
 

@@ -117,11 +117,11 @@ public class TaskDetailsActivity extends AppCompatActivity implements TaskListen
     public void onGetTaskSucces(TaskDetailsGetBody taskResponse) {
         TasksGetBody.Task task = taskResponse.getTask();
 
-        Log.e("!!!", "SUCCESS" + task.getTitle());
+        //Log.d(TAG, "SUCCESS" + task.getTitle());
         tvDate.setText(task.getCreated_at());
         tvEstimatedTime.setText(task.getTime_cost());
         tvDetails.setText(task.getDescription());
-        tvUserame.setText(task.getOwner_id());
+        tvUserame.setText(task.getName());
         tvReward.setText(task.getResource_cost());
 
         downloadImageToImageView.downloadImageToIV(task.getCategory_picture(), ivCategory);
@@ -129,8 +129,6 @@ public class TaskDetailsActivity extends AppCompatActivity implements TaskListen
 
     @Override
     public void onGetTaskFailed() {
-        Log.e("!!!!","Cyka");
+        //Log.d("!!!!","");
     }
-
-
 }

@@ -2,6 +2,7 @@ package com.unibuc.communityhelpv3.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.media.Rating;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -66,8 +67,13 @@ public class RateActivity extends AppCompatActivity implements TasksParticipants
 
         ratingPostBody = new RatingPostBody();
 
-        // TODO: 23.05.2016 get task id from bundle
-        int taskId = bundle.getInt(BUNDLE_KEY_TASK_ID, -1);
+        String taskIdString = getIntent().getStringExtra(BUNDLE_KEY_TASK_ID);
+        int taskId;
+        if(taskIdString != null)
+            taskId = Integer.parseInt(taskIdString);
+        else
+            taskId = -1;
+        //int taskId = bundle.getInt(BUNDLE_KEY_TASK_ID, -1);
         String fbToken = AccessToken.getCurrentAccessToken().getToken();
 
         if (taskId == -1) {
@@ -80,6 +86,8 @@ public class RateActivity extends AppCompatActivity implements TasksParticipants
         ratingPostBody.setTaskId(taskId);
         ratingPostBody.setFacebookToken(fbToken);
 
+        Log.d(TAG,fbToken);
+        Log.d(TAG, taskId+"");
         networkManager.getTaskConfirmedUsers(fbToken, taskId, this);
 
         previousButton.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +105,14 @@ public class RateActivity extends AppCompatActivity implements TasksParticipants
                 Ratings newRating = new RatingPostBody().new Ratings(participants.get(position).getId(), ratingBar.getRating());
                 ratingPostBody.addRating(newRating);
                 if (position == participants.size() - 1) {
+                    Log.d(TAG, ratingPostBody.getFacebookToken() + " " + ratingPostBody.getTaskId());
+                    ArrayList<Ratings> ratings = ratingPostBody.getRatings();
+                    for(int i = 0 ; i < ratings.size() ; i++)
+                    {
+                        Ratings r = ratings.get(i);
+                        Log.d(TAG, r.getUserId() + " " + r.getRating());
+                    }
+
                     networkManager.rateParticipants(ratingPostBody, RateActivity.this);
                     progressDialog.show();
                 } else {

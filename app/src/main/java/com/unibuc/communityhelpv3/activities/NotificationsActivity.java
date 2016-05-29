@@ -189,8 +189,6 @@ public class NotificationsActivity extends AppCompatActivity implements GetNotif
             Log.e(TAG, "No access token");
         }
 
-        Log.d(TAG, notifications.size() + " MUIE SIZE");
-
         if(intent != null) {
             String message, title, user_id, task_id, current_time, type, notification_id, first_time;
             title = intent.getStringExtra("title");

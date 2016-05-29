@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
 import com.unibuc.communityhelpv3.R;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.TaskDetails;
@@ -44,6 +45,8 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements TaskList
     private Button deleteButton;
     private Button finishButton;
 
+    private AccessToken accessToken;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,30 +60,8 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements TaskList
         init();
     }
 
-    private void populateTask()
-    {
-        Log.d(TAG, currentTask.getTitle());
-        Log.d(TAG, currentTask.getDescription());
-        Log.d(TAG, currentTask.getCreated_at());
-        Log.d(TAG, currentTask.getTime_cost()+"");
-        Log.d(TAG, currentTask.getName());
-        Log.d(TAG, currentTask.getResource_cost()+"");
-
-        Log.d(TAG, currentTask.getRating()+"");
-        tvTitle.setText(currentTask.getTitle());
-        tvDate.setText(currentTask.getCreated_at());
-
-        String aux = currentTask.getTime_cost()+"";
-        tvEstimatedTime.setText(aux);
-
-        tvDetails.setText(currentTask.getDescription());
-        tvUserame.setText(currentTask.getName());
-        aux = currentTask.getResource_cost() + "";
-        tvReward.setText(aux);
-        tvRating.setText(currentTask.getRating());
-    }
-
     private void init(){
+        accessToken = AccessToken.getCurrentAccessToken();
         currentTask = AppUtils.getCurrentTask(getApplicationContext());
         networkManager = NetworkManager.getInstance();
         currentTaskId = getIntent().getStringExtra("task_id");
@@ -105,21 +86,31 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements TaskList
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                networkManager.startTask(accessToken.getToken(), Integer.parseInt(currentTaskId));
+                startButton.setVisibility(View.GONE);
+                finishButton.setVisibility(View.VISIBLE);
             }
         });
 
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                networkManager.finishTask(accessToken.getToken(), Integer.parseInt(currentTaskId));
 
+                Intent intent = new Intent(MyTaskDetailsActivity.this, RateActivity.class);
+                intent.putExtra("BUNDLE_KEY_TASK_ID", currentTaskId);
+                startActivity(intent);
+
+                finish();
             }
         });
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                networkManager.deleteTask(accessToken.getToken(), Integer.parseInt(currentTaskId));
 
+                finish();
             }
         });
 
@@ -163,7 +154,7 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements TaskList
         tvDate.setText(task.getCreated_at());
         tvEstimatedTime.setText(task.getTime_cost());
         tvDetails.setText(task.getDescription());
-        tvUserame.setText(task.getOwner_id());
+        tvUserame.setText(task.getName());
         tvReward.setText(task.getResource_cost());
 
         downloadImageToImageView.downloadImageToIV(task.getCategory_picture(),ivCategory);

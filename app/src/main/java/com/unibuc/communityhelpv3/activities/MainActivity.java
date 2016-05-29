@@ -181,19 +181,14 @@ public class MainActivity extends AppCompatActivity{
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FavoritePeopleFragment(), "Friends");
+        //adapter.addFragment(new FavoritePeopleFragment(), "Friends");
         adapter.addFragment(new OtherTasksFragment(), "Tasks");
         adapter.addFragment(new TasksFragment(), "Your tasks");
         viewPager.setAdapter(adapter);
-
-
-
-
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         private final FragmentManager fragmentManager;
-
 
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();

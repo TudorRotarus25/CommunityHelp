@@ -24,7 +24,6 @@ public class NotificationsListAdapter extends BaseAdapter {
     public NotificationsListAdapter(NotificationsGetBody notifications, Context context)
     {
         this.context = context;
-        Log.d(TAG, notifications.getNotifications().get(0).getSeen() + " MUIE");
         this.notifications = notifications;
     }
 
@@ -58,7 +57,7 @@ public class NotificationsListAdapter extends BaseAdapter {
         NotificationsGetBody.Notification not = notifications.getNotifications().get(position);
         if(not.getSeen().equals("1"))
             convertView.setBackgroundColor(context.getResources().getColor(R.color.grey));
-        //Log.d(TAG, not.getTask_id());
+
         notification_title.setText(not.getTitle());
         notification_text.setText(not.getMessage());
         notification_time.setText(not.getCreated_at());

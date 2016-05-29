@@ -436,6 +436,7 @@ public class NetworkManager {
     }
 
     public void rateParticipants(RatingPostBody body, final RateParticipantsListener callback) {
+        Log.d(TAG, body.getRatings().size()+" CEAV");
         Call<Void> call = restAPI.RATE_PARTICIPANTS_BODY_CALL(body);
         call.enqueue(new Callback<Void>() {
             @Override
@@ -444,6 +445,7 @@ public class NetworkManager {
                     callback.onRateParticipantsSuccess();
                 } else {
                     Log.e(TAG, "rateParticipants failed: " + response.code());
+                    Log.e(TAG, "rateParticipants failed: " + response.message());
                     callback.onRateParticipantsFailed();
                 }
             }
@@ -477,5 +479,49 @@ public class NetworkManager {
         });
     }
 
+    public void startTask(String facebookToken, int taskId){
+        Call<Void> call = restAPI.TASK_START_TASK(facebookToken, taskId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Response<Void> response, Retrofit retrofit) {
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+    }
+
+    public void finishTask(String facebookToken, int taskId){
+        Call<Void> call = restAPI.TASK_FINISH_TASK(facebookToken, taskId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Response<Void> response, Retrofit retrofit) {
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+    }
+
+    public void deleteTask(String facebookToken, int taskId){
+        Call<Void> call = restAPI.TASK_DELETE_TASK(facebookToken, taskId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Response<Void> response, Retrofit retrofit) {
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+    }
 
 }

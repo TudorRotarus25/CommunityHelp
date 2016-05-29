@@ -103,4 +103,17 @@ public interface RestAPI {
     @FormUrlEncoded
     @POST("notification/set_seen")
     Call<Void> SET_NOTIFICATION_SEEN(@Field("facebook_token") String facebookToken, @Field("notification_id") String notificationId);
+
+    @FormUrlEncoded
+    @POST("/tasks/start")
+    Call<Void> TASK_START_TASK(@Field("facebook_token") String facebookToken, @Field("task_id") int taskId);
+
+    @FormUrlEncoded
+    @POST("/tasks/finish")
+    Call<Void> TASK_FINISH_TASK(@Field("facebook_token") String facebookToken, @Field("task_id") int taskId);
+
+    @FormUrlEncoded
+    @POST("/tasks/delete")
+    Call<Void> TASK_DELETE_TASK(@Field("facebook_token") String facebookToken, @Field("task_id") int taskId);
+
 }
