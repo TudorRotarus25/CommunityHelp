@@ -54,6 +54,10 @@ public interface RestAPI {
     Call<TasksGetBody> OTHER_PEOPLE_TASKS_GET_BODY_CALL(@Field("facebook_token") String facebookToken, @Field("lat") Double lat, @Field("lng") Double lng);
 
     @FormUrlEncoded
+    @POST("tasks/get_task")
+    Call<TaskDetailsGetBody> GET_TASK(@Field("task_id") int taskId);
+
+    @FormUrlEncoded
     @POST("tasks/get_participants_pending")
     Call<TasksGetParticipantsBody> TASKS_GET_PARTICIPANTS_PENDING_BODY_CALL(@Field("facebook_token") String facebookToken, @Field("task_id") int taskId);
 
@@ -64,6 +68,14 @@ public interface RestAPI {
             @FormUrlEncoded
     @POST("tasks/confirm_participant")
     Call<Void> TASKS_COMFIRM_PARTICIPANT(@Field("facebook_token") String facebookToken,@Field("participant_id") String participantId, @Field("task_id") int taskId);
+
+    @FormUrlEncoded
+    @POST("tasks/accept")
+    Call<Void> TASKS_ACCEPT_TASK(@Field("facebook_token") String facebookToken, @Field("task_id") int taskId);
+
+    @FormUrlEncoded
+    @POST("tasks/cancel")
+    Call<Void> TASKS_DECLINE_TASK(@Field("facebook_token") String facebookToken, @Field("task_id") int taskId);
 
     @FormUrlEncoded
     @POST("tasks/get_participants_confirmed")

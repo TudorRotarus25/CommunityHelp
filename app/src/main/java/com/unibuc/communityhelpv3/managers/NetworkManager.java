@@ -1,6 +1,5 @@
 package com.unibuc.communityhelpv3.managers;
 
-import android.location.LocationListener;
 import android.util.Log;
 
 import com.unibuc.communityhelpv3.pojos.CategoriesGetBody;
@@ -18,11 +17,10 @@ import com.unibuc.communityhelpv3.pojos.interfaces.GetMyTaskDetailsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.GetNotificationsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.GetOtherTaskDetailsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.LocationsListener;
-import com.unibuc.communityhelpv3.pojos.interfaces.GetOtherTaskDetailsListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.LoginListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.SetNotificationSeenListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.RateParticipantsListener;
-import com.unibuc.communityhelpv3.pojos.interfaces.SetNotificationSeenListener;
+import com.unibuc.communityhelpv3.pojos.interfaces.TaskListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.TasksListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.ProfileListener;
 import com.unibuc.communityhelpv3.pojos.interfaces.TasksParticipantsListener;
@@ -35,7 +33,6 @@ import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
-import retrofit.http.GET;
 
 /**
  * Created by Tudor on 31.03.2016.
@@ -229,6 +226,27 @@ public class NetworkManager {
         });
     }
 
+    public void getTask(int taskId, final TaskListener callback) {
+        Call<TaskDetailsGetBody> call = restAPI.GET_TASK(taskId);
+        call.enqueue(new Callback<TaskDetailsGetBody>() {
+            @Override
+            public void onResponse(Response<TaskDetailsGetBody> response, Retrofit retrofit) {
+                if (response != null && response.body() != null && response.code() == 200) {
+                    callback.onGetTaskSucces(response.body());
+                } else {
+                    Log.e(TAG, "getTask failed: " + response.code() + " - " + response.message());
+                    callback.onGetTaskFailed();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e(TAG, "getTask failed: " + t.getMessage());
+                callback.onGetTaskFailed();
+            }
+        });
+    }
+
     public void getTaskPendingUsers(String facebookToken, int taskId, final TasksParticipantsListener callback) {
         Call<TasksGetParticipantsBody> call = restAPI.TASKS_GET_PARTICIPANTS_PENDING_BODY_CALL(facebookToken, taskId);
         call.enqueue(new Callback<TasksGetParticipantsBody>() {
@@ -310,6 +328,36 @@ public class NetworkManager {
 
     public void declineParticipant(String facebookToken, String participantId, int taskId){
         Call<Void> call = restAPI.TASKS_DECLINE_PARTICIPANT(facebookToken, participantId, taskId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Response<Void> response, Retrofit retrofit) {
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+    }
+
+    public void acceptTask(String facebookToken, int taskId){
+        Call<Void> call = restAPI.TASKS_ACCEPT_TASK(facebookToken, taskId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Response<Void> response, Retrofit retrofit) {
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+    }
+
+    public void declineTask(String facebookToken, int taskId){
+        Call<Void> call = restAPI.TASKS_DECLINE_TASK(facebookToken, taskId);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Response<Void> response, Retrofit retrofit) {

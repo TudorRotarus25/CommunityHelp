@@ -1,43 +1,33 @@
 package com.unibuc.communityhelpv3.activities;
 
-import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.facebook.AccessToken;
-import com.unibuc.communityhelpv3.MyApplication;
 import com.unibuc.communityhelpv3.R;
-import com.unibuc.communityhelpv3.managers.MyPreferenceManager;
 import com.unibuc.communityhelpv3.managers.NetworkManager;
-import com.unibuc.communityhelpv3.pojos.TaskDetailsGetBody;
+import com.unibuc.communityhelpv3.pojos.TaskDetails;
 import com.unibuc.communityhelpv3.dialogs.ConfirmedUsersDialog;
 import com.unibuc.communityhelpv3.dialogs.PendingUsersDialog;
-import com.unibuc.communityhelpv3.managers.MyPreferenceManager;
-import com.unibuc.communityhelpv3.managers.NetworkManager;
 import com.unibuc.communityhelpv3.pojos.TaskDetailsGetBody;
 import com.unibuc.communityhelpv3.pojos.TasksGetBody;
-import com.unibuc.communityhelpv3.pojos.interfaces.GetMyTaskDetailsListener;
+import com.unibuc.communityhelpv3.pojos.interfaces.TaskListener;
 import com.unibuc.communityhelpv3.utils.AppUtils;
 import com.unibuc.communityhelpv3.utils.DownloadImageToImageView;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-public class MyTaskDetailsActivity extends AppCompatActivity implements GetMyTaskDetailsListener {
+public class MyTaskDetailsActivity extends AppCompatActivity implements TaskListener {
     private static final String TAG = "MyTaskDetailsActivity";
     private TasksGetBody.Task currentTask;
+    private NetworkManager networkManager;
+    DownloadImageToImageView downloadImageToImageView;
 
     private String taskId;
+    private String currentTaskId;
 
     private TextView tvTitle;
     private TextView tvDate;
@@ -47,14 +37,12 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements GetMyTas
     private TextView tvUserame;
     private TextView tvRating;
     private TextView tvReward;
+    private ImageView ivCategory;
     private Button pendingButton;
     private Button confirmedButton;
-    private ImageView ivCategoryPicture;
-
-    private MyPreferenceManager preferenceManager;
-    private NetworkManager networkManager;
-    private AccessToken accessToken;
-    private String userId;
+    private Button startButton;
+    private Button deleteButton;
+    private Button finishButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,19 +52,6 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements GetMyTas
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             taskId = extras.getString("task_id");
-        }
-
-        accessToken = AccessToken.getCurrentAccessToken();
-        networkManager = NetworkManager.getInstance();
-        MyPreferenceManager preferenceManager = MyApplication.getInstance().getPrefManager();
-        userId = preferenceManager.get_current_user_id();
-
-        if(accessToken != null) {
-            Log.i(TAG, accessToken.getToken());
-            networkManager.getMyTaskDetails(accessToken.getToken(), taskId, MyTaskDetailsActivity.this);
-        } else {
-            Toast.makeText(MyTaskDetailsActivity.this, "Error!", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "No access token");
         }
 
         init();
@@ -103,31 +78,64 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements GetMyTas
         aux = currentTask.getResource_cost() + "";
         tvReward.setText(aux);
         tvRating.setText(currentTask.getRating());
-        //ivCategoryPicture.setImage;
-        DownloadImageToImageView down = new DownloadImageToImageView();
-        down.downloadImageToIV(currentTask.getCategory_picture(), ivCategoryPicture);
     }
 
     private void init(){
         currentTask = AppUtils.getCurrentTask(getApplicationContext());
+        networkManager = NetworkManager.getInstance();
+        currentTaskId = getIntent().getStringExtra("task_id");
 
+        downloadImageToImageView = new DownloadImageToImageView();
+
+        ivCategory = (ImageView) findViewById(R.id.layout_my_task_details_image_imageView);
         tvTitle = (TextView) findViewById(R.id.layout_my_task_details_title_textView);
         tvDate = (TextView) findViewById(R.id.my_task_details_tvDate);
-        //tvTime = (TextView) findViewById(R.id.my_task_details_tvTime);
+        tvTime = (TextView) findViewById(R.id.my_task_details_tvTime);
         tvEstimatedTime = (TextView) findViewById(R.id.layout_my_task_details_estimated_time_textView);
         tvDetails = (TextView) findViewById(R.id.layout_my_task_details_details_textVIew);
         tvUserame = (TextView) findViewById(R.id.layout_my_task_details_username_textView);
         tvRating = (TextView) findViewById(R.id.layout_my_task_details_rating_textView);
         tvReward = (TextView) findViewById(R.id.layout_my_task_details_reward_textView);
-        ivCategoryPicture = (ImageView) findViewById(R.id.layout_my_task_details_image_imageView);
-
         pendingButton = (Button) findViewById(R.id.layout_my_task_details_pending_button);
         confirmedButton = (Button) findViewById(R.id.layout_my_task_details_confirmed_button);
+        startButton = (Button) findViewById(R.id.layout_my_task_details_start_button);
+        finishButton = (Button) findViewById(R.id.layout_my_task_details_finish_button);
+        deleteButton = (Button) findViewById(R.id.layout_my_task_details_delete_button);
 
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        finishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        tvTitle.setText(currentTask.getTitle());
+//        tvDate.setText(currentTask.getCreated_at());
+//        tvEstimatedTime.setText(currentTask.getTime_cost());
+//        tvDetails.setText(currentTask.getDescription());
+//        tvUserame.setText(currentTask.getOwner_id());
+//        tvReward.setText(currentTask.getResource_cost());
+
+        Log.e("!!! id", currentTask.getId()+" " + currentTaskId);
+        networkManager.getTask(Integer.parseInt(currentTaskId), MyTaskDetailsActivity.this);
         pendingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PendingUsersDialog pendingDialog = PendingUsersDialog.newInstance(currentTask.getId());
+                PendingUsersDialog pendingDialog = PendingUsersDialog.newInstance(Integer.parseInt(currentTask.getId()));
                 pendingDialog.show(MyTaskDetailsActivity.this.getFragmentManager(), TAG);
             }
         });
@@ -135,7 +143,7 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements GetMyTas
         confirmedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConfirmedUsersDialog confirmedDialog = ConfirmedUsersDialog.newInstance(currentTask.getId());
+                ConfirmedUsersDialog confirmedDialog = ConfirmedUsersDialog.newInstance(Integer.parseInt(currentTask.getId()));
                 confirmedDialog.show(MyTaskDetailsActivity.this.getFragmentManager(), TAG);
             }
         });
@@ -147,16 +155,30 @@ public class MyTaskDetailsActivity extends AppCompatActivity implements GetMyTas
         finish();
     }
 
-    //// TODO: 19-May-16
     @Override
-    public void onGetMyTaskDetailsSuccess(TaskDetailsGetBody response) {
-        currentTask = response.getTask();
-        populateTask();
+    public void onGetTaskSucces(TaskDetailsGetBody taskResponse) {
+        TasksGetBody.Task task = taskResponse.getTask();
+
+        Log.e("!!!", "SUCCESS" + task.getTitle());
+        tvDate.setText(task.getCreated_at());
+        tvEstimatedTime.setText(task.getTime_cost());
+        tvDetails.setText(task.getDescription());
+        tvUserame.setText(task.getOwner_id());
+        tvReward.setText(task.getResource_cost());
+
+        downloadImageToImageView.downloadImageToIV(task.getCategory_picture(),ivCategory);
+
+        if (task.getStatus().equals("0")){
+            deleteButton.setVisibility(View.VISIBLE);
+            startButton.setVisibility(View.VISIBLE);
+        }
+        else if (task.getStatus().equals("1")){
+            finishButton.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
-    public void onGetMyTaskDetailsFailed() {
-        Toast.makeText(this, "Failed to fetch details!", Toast.LENGTH_SHORT).show();
-    }
+    public void onGetTaskFailed() {
 
+    }
 }

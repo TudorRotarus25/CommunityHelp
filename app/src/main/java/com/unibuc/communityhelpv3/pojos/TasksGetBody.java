@@ -1,5 +1,6 @@
 package com.unibuc.communityhelpv3.pojos;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -21,26 +22,35 @@ public class TasksGetBody {
         this.tasks = tasks;
     }
 
-    public class Task {
-
-        int id;
-        String title;
-        int category_id;
-
-        String category_picture;
-        int resource_cost;
-        String description;
+    public class Task implements Serializable {
+        String participant_status;
         String location_name;
         String location_lat;
         String location_lng;
-        int time_cost;
-        String owner_id;
         String name;
-        int status;
         int participants_number;
+        String rating;
+        String category_title;
+        String category_picture;
+        String id;
+        String title;
+        String category_id;
+        String resource_cost;
+        String description;
+        String location_id;
+        String time_cost;
+        String owner_id;
+        String status;
         String created_at;
         String updated_at;
-        String rating;
+
+        public String getCategory_title() {
+            return category_title;
+        }
+
+        public void setCategory_title(String category_title) {
+            this.category_title = category_title;
+        }
 
         public String getCategory_picture() {
             return category_picture;
@@ -48,6 +58,34 @@ public class TasksGetBody {
 
         public void setCategory_picture(String category_picture) {
             this.category_picture = category_picture;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public void setCategory_id(String category_id) {
+            this.category_id = category_id;
+        }
+
+        public void setResource_cost(String resource_cost) {
+            this.resource_cost = resource_cost;
+        }
+
+        public String getLocation_id() {
+            return location_id;
+        }
+
+        public void setLocation_id(String location_id) {
+            this.location_id = location_id;
+        }
+
+        public void setTime_cost(String time_cost) {
+            this.time_cost = time_cost;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
         }
 
         public String getName() {
@@ -67,66 +105,35 @@ public class TasksGetBody {
             this.rating = rating;
         }
 
-        public Task(int id, String title, int category_id, int resource_cost, String description, String location_name,
-                    String rating, String location_lat, String location_lng, int time_cost, String owner_id, int status,
-                    int participants_number, String created_at, String updated_at, String name, String category_picture) {
-            this.id = id;
-            this.name = name;
-            this.rating = rating;
-            this.title = title;
-            this.category_id = category_id;
-            this.resource_cost = resource_cost;
-            this.description = description;
+        public Task(String participant_status, String location_name, String location_lat, String location_lng, String name, int participants_number, String rating, String category_title, String category_picture, String id, String title, String category_id, String resource_cost, String description, String location_id, String time_cost, String owner_id, String status, String created_at, String updated_at) {
+            this.participant_status = participant_status;
             this.location_name = location_name;
             this.location_lat = location_lat;
             this.location_lng = location_lng;
+            this.name = name;
+            this.participants_number = participants_number;
+            this.rating = rating;
+            this.category_title = category_title;
+            this.category_picture = category_picture;
+            this.id = id;
+            this.title = title;
+            this.category_id = category_id;
+            this.resource_cost = resource_cost;
+            this.description = description;
+            this.location_id = location_id;
             this.time_cost = time_cost;
             this.owner_id = owner_id;
             this.status = status;
-            this.participants_number = participants_number;
             this.created_at = created_at;
             this.updated_at = updated_at;
-            this.category_picture = category_picture;
         }
 
-        public int getId() {
-            return id;
+        public String getParticipant_status() {
+            return participant_status;
         }
 
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public int getCategory_id() {
-            return category_id;
-        }
-
-        public void setCategory_id(int category_id) {
-            this.category_id = category_id;
-        }
-
-        public int getResource_cost() {
-            return resource_cost;
-        }
-
-        public void setResource_cost(int resource_cost) {
-            this.resource_cost = resource_cost;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
+        public void setParticipant_status(String participant_status) {
+            this.participant_status = participant_status;
         }
 
         public String getLocation_name() {
@@ -153,12 +160,44 @@ public class TasksGetBody {
             this.location_lng = location_lng;
         }
 
-        public int getTime_cost() {
-            return time_cost;
+        public int getParticipants_number() {
+            return participants_number;
         }
 
-        public void setTime_cost(int time_cost) {
-            this.time_cost = time_cost;
+        public void setParticipants_number(int participants_number) {
+            this.participants_number = participants_number;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getCategory_id() {
+            return category_id;
+        }
+
+        public String getResource_cost() {
+            return resource_cost;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getTime_cost() {
+            return time_cost;
         }
 
         public String getOwner_id() {
@@ -169,20 +208,8 @@ public class TasksGetBody {
             this.owner_id = owner_id;
         }
 
-        public int getStatus() {
+        public String getStatus() {
             return status;
-        }
-
-        public void setStatus(int status) {
-            this.status = status;
-        }
-
-        public int getParticipants_number() {
-            return participants_number;
-        }
-
-        public void setParticipants_number(int participants_number) {
-            this.participants_number = participants_number;
         }
 
         public String getCreated_at() {

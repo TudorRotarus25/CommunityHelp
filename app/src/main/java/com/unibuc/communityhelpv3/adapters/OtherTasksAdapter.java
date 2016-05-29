@@ -55,8 +55,9 @@ public class OtherTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         ((OtherViewHolder) holder).other_task_time.setText("" + task.getTime_cost());
         ((OtherViewHolder) holder).other_task_date_added.setText(task.getCreated_at());
         ((OtherViewHolder) holder).other_task_user.setText("" + task.getOwner_id());
-        ((OtherViewHolder) holder).other_no_users.setText("" + task.getParticipants_number());
+        //((OtherViewHolder) holder).other_no_users.setText("" + task.getParticipants_number());
         ((OtherViewHolder) holder).other_task_reward_info.setText("" + task.getResource_cost());
+        ((OtherViewHolder) holder).mainContent.setBackgroundResource(R.color.white);
 
         ((OtherViewHolder) holder).mainContent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +65,13 @@ public class OtherTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 onOtherTaskClickedInterface.onOtherTaskClicked(task);
             }
         });
+
+        if (task.getParticipant_status() != null){
+            if (task.getParticipant_status().equals("2"))
+                ((OtherViewHolder) holder).mainContent.setBackgroundResource(R.color.colorAccent);
+            else if (task.getParticipant_status().equals("1"))
+                ((OtherViewHolder) holder).mainContent.setBackgroundResource(R.color.colorPrimary);
+        }
     }
 
     @Override
@@ -92,7 +100,6 @@ public class OtherTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             other_task_time = (TextView) itemView.findViewById(R.id.layout_other_tasks_duration_textView);
             other_task_date_added = (TextView) itemView.findViewById(R.id.layout_other_tasks_date_textView);
             other_task_user = (TextView) itemView.findViewById(R.id.layout_other_tasks_username_textView);
-            other_no_users = (TextView) itemView.findViewById(R.id.layout_other_tasks_participants_textView);
             other_task_reward_info = (TextView) itemView.findViewById(R.id.layout_other_tasks_reward_textView);
             other_task_image_url = (ImageView) itemView.findViewById(R.id.layout_other_tasks_icon);
         }
